@@ -103,7 +103,7 @@ Build the reading into a self-contained HTML document, then convert to PDF.
    - Interpretation body: chapters flow continuously with generous `margin-top` on `h2` headings; only the cover+cards page uses `break-after: page`
    - Apply Kami styling: warm parchment background (`#f5f4ed`), ink-blue accent (`#1B365D`), Chiron Sung HK (昭源宋體) variable font, A4 format
 
-2. **Card images**: Reference Stargazer's card images at `https://stargazer.estework.site/cards/{NN}_{slug}.webp` with an `onerror` handler that falls back to inline SVG
+2. **Card display**: Render cards as text blocks (number + Chinese name) with polarity-colored backgrounds. No external images or SVGs. Keeps the reading clean, fast, and free of copyright concerns.
 
 3. **Save HTML** to `output/` directory as a temporary file
 
@@ -144,7 +144,6 @@ Output the PDF file to the project's `output/` directory. Present it to the user
 - **Missing universal prefix**: Some users may paste prompts without the instruction prefix. If no `---` delimiter is found, treat the entire text as the spread body.
 - **Daily reading**: Auto-detected by `每日運勢`. No question — generate "daily fortune" context.
 - **9-card significator**: If position 5 card is explicitly noted as the Significator, mention this in the cross method analysis.
-- **Image loading failure**: The card HTML uses `onerror` to hide the `<img>` and show inline SVG. No external dependency risk.
-- **Card name ambiguity**: Resolve both Chinese names (騎士) and English names (Rider) case-insensitively against the card database.
+- **Card ambiguity**: Resolve both Chinese names (騎士) and English names (Rider) case-insensitively against the card database.
 - **Language consistency**: If the prompt is Chinese, all interpretation text, chapter titles, and labels should be in Chinese. If English, all in English.
 - **Prompt With Guidance toggle**: The Stargazer universal instruction prefix may or may not be included. Handle both cases.

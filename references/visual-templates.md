@@ -197,38 +197,20 @@ Cover CSS:
 
 ### Card Rendering Component
 
-Each card is rendered as a figure with Stargazer image + SVG fallback.
+Each card is rendered as a simple text block — no images, no external dependencies. Polarity is indicated by background tint.
 
 ```html
-<figure class="card {polarity}" data-card="{number}">
-  <div class="card-inner">
-    <img class="card-img"
-         src="https://stargazer.estework.site/cards/{number_padded}_{slug}.webp"
-         alt="{name_zh}"
-         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
-         loading="lazy">
-    <div class="card-fallback" style="display:none;">
-      <!-- Inline SVG fallback -->
-      <svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100" height="140" rx="8" fill="{polarity_fill}" stroke="{polarity_stroke}" stroke-width="2"/>
-        <text x="50" y="50" text-anchor="middle" font-family="serif" font-size="24" fill="{polarity_text}">{number}</text>
-        <text x="50" y="80" text-anchor="middle" font-family="serif" font-size="10" fill="{polarity_text}">{name_zh}</text>
-        <text x="50" y="98" text-anchor="middle" font-family="serif" font-size="8" fill="{polarity_text}">{name_en}</text>
-      </svg>
-    </div>
-  </div>
-  <figcaption class="card-caption">
-    <span class="card-number">{number}</span>
-    <span class="card-name">{name_zh}</span>
-  </figcaption>
-</figure>
+<div class="card card-{polarity}">
+  <span class="card-num">{number}</span>
+  <span class="card-name">{name_zh}</span>
+</div>
 ```
 
-Card polarity colors for fallback:
+Card polarity colors:
 ```
-positive → fill: #E1F5EE, stroke: #5DCAA5, text: #085041
-negative → fill: #FAECE7, stroke: #D85A30, text: #6B2F1A
-neutral  → fill: #EEEDFE, stroke: #AFA9EC, text: #3C3489
+positive → background: #E1F5EE, text: #085041
+negative → background: #FAECE7, text: #6B2F1A
+neutral  → background: #EEEDFE, text: #3C3489
 ```
 
 Card CSS:
@@ -237,37 +219,35 @@ Card CSS:
 .card {
   text-align: center;
   break-inside: avoid;
-}
-.card-inner {
-  width: 130px;
-  height: 182px; /* 100:140 ratio ~= card proportions */
-  overflow: hidden;
-  margin: 0 auto;
-}
-/* Stargazer images have their own rounded corners in the artwork — no CSS frame */
-.card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.card-fallback {
-  width: 100%;
-  height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 4pt;
+  padding: 6pt;
 }
-.card-fallback svg { width: 100%; height: 100%; }
-.card-caption { margin-top: 4pt; font-size: 9pt; }
-.card-number { color: var(--stone); margin-right: 4pt; }
-.card-name { color: var(--dark-warm); font-weight: 500; }
+.card-positive { background: #E1F5EE; color: #085041; }
+.card-negative { background: #FAECE7; color: #6B2F1A; }
+.card-neutral  { background: #EEEDFE; color: #3C3489; }
+.card-num {
+  font-size: 20pt;
+  font-weight: 600;
+  margin-bottom: 1.5mm;
+}
+.card-name {
+  font-size: 9pt;
+  font-weight: 500;
+}
 
 /* Spread-specific card sizes for layout balance */
-.card-large  .card-inner { width: 160px; height: 224px; }  /* 1-card spread */
-.spread-two   .card-inner { width: 150px; height: 210px; }
-.spread-three .card-inner { width: 130px; height: 182px; }  /* 3-card, A-or-B */
-.spread-five  .card-inner { width: 90px;  height: 126px; }   /* 5-card — narrower to fit */
-.spread-box   .card-inner { width: 90px;  height: 126px; }   /* 9-card — narrower to fit */
+.spread-yesno .card { width: 100px; height: 130px; }
+.spread-yesno .card-num { font-size: 28pt; }
+.spread-two   .card { width: 100px; height: 130px; }
+.spread-three .card { width: 90px;  height: 120px; }
+.spread-five  .card { width: 75px;  height: 100px; }
+.spread-five  .card-num { font-size: 16pt; }
+.spread-box   .card { width: 75px;  height: 100px; }
+.spread-box   .card-num { font-size: 16pt; }
 ```
 
 ### Spread Layout: 1-Card Yes/No
@@ -278,9 +258,10 @@ Rendered inside `.cover-cards`:
 <div class="cover-cards">
   <h2>Yes / No Reading</h2>
   <div class="spread-layout spread-yesno">
-    <figure class="card card-large {polarity}" data-card="{number}">
-      ...
-    </figure>
+    <div class="card card-{polarity}">
+      <span class="card-num">{number}</span>
+      <span class="card-name">{name_zh}</span>
+    </div>
     <div class="verdict-badge verdict-{verdict}">
       {verdict_text}
     </div>
@@ -316,9 +297,9 @@ Rendered inside `.cover-cards`:
 <div class="cover-cards">
   <h2>Two-Card Pair</h2>
   <div class="spread-layout spread-two">
-    <figure class="card" data-card="{num1}">...</figure>
+    <div class="card card-{polarity}"><span class="card-num">{num1}</span><span class="card-name">{name_zh}</span></div>
     <div class="card-arrow">+</div>
-    <figure class="card" data-card="{num2}">...</figure>
+    <div class="card card-{polarity}"><span class="card-num">{num2}</span><span class="card-name">{name_zh}</span></div>
   </div>
 </div>
 ```
@@ -344,7 +325,7 @@ Rendered inside `.cover-cards`:
   margin-top: 2mm;
 }
 .spread-labels span {
-  width: 130px;
+  width: 90px;
   text-align: center;
   font-size: 9pt;
   color: var(--stone);
@@ -359,11 +340,11 @@ Rendered inside `.cover-cards`:
 <div class="cover-cards">
   <h2>Three-Card Linear Spread</h2>
   <div class="spread-layout spread-three">
-    <figure class="card" data-card="{num1}">...</figure>
+    <div class="card card-{polarity}"><span class="card-num">{num1}</span><span class="card-name">{name_zh}</span></div>
     <div class="card-arrow">→</div>
-    <figure class="card" data-card="{num2}">...</figure>
+    <div class="card card-{polarity}"><span class="card-num">{num2}</span><span class="card-name">{name_zh}</span></div>
     <div class="card-arrow">→</div>
-    <figure class="card" data-card="{num3}">...</figure>
+    <div class="card card-{polarity}"><span class="card-num">{num3}</span><span class="card-name">{name_zh}</span></div>
   </div>
   <div class="spread-labels">
     <span>1</span><span></span><span>2</span><span></span><span>3</span>
@@ -390,15 +371,15 @@ Rendered inside `.cover-cards`:
   <h2>Five-Card Linear Spread</h2>
   <p class="spread-note">Center card (position 3) = core theme</p>
   <div class="spread-layout spread-five">
-    <figure class="card" data-card="{num1}">...</figure>
+    <div class="card card-{polarity}"><span class="card-num">{num1}</span><span class="card-name">{name_zh}</span></div>
     <div class="card-arrow">→</div>
-    <figure class="card" data-card="{num2}">...</figure>
+    <div class="card card-{polarity}"><span class="card-num">{num2}</span><span class="card-name">{name_zh}</span></div>
     <div class="card-arrow">→</div>
-    <figure class="card card-center" data-card="{num3}">...</figure>
+    <div class="card card-center card-{polarity}"><span class="card-num">{num3}</span><span class="card-name">{name_zh}</span></div>
     <div class="card-arrow">→</div>
-    <figure class="card" data-card="{num4}">...</figure>
+    <div class="card card-{polarity}"><span class="card-num">{num4}</span><span class="card-name">{name_zh}</span></div>
     <div class="card-arrow">→</div>
-    <figure class="card" data-card="{num5}">...</figure>
+    <div class="card card-{polarity}"><span class="card-num">{num5}</span><span class="card-name">{name_zh}</span></div>
   </div>
 </div>
 ```
@@ -411,7 +392,7 @@ Rendered inside `.cover-cards`:
   gap: 3mm;
   padding: 0 0 4mm 0;
 }
-.card-center .card-inner {
+.card-center {
   border: 3pt solid var(--brand);
 }
 .spread-note {
@@ -440,19 +421,19 @@ Rendered inside `.cover-cards`:
   <!-- 3×3 grid -->
   <div class="spread-layout spread-box">
     <div class="box-row">
-      <figure class="card" data-card="{n1}">...</figure>
-      <figure class="card" data-card="{n2}">...</figure>
-      <figure class="card" data-card="{n3}">...</figure>
+      <div class="card card-{polarity}"><span class="card-num">{n1}</span><span class="card-name">{name_zh}</span></div>
+      <div class="card card-{polarity}"><span class="card-num">{n2}</span><span class="card-name">{name_zh}</span></div>
+      <div class="card card-{polarity}"><span class="card-num">{n3}</span><span class="card-name">{name_zh}</span></div>
     </div>
     <div class="box-row">
-      <figure class="card" data-card="{n4}">...</figure>
-      <figure class="card card-center" data-card="{n5}">...</figure>
-      <figure class="card" data-card="{n6}">...</figure>
+      <div class="card card-{polarity}"><span class="card-num">{n4}</span><span class="card-name">{name_zh}</span></div>
+      <div class="card card-center card-{polarity}"><span class="card-num">{n5}</span><span class="card-name">{name_zh}</span></div>
+      <div class="card card-{polarity}"><span class="card-num">{n6}</span><span class="card-name">{name_zh}</span></div>
     </div>
     <div class="box-row">
-      <figure class="card" data-card="{n7}">...</figure>
-      <figure class="card" data-card="{n8}">...</figure>
-      <figure class="card" data-card="{n9}">...</figure>
+      <div class="card card-{polarity}"><span class="card-num">{n7}</span><span class="card-name">{name_zh}</span></div>
+      <div class="card card-{polarity}"><span class="card-num">{n8}</span><span class="card-name">{name_zh}</span></div>
+      <div class="card card-{polarity}"><span class="card-num">{n9}</span><span class="card-name">{name_zh}</span></div>
     </div>
   </div>
 </div>
@@ -475,8 +456,8 @@ Rendered inside `.cover-cards`:
   color: var(--brand);
   font-weight: 500;
 }
-.col-label { width: 130px; text-align: center; }
-.card-center .card-inner {
+.col-label { width: 75px; text-align: center; }
+.card-center {
   border: 3pt solid var(--brand);
 }
 ```
@@ -492,11 +473,11 @@ Rendered inside `.cover-cards`:
   <div class="choice-option">
     <h3 class="choice-label label-a">A. {optionA_text}</h3>
     <div class="spread-layout spread-three">
-      <figure class="card" data-card="{a_num1}">...</figure>
+      <div class="card card-{polarity}"><span class="card-num">{a_num1}</span><span class="card-name">{name_zh}</span></div>
       <div class="card-arrow">→</div>
-      <figure class="card" data-card="{a_num2}">...</figure>
+      <div class="card card-{polarity}"><span class="card-num">{a_num2}</span><span class="card-name">{name_zh}</span></div>
       <div class="card-arrow">→</div>
-      <figure class="card" data-card="{a_num3}">...</figure>
+      <div class="card card-{polarity}"><span class="card-num">{a_num3}</span><span class="card-name">{name_zh}</span></div>
     </div>
   </div>
 
@@ -505,11 +486,11 @@ Rendered inside `.cover-cards`:
   <div class="choice-option">
     <h3 class="choice-label label-b">B. {optionB_text}</h3>
     <div class="spread-layout spread-three">
-      <figure class="card" data-card="{b_num1}">...</figure>
+      <div class="card card-{polarity}"><span class="card-num">{b_num1}</span><span class="card-name">{name_zh}</span></div>
       <div class="card-arrow">→</div>
-      <figure class="card" data-card="{b_num2}">...</figure>
+      <div class="card card-{polarity}"><span class="card-num">{b_num2}</span><span class="card-name">{name_zh}</span></div>
       <div class="card-arrow">→</div>
-      <figure class="card" data-card="{b_num3}">...</figure>
+      <div class="card card-{polarity}"><span class="card-num">{b_num3}</span><span class="card-name">{name_zh}</span></div>
     </div>
   </div>
 </div>
@@ -676,16 +657,9 @@ Each interpretation chapter must fit cleanly on its pages — no orphaned lines 
 
 ---
 
-## Image Path Map
+## Card Slug Reference
 
-Stargazer card image URLs follow this format:
-
-```
-Full:    https://stargazer.estework.site/cards/{NN}_{slug}.webp
-Thumb:   https://stargazer.estework.site/cards/thumbs/{NN}_{slug}.webp
-```
-
-Where `{NN}` is zero-padded card number (01-36) and `{slug}` is the English lowercase name.
+Card slugs (for internal lookup only — no image URLs used):
 
 | # | Slug | # | Slug | # | Slug |
 |---|------|---|------|---|------|
