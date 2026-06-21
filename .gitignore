@@ -1,2 +1,5 @@
 scripts/node_modules/
 .last-update-check
+previews/
+cards/previews/
+output/

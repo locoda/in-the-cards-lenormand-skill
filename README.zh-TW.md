@@ -30,9 +30,9 @@
 
 | 類型 | 牌陣 | 牌面 | 連結 |
 |------|------|------|------|
-| A4 PDF | 5 張 | 月亮 → 棺材 → 樹 → 雲 → 男人 | [PDF](previews/lenormand-five-創作瓶頸-2026-06-20.pdf) |
-| A4 PDF | 二選一 (EN) | Ship·Bear vs Mountain·Ring·Book | [PDF](previews/lenormand-choice-speak-or-hold-2026-06-20.pdf) |
-| 社群卡片 | 3 張每日運勢 | 完整 4 頁輪播 | [P1](previews/lenormand-xhs-每日運勢-2026-06-20-01.png) · [P2](previews/lenormand-xhs-每日運勢-2026-06-20-02.png) · [P3](previews/lenormand-xhs-每日運勢-2026-06-20-03.png) · [P4](previews/lenormand-xhs-每日運勢-2026-06-20-04.png) |
+| A4 PDF | 5 張 | 月亮 → 棺材 → 樹 → 雲 → 男人 | [PDF](https://stargazer-interpreter.1mether.me/previews/lenormand-five-創作瓶頸-2026-06-20.pdf) |
+| A4 PDF | 二選一 (EN) | Ship·Bear vs Mountain·Ring·Book | [PDF](https://stargazer-interpreter.1mether.me/previews/lenormand-choice-speak-or-hold-2026-06-20.pdf) |
+| 社群卡片 | 3 張每日運勢 | 完整 4 頁輪播 | [P1](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-01.png) · [P2](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-02.png) · [P3](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-03.png) · [P4](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-04.png) |
 
 ## 安裝
 
