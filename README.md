@@ -10,7 +10,7 @@ Parses AI prompts → produces traditional combination-reading interpretations �
 - **Bilingual**: Auto-detects Chinese or English prompts
 - **Combination-first reading**: Adjacent card pair chains, not isolated card meanings
 - **PDF output**: Kami-styled — warm parchment (#f5f4ed) + ink-blue accent (#1B365D) + Chiron Sung HK variable font
-- **Card images**: Pulls from Stargazer with inline SVG fallback
+- **Text-only cards**: Clean number + name display with polarity-colored backgrounds — no external images, no copyright concerns
 
 ## Install
 
@@ -58,5 +58,5 @@ MIT
 - Visual style inspired by [Kami](https://github.com/tw93/Kami) — the warm parchment + ink-blue A4 typesetting aesthetic by [tw93](https://github.com/tw93). Kami is MIT-licensed.
 
 **Data**
-- [Stargazer's Oracle](https://stargazer.estework.site/) — the online Lenormand reading platform that generates the AI prompts this skill interprets. Card images are served from Stargazer's CDN.
+- [Stargazer's Oracle](https://stargazer.estework.site/) — the online Lenormand reading platform that generates the AI prompts this skill interprets.
 - Lenormand card meanings draw from traditional interpretations in the public domain, compiled and annotated for this skill.
