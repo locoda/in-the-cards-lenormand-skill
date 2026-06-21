@@ -10,8 +10,8 @@
     --text: #1a1a1a;
     --brand: #1B365D;
     --border: #e0ddd3;
-    --serif: "Chiron Sung HK WS", "Source Han Serif SC", "Noto Serif CJK SC", serif;
-    --sans: "Chiron Hei HK WS", -apple-system, "PingFang SC", sans-serif;
+    --serif: "Chiron Sung HK", "Chiron Sung HK WS", "Source Han Serif SC", "Noto Serif CJK SC", serif;
+    --sans: "Chiron Hei HK", "Chiron Hei HK WS", -apple-system, "PingFang SC", sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -168,9 +168,11 @@
   }
   .page-break { width: 100%; height: 40px; }
 </style>
-<!-- Local fonts — {{SKILL_ROOT}} is filled at generation time -->
-<link rel="stylesheet" href="file://{{SKILL_ROOT}}/assets/fonts/chiron-sung-hk/woff2/css/vf.css">
-<link rel="stylesheet" href="file://{{SKILL_ROOT}}/assets/fonts/chiron-hei-hk/woff2/css/vf.css">
+<!-- Fonts: Google Fonts primary, CN mirror fallback -->
+<link id="font-css" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:ital,wght@0,200..900;1,200..900&family=Chiron+Sung+HK:ital,wght@0,200..900;1,200..900&display=swap">
+<script>
+(function(){var t=setTimeout(function(){var l=document.getElementById('font-css');if(l)l.href=l.href.replace('fonts.googleapis.com','fonts.loli.net');},2500);document.fonts.ready.then(function(){clearTimeout(t);});})();
+</script>
 </head>
 <body>
 
