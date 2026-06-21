@@ -82,19 +82,19 @@ check('R3', 'SVG card elements present in HTML source', svgCardCount > 0,
 // Type-specific static checks
 
 if (productType === 'a4-pdf') {
-  // R6 — Page breaks: chapters 2+ must have break-before: page
+  // R6 — Page breaks: at least one break-before for multi-page layouts
   const breakBeforeCount = countMatches(html, /break-before\s*:\s*page/g);
-  // Heuristic: count chapter section containers; adjust selector if needed
   const chapterCount = countMatches(html, /class="[^"]*chapter[^"]*"/g);
-  // We expect at least (chapterCount - 1) break-before rules; warn if zero chapters found
   if (chapterCount === 0) {
     check('R6', 'Chapter page breaks', false,
       'Could not detect chapter elements — verify CSS class name contains "chapter"');
   } else {
-    const expectedBreaks = chapterCount - 1;
-    check('R6', 'Chapter page breaks (break-before: page)', breakBeforeCount >= expectedBreaks,
-      breakBeforeCount < expectedBreaks
-        ? `Expected ≥${expectedBreaks} break-before rules for ${chapterCount} chapters, found ${breakBeforeCount}`
+    // Cover has break-after:page, chapters share pages via break-before.
+    // At least the 2nd logical page needs a break-before; otherwise fine.
+    const ok = breakBeforeCount > 0 || chapterCount <= 1;
+    check('R6', 'Chapter page breaks (break-before: page)', ok,
+      breakBeforeCount === 0 && chapterCount > 1
+        ? `${chapterCount} chapters but no break-before: page found — verify page layout`
         : null);
   }
 }
@@ -134,9 +134,19 @@ if (productType === 'web-page') {
   try {
     const page = await browser.newPage();
     const absolutePath = path.resolve(htmlFile);
-    await page.goto(`file://${absolutePath}`, { waitUntil: 'networkidle0', timeout: 30000 });
 
-    // Wait for fonts
+    // A4 PDF: emulate print media + set A4 viewport
+    if (productType === 'a4-pdf') {
+      await page.emulateMediaType('print');
+      await page.setViewport({ width: 794, height: 1123 }); // A4 @ 96dpi
+    }
+
+    // Social card: 1080×1440 canvas
+    if (productType === 'social-card') {
+      await page.setViewport({ width: 1080, height: 1440 });
+    }
+
+    await page.goto(`file://${absolutePath}`, { waitUntil: 'networkidle0', timeout: 30000 });
     await page.evaluate(() => document.fonts.ready);
 
     // R2b — Chiron fonts actually rendered (not fallback serif/sans)
@@ -163,31 +173,52 @@ if (productType === 'web-page') {
     // ── A4 PDF checks ──────────────────────────────────────────────────────
 
     if (productType === 'a4-pdf') {
-      // R5 — Page balance: each chapter must fill ≥ 440pt (≈587px at 96dpi)
+      // R5 — Page balance: each page must fill ≥ 440pt (≈587px at 96dpi)
+      // Group consecutive chapters that share a page (no break-before)
       const MIN_HEIGHT_PX = 587; // 440pt × (96/72)
-      const chapterData = await page.evaluate(() => {
-        // Try common chapter container selectors
-        const selectors = ['.chapter', '[class*="chapter"]', 'section', 'article'];
+      const pageData = await page.evaluate(() => {
+        const selectors = ['.chapter', '[class*="chapter"]'];
         let chapters = [];
         for (const sel of selectors) {
           chapters = Array.from(document.querySelectorAll(sel));
           if (chapters.length > 0) break;
         }
-        return chapters.map((ch, i) => ({
-          index: i + 1,
-          heightPx: Math.round(ch.getBoundingClientRect().height),
-          selector: ch.className || ch.tagName,
+        if (chapters.length === 0) return [];
+
+        // Group chapters by page: a new page starts at each break-before: page
+        const pages = [];
+        let currentPage = { startIdx: 1, chapters: [] };
+        for (let i = 0; i < chapters.length; i++) {
+          const style = chapters[i].getAttribute('style') || '';
+          const hasBreak = /break-before\s*:\s*page/.test(style);
+          if (i > 0 && hasBreak) {
+            // Start a new page
+            pages.push(currentPage);
+            currentPage = { startIdx: 0, chapters: [] };
+          }
+          if (currentPage.startIdx === 0) currentPage.startIdx = i + 1;
+          currentPage.chapters.push({
+            index: i + 1,
+            heightPx: Math.round(chapters[i].getBoundingClientRect().height),
+          });
+        }
+        pages.push(currentPage);
+
+        return pages.map((p, pi) => ({
+          page: pi + 1,
+          totalPx: p.chapters.reduce((sum, ch) => sum + ch.heightPx, 0),
+          chapterNames: p.chapters.map(ch => `Ch${ch.index}`).join('+'),
         }));
       });
 
-      if (chapterData.length === 0) {
-        check('R5', 'Page balance (≥440pt per chapter)', false,
+      if (pageData.length === 0) {
+        check('R5', 'Page balance (≥440pt per page)', false,
           'No chapter elements found — verify chapter container CSS class');
       } else {
-        const thinChapters = chapterData.filter(ch => ch.heightPx < MIN_HEIGHT_PX);
-        check('R5', 'Page balance (≥440pt per chapter)', thinChapters.length === 0,
-          thinChapters.length > 0
-            ? thinChapters.map(ch => `Chapter ${ch.index}: ${ch.heightPx}px (${Math.round(ch.heightPx * 0.75)}pt) < 440pt minimum`).join('; ')
+        const thinPages = pageData.filter(p => p.totalPx < MIN_HEIGHT_PX);
+        check('R5', 'Page balance (≥440pt per page)', thinPages.length === 0,
+          thinPages.length > 0
+            ? thinPages.map(p => `Page ${p.page} (${p.chapterNames}): ${p.totalPx}px (${Math.round(p.totalPx * 0.75)}pt) < 440pt`).join('; ')
             : null);
       }
     }
@@ -195,8 +226,7 @@ if (productType === 'web-page') {
     // ── Social card checks ─────────────────────────────────────────────────
 
     if (productType === 'social-card') {
-      // R7 — No overflow on any card page
-      await page.setViewport({ width: 1080, height: 1440, deviceScaleFactor: 1 });
+      // R7 — No overflow on any card page (viewport already 1080×1440)
 
       const overflowData = await page.evaluate(() => {
         const selectors = ['.poster.xhs', '.poster', '[class*="poster"]', '.card-page', '.page', '[class*="card-page"]', '[class*="slide"]'];
@@ -222,17 +252,10 @@ if (productType === 'web-page') {
           overflowing.length > 0
             ? overflowing.map(p => `Page ${p.index}: scrollHeight ${p.scrollHeight}px > clientHeight ${p.clientHeight}px`).join('; ')
             : null);
-
-        // R7b — Content pages must fill ~60% (no thin pages)
-        // Skip cover (page 1); check content pages only
-        const MIN_BODY_HEIGHT_PX = 500; // body-text area minimum fill
-        const bodyHeightData = overflowData.filter(p => p.index > 1).map(p => ({
-          index: p.index,
-        }));
-        // Re-evaluate with body-text height measurement
       }
 
-      // R7b — Content page body-text area fills ≥500px (≈60% of usable area)
+      // R7b — Content page body-text area fills ≥500px (≈60% of content area)
+      // Canvas = 1440px, .content-page padding = 100px top + 100px bottom = 200px
       const bodyTextData = await page.evaluate(() => {
         const selectors = ['.body-text', '[class*="body-text"]', '.content-page > div'];
         let blocks = [];
