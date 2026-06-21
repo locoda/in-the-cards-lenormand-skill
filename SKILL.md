@@ -2,8 +2,8 @@
 name: stargazer-interpreter
 description: |-
   Interpret Lenormand card readings from Stargazer (stargazer.estework.site) and generate Kami-styled PDF visualizations. Two-step workflow: parse the AI prompt copied from Stargazer → produce a Lenormand reading with card grid visualization and structured interpretation, output as A4 PDF. Supports all 6 spread types: 1-card Yes/No, 2-card pair, 3-card linear, 5-card linear, 9-card Box Spread (3×3), and A-or-B choice. Card meanings drawn from traditional Lenormand, with combination-first reading (adjacent pairs chain), time-axis analysis, three-layer consciousness, and cross method for the 9-card spread. Language follows the input prompt (Chinese or English). Use when the user pastes a Stargazer prompt and asks for interpretation, reading, or reading + cards visualization/PDF.
--  Triggers on: "Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF".
-+version: 2.0.0
+  Triggers on: "Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF".
+version: 2.1.0
 agent_created: true
 ---
 
@@ -104,7 +104,11 @@ Build the reading into a self-contained HTML document, then convert to PDF.
    - Interpretation body: chapters flow continuously with generous `margin-top` on `h2` headings; only the cover+cards page uses `break-after: page`
    - Apply Kami styling: warm parchment background (`#f5f4ed`), ink-blue accent (`#1B365D`), Chiron Sung HK (昭源宋體) variable font, A4 format
 
-2. **Card display**: Render cards as text blocks (number + Chinese name) with polarity-colored backgrounds. No external images or SVGs. Keeps the reading clean, fast, and free of copyright concerns.
+2. **Card display (SVG default)**:
+   - **Default mode**: Render cards as Geometric Silence SVG card faces from `cards/*.svg`. Read each relevant SVG file and embed the `<svg>` element inline. SVG cards display the clean geometric design without any border, polarity label, or decorative frame around them.
+   - **Card name labels**: Below each SVG card face, display the card's Chinese name (e.g. 騎士, 幸運草) in small, centered text. Do NOT show polarity labels (POSITIVE/NEGATIVE) — only the card name.
+   - **No borders**: SVG cards should not have CSS borders, box-shadows, or outline frames. The card face itself is sufficient.
+   - **Fallback text mode**: Only use text blocks (number + Chinese name with polarity background) if the SVG files are not available on disk.
 
 3. **Save HTML** to `output/` directory as a temporary file
 
@@ -114,11 +118,18 @@ Build the reading into a self-contained HTML document, then convert to PDF.
    ```
    This uses Puppeteer with system Chrome, A4 format, print backgrounds enabled.
 
-5. **Name the PDF**: `lenormand-{spread_type}-{date_YYYY-MM-DD}.pdf`
+5. **Name the PDF**: `lenormand-{spread_type}-{topic_slug}-{date_YYYY-MM-DD}.pdf`
+   - `topic_slug`: extract 2–4 Chinese characters from the user's question to form a brief topic identifier. Use the core subject (e.g. 写作方向, 感情走向, 工作选择). Keep it short — max 6 characters in pinyin or Chinese. If no clear question topic, use `占卜`.
+   - Examples: `lenormand-three-写作方向-2026-06-20.pdf`, `lenormand-box-感情走向-2026-06-20.pdf`, `lenormand-choice-工作选择-2026-06-20.pdf`
 
-6. **Page balance check** (before finalizing): Review each chapter's last page. If fewer than 5 lines appear on the last page of any chapter, the content is unbalanced. Fix by:
-   - Expanding the thin chapter with an additional reflection paragraph or extended takeaway
-   - Or condensing earlier chapters so the orphan page disappears entirely
+6. **Page balance check** (before finalizing):
+   - Read the generated HTML and estimate page breaks. For each page:
+     - **(1) No page more than 50% blank**: Content must fill at least 50% of each page's printable area (A4 content area approximately 170mm × 257mm minus card-grid portion). If a chapter's last page has less than 50% filled content, expand or condense.
+     - **(2) Page breaks at natural boundaries**: Page breaks should fall at chapter headings (h2) or paragraph endings — never split a paragraph mid-sentence. Adjust chapter content so each page starts cleanly with a heading or at the beginning of a new paragraph.
+   - **Fix strategies** (in priority order):
+     - Expand thin chapters with additional reflection paragraphs or extended takeaways
+     - Condense verbose chapters to pull orphan content onto the preceding page
+     - If necessary, add a spacer or adjust the chapter order to avoid mid-paragraph splits
    - See `references/visual-templates.md` Page Balance Rules for detailed guidance
 
 7. **Deliver**: Present the PDF to the user. If the user wants to keep the intermediate HTML, mention its location; otherwise, delete it after PDF generation.
@@ -137,7 +148,7 @@ Output the PDF file to the project's `output/` directory. Present it to the user
 | `references/spread-parsing.md` | Prompt parsing rules for all 6 spread types | Step 1 (parse the user's prompt) |
 | `references/visual-templates.md` | HTML/CSS templates for each spread layout + chapter structure | Step 3 (build the PDF HTML) |
 | `scripts/generate-pdf.js` | Puppeteer script: HTML → A4 PDF | Step 3 (final conversion step) |
-| `cards/*.svg` | Geometric Silence 36-card deck — SVG card faces (cream, sage, rose) | When user wants visual cards |
+| `cards/*.svg` | Geometric Silence 36-card deck — SVG card faces (cream, sage, rose) | **Always** (default card rendering) |
 | `cards/previews/*.png` | PNG previews of all 36 cards (1024×1536) | Quick preview / reference |
 
 ---
