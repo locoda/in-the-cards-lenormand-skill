@@ -40,6 +40,10 @@ Check the spread body for these markers:
 - **ZH**: Contains `【問題】` or `【占卜日期】` or `【牌陣】`
 - **EN**: Contains `Question:` or `Spread:` or `I'd like to consult`
 
+**Fallback**: If neither ZH nor EN markers are found (freeform input, non-Stargazer format), detect language from the actual text content:
+- Count CJK characters (Unicode ranges: U+4E00–U+9FFF, U+3400–U+4DBF, U+F900–U+FAFF)
+- If CJK characters > 30% of non-whitespace content → `zh`, otherwise → `en`
+
 ### Spread Type Detection
 
 Scan for keywords (in order, first match wins):
@@ -215,6 +219,7 @@ After parsing, produce a structured object:
 ## Edge Cases
 
 - **Missing prefix delimiter**: If no `---` is found, treat the entire text as the spread body (no universal prefix).
+- **Missing language markers**: If the spread body contains none of the ZH/EN markers, use the CJK character ratio fallback defined in Step 1. This handles freeform prompts that don't follow Stargazer's output format.
 - **Extra whitespace**: Trim all extracted strings. Card names may have trailing spaces after the number.
 - **Daily reading**: Auto-detected by `每日運勢` keyword. No question field — generate a generic "daily fortune" context.
 - **Significator in 9-card**: If a card name appears at position 5 and the prompt mentions "Significator" or "代表牌", mark it.

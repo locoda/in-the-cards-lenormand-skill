@@ -45,7 +45,7 @@ E.g., "把上次的解读生成社交卡片" / "用 #3 解读生成网页版" / 
 Read `references/spread-parsing.md` for detailed parsing rules. Extract structured data:
 
 1. **Strip universal instruction prefix** — the "You are a traditional Lenormand reader..." / "你是一位傳統 Lenormand 占卜師..." block before `---`
-2. **Detect language** (ZH/EN) from `【問題】` or `Question:`
+2. **Detect language** (ZH/EN) from `【問題】` / `Question:` / `Spread:`; fallback: CJK character ratio.
 3. **Detect spread type**: `yesno-1` | `two` | `three` | `five` | `nine` | `choice`
 4. **Extract fields**: question, date, cards with positions, verdict (yes/no), option A/B texts (choice)
 5. **Resolve card names** against `references/lenormand-cards.md`
@@ -334,7 +334,8 @@ Before presenting any product to the user, run these checks. All rules apply to 
 - **Daily reading**: Auto-detected by `每日運勢`; question is null, generate "daily fortune" context
 - **9-card significator**: Mark in card data if position 5 is noted as Significator
 - **Card ambiguity**: Resolve both Chinese (騎士) and English (Rider) case-insensitively
-- **Language consistency**: If Chinese prompt → all text in Chinese. English → all English
+- **Freeform (non-Stargazer) input**: If the input doesn't follow Stargazer format (no `---` delimiter, no Stargazer ZH/EN markers), still run Phase 1 language detection — the CJK fallback in `spread-parsing.md` will determine the output language. All Phase 2–3 rules apply as normal.
+- **Language consistency**: Detect language FIRST from the prompt itself (via markers or CJK fallback). Do NOT override with user profile language preference. If Chinese prompt → all text in Chinese. English → all English. The interpretation must match the prompt's language, not the user's chat language.
 - **Duplicate generation**: If a product type already recorded in index, still regenerate (overwrite) but log a note
 - **Social card chapter count**: If a reading has only 1 chapter (yesno-1, two), produce a cover-only card (single 1080×1440 image)
 - **Web page immutability**: Web pages are standalone and self-contained — they don't link back to the reading data
