@@ -11,6 +11,7 @@ Parses AI prompts → produces traditional combination-reading interpretations �
 - **Combination-first reading**: Adjacent card pair chains, not isolated card meanings
 - **PDF output**: Kami-styled — warm parchment (#f5f4ed) + ink-blue accent (#1B365D) + Chiron Sung HK variable font
 - **Text-only cards**: Clean number + name display with polarity-colored backgrounds — no external images, no copyright concerns
+- **Geometric Silence Deck**: Optional inline SVG card faces — cream/sage/rose Swiss International Style — 36 SVG + 36 PNG previews bundled in `cards/`
 
 ## Install
 

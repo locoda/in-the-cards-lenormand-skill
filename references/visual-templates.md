@@ -195,9 +195,13 @@ Cover CSS:
 
 ## Card Grid Page Templates
 
-### Card Rendering Component
+### Card Rendering Modes
 
-Each card is rendered as a simple text block — no images, no external dependencies. Polarity is indicated by background tint.
+Two card rendering modes are supported. Default to **Text Mode** unless the user explicitly asks for visual cards, or the `cards/` SVG assets are referenced.
+
+#### Mode 1: Text Card (Default)
+
+Simple text blocks with polarity-colored backgrounds. No images, no external dependencies.
 
 ```html
 <div class="card card-{polarity}">
@@ -213,7 +217,46 @@ negative → background: #FAECE7, text: #6B2F1A
 neutral  → background: #EEEDFE, text: #3C3489
 ```
 
-Card CSS:
+#### Mode 2: Geometric Silence SVG Card
+
+Inline SVG card faces from the `cards/` directory. Each SVG is a self-contained 1024×1536 Geometric Silence card with cream background, sage structural lines, rose accent, registration crosses, grid system, and bottom label.
+
+```html
+<!-- Inline the SVG directly from cards/card-{nn}-{slug}.svg -->
+<svg class="card-svg" viewBox="0 0 1024 1536" width="...">
+  <!-- paste full SVG content here -->
+</svg>
+```
+
+Available at: `cards/card-01-rider.svg` through `cards/card-36-cross.svg`.
+
+If the user wants visual cards, read the relevant SVG files and embed them inline. For layout sizing:
+
+| Spread | SVG width | SVG height |
+|--------|-----------|------------|
+| Yes/No (1 card) | 130px | 195px |
+| Two-card | 110px | 165px |
+| Three-card | 112px | 168px |
+| Five-card | 85px | 128px |
+| Box (9-card) | 80px | 120px |
+| A-or-B (3+3) | 95px | 143px |
+
+Center card (position 3 in 5-card, position 5 in box) gets `outline: 2pt solid var(--brand)` with `outline-offset: 2pt`.
+
+```css
+.card-svg {
+  border-radius: 3pt;
+  box-shadow: 0 1pt 4pt rgba(0,0,0,0.08);
+}
+.card-svg-center {
+  box-shadow: 0 1pt 6pt rgba(27,54,93,0.15);
+  outline: 2pt solid var(--brand);
+  outline-offset: 2pt;
+}
+```
+
+### Card CSS (Text Mode)
+
 ```css
 /* Card grid is rendered inside .cover-cards — no page break */
 .card {
