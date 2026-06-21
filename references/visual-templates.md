@@ -647,6 +647,15 @@ Each analysis dimension gets its own chapter section.
 
 ## Interpretation Chapter Structure by Spread Type
 
+**Page break rule:** Each chapter (h2 section) should start on its own page via `style="break-before: page"`. This ensures clean page boundaries — every analytical perspective opens a fresh page, and no chapter heading is orphaned at the bottom of a preceding page. The cover + card grid already has `break-after: page`, so the first interpretation chapter begins naturally on page 2.
+
+Add to each chapter section:
+```html
+<section class="chapter" style="break-before: page;">
+```
+
+If a chapter would occupy less than 50% of its page when standing alone, either expand it or merge it with the preceding chapter (removing the break-before) to share a page. But prefer expansion over merging — each analytical perspective deserves its own space.
+
 ### 1-Card Yes/No
 Single chapter:
 - **Verdict & Nuance**: Overall judgment + card meaning applied to question + subtle nuances
@@ -685,18 +694,48 @@ Three chapters:
 
 ## Page Balance Rules
 
-Each interpretation chapter must fit cleanly on its pages — no orphaned lines or half-sentences dangling at the bottom of a page. When building interpretation text:
+Every interpretation page must be well-balanced. Before finalizing the HTML, run through this checklist:
 
-1. **Evaluate after writing**: Check whether the final chapter ends with fewer than 3 lines on its last page. If it does, the content is unbalanced.
+### Rule 1: No page more than 50% blank
 
-2. **Fix strategies** (in priority order):
-   - **Expand the last chapter**: Add a closing reflection paragraph or extend the final takeaway to push at least 4–5 lines onto the orphan page.
-   - **Condense into previous page**: Trim or tighten earlier chapters so the last chapter fits entirely on the preceding page.
-   - **Split into a new sub-section**: If the last topic has enough depth, promote it to a short standalone chapter with its own h2.
+A4 printable area is approximately 170mm × 257mm. After accounting for the cover+cards page, each interpretation page must have text/content filling at least 50% of the printable area.
 
-3. **Aim for**: No page in the interpretation body ends with fewer than 5 lines of text. Each chapter section should either fill its page or flow naturally into the next.
+**How to check**: Estimate the total height of all content (paragraphs, blockquotes, headings) on each page. If a page's content occupies less than half the available vertical space, it fails this rule.
 
-4. **5-card and A-or-B spreads** are most prone to this issue due to their chapter count. Pay extra attention after writing the final chapter.
+**Fix**: Expand the thin chapter(s) with additional reflection paragraphs or extended takeaways until each page is at least 50% filled.
+
+### Rule 2: Page breaks at chapter headings (h2) — preferred
+
+The cleanest approach is to give each analytical perspective its own page. Add `style="break-before: page"` to every chapter section. This ensures:
+- Each analytical angle starts fresh at the top of a page
+- No chapter heading is ever orphaned at a page bottom
+- The reader can flip through the reading like chapters in a book
+
+**Exception**: If a chapter on its own would occupy less than 50% of a page, either:
+- Expand the chapter to fill 50%+ (preferred), or
+- Remove the break-before so it shares a page with the next chapter, merging two thin sections
+
+### Rule 3: Never split content mid-paragraph
+
+Page breaks should NEVER split a paragraph mid-sentence. They should fall at:
+- Chapter headings (h2) — ideal; always safe
+- Between paragraphs — acceptable
+- After a blockquote or takeaway box — acceptable
+
+**NEVER split**:
+- A paragraph across two pages (mid-sentence split is forbidden)
+- A combination blockquote across two pages
+- A takeaway box across two pages
+
+Using break-before on every chapter (Rule 2) naturally avoids all of these — each chapter starts clean and its content cannot be split.
+
+### Spread-specific guidance
+
+- **Yes/No and 2-card** spreads: single chapters. Ensure the chapter fills at least 50% of its page.
+- **3-card spreads**: 3 chapters. Each chapter should stand alone on a page. 提醒與建議 may need expansion.
+- **5-card spreads**: 3 chapters. Each chapter should stand alone. 整體走向 may need expansion.
+- **9-card Box spreads**: 5 chapters. Ample content. Each analytical perspective naturally fills 50%+ alone.
+- **A-or-B Choice spreads**: 3 chapters. The 比較與傾向 comparison chapter often needs expansion to stand alone.
 
 ---
 

@@ -100,8 +100,9 @@ Structure the interpretation as clear chapter sections with titles in the detect
 Build the reading into a self-contained HTML document, then convert to PDF.
 
 1. **Build HTML** using the templates in `references/visual-templates.md`:
-   - Cover + card grid (single page): question, date, spread type, card names, and the card layout merged together
-   - Interpretation body: chapters flow continuously with generous `margin-top` on `h2` headings; only the cover+cards page uses `break-after: page`
+   - Cover + card grid (single page): question, date, spread type, card names, and the card layout merged together with `break-after: page`
+   - Each interpretation chapter gets its own page: add `style="break-before: page"` to every `<section class="chapter">` so each analytical perspective starts clean at the top of a new page
+   - If a chapter on its own would fill less than 50% of a page, expand it or merge with the next chapter — prefer expansion
    - Apply Kami styling: warm parchment background (`#f5f4ed`), ink-blue accent (`#1B365D`), Chiron Sung HK (昭源宋體) variable font, A4 format
 
 2. **Card display (SVG default)**:
