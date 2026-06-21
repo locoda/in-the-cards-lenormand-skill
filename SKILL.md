@@ -272,7 +272,6 @@ Do NOT write a new HTML file from scratch. You must copy the seed.
 Open `output/lenormand-{spread_type}-{topic_slug}-{date}.html`.
 Replace every `{{PLACEHOLDER}}` marker using str_replace or sed, sourcing all values from the saved reading JSON at `output/readings/{reading_id}.json`.
 Required replacements:
-- `{{SKILL_ROOT}}` → absolute path to this skill's root directory, no trailing slash (e.g., `/Users/1mether/.workbuddy/skills/stargazer-interpreter`)
 - `{{TITLE}}` → `meta.question`
 - `{{DATE}}` → `meta.date`
 - `{{SPREAD_LABEL}}` → `meta.spread_label`
