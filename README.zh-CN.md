@@ -24,7 +24,7 @@
 - **解读持久化**：结构化 JSON + 人类可读 Markdown 双存，随时再生为任意产品形态
 - **种子 HTML**：复制即用，不再从零构造 HTML
 - **几何沉默牌组 (Geometric Silence)**：36 张原创 SVG 牌面，建筑蓝图风格
-- **昭源字体系列**：Chiron Sung HK（昭源宋體）正文 + Chiron Hei HK（昭源黑體）标签
+- **昭源字体系列**：Chiron Sung HK（昭源宋體）正文 + Chiron Hei HK（昭源黑體）标签，通过 Google Fonts CDN 加载，国内自动切换镜像
 
 ## 预览
 
@@ -109,20 +109,7 @@ Stargazer 提示词
 │   ├── seed-social-card.html        # 1080×1440 社交卡片骨架
 │   └── seed-web-page.html           # 网页版骨架
 ├── cards/
-│   ├── card-01-rider.svg ...        # 36 张 Geometric Silence SVG
-│   └── previews/                    # 36 张 PNG 预览
-├── previews/                        # 解读样例输出
-├── public/                          # Landing page（Cloudflare Pages 部署）
-│   ├── index.html                   # 主页面
-│   ├── style.css                    # 样式
-│   ├── script.js                    # 交互 + 多语言切换
-│   ├── favicon.svg                  # 月亮牌 favicon
-│   ├── locales/
-│   │   ├── en.json                  # 英文
-│   │   ├── zh-CN.json               # 简体中文
-│   │   └── zh-TW.json               # 繁体中文
-│   ├── cards/                       # 网页展示用牌面 SVG
-│   └── previews/                    # 产品展示预览素材
+│   └── card-01-rider.svg ...        # 36 张 Geometric Silence SVG
 ├── references/
 │   ├── lenormand-cards.md           # 36 张牌数据库
 │   ├── spread-parsing.md            # 提示词解析规则
@@ -132,8 +119,11 @@ Stargazer 提示词
 └── scripts/
     ├── generate-pdf.js              # HTML → A4 PDF (Puppeteer)
     ├── render-social-cards.js       # HTML → 1080×1440 PNG (Puppeteer)
+    ├── validate.js                  # 产物验证（静态 + Puppeteer）
     └── manage-readings.js           # 解读索引 CLI
 ```
+
+> **前端页面与预览文件** 维护在 `site` 分支，通过 Cloudflare Pages 部署于 [stargazer-interpreter.1mether.me](https://stargazer-interpreter.1mether.me)。可查看 [在线 Demo](https://stargazer-interpreter.1mether.me/demo/)。
 
 ## 许可证
 

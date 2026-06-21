@@ -24,7 +24,7 @@ Together they create a reading experience that feels scholarly, warm, and quietl
 - **Persistent readings**: Saved as structured JSON + human-readable Markdown; regenerate into any product format anytime
 - **Seed-based HTML**: Copy + fill HTML skeletons — no fragile from-scratch construction
 - **Geometric Silence deck**: 36 original SVG cards in architectural blueprint style
-- **Chiron font pair**: Chiron Sung HK (昭源宋體) serif + Chiron Hei HK (昭源黑體) sans
+- **Chiron font pair**: Chiron Sung HK (昭源宋體) serif + Chiron Hei HK (昭源黑體) sans, loaded from Google Fonts CDN with CN mirror fallback
 
 ## Preview
 
@@ -112,20 +112,7 @@ Stargazer Prompt
 │   ├── seed-social-card.html        # 1080×1440 social card skeleton
 │   └── seed-web-page.html           # Web page skeleton
 ├── cards/
-│   ├── card-01-rider.svg ...        # 36 Geometric Silence SVG cards
-│   └── previews/                    # 36 PNG card previews
-├── previews/                        # Sample reading outputs
-├── public/                          # Landing page (deployed via Cloudflare Pages)
-│   ├── index.html                   # Main page
-│   ├── style.css                    # Styles
-│   ├── script.js                    # Interactivity + i18n
-│   ├── favicon.svg                  # Moon card favicon
-│   ├── locales/
-│   │   ├── en.json                  # English
-│   │   ├── zh-CN.json               # Simplified Chinese
-│   │   └── zh-TW.json               # Traditional Chinese
-│   ├── cards/                       # Card SVGs for web display
-│   └── previews/                    # Preview assets for showcase
+│   └── card-01-rider.svg ...        # 36 Geometric Silence SVG cards
 ├── references/
 │   ├── lenormand-cards.md           # 36-card database
 │   ├── spread-parsing.md            # Prompt parsing rules
@@ -135,8 +122,11 @@ Stargazer Prompt
 └── scripts/
     ├── generate-pdf.js              # HTML → A4 PDF (Puppeteer)
     ├── render-social-cards.js       # HTML → 1080×1440 PNGs (Puppeteer)
+    ├── validate.js                  # Product validation (static + Puppeteer)
     └── manage-readings.js           # Reading index CLI
 ```
+
+> **Frontend & previews** are maintained in the `site` branch and deployed via Cloudflare Pages at [stargazer-interpreter.1mether.me](https://stargazer-interpreter.1mether.me). See the [live demo](https://stargazer-interpreter.1mether.me/demo/).
 
 ## License
 
