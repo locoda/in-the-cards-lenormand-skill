@@ -1,6 +1,6 @@
 # Stargazer Interpreter · 星解者
 
-> [English](README.md) · [簡體中文](README.zh-CN.md)
+> [English](README.md) · [简体中文](README.zh-CN.md)
 
 遵循 [Agent Skills](https://agentskills.io) 開放標準的 Lenormand 雷諾曼解讀技能，為 [Stargazer's Oracle（觀星者神諭）](https://stargazer.estework.site/) 而生。相容任何支援 Agent Skills 的 AI 助理，不綁定特定平臺。
 
@@ -102,7 +102,7 @@ Stargazer 提示詞
 ```
 ├── SKILL.md                         # 主技能指令
 ├── README.md                        # 英文文檔
-├── README.zh-CN.md                  # 簡體中文文檔
+├── README.zh-CN.md                  # 简体中文文檔
 ├── README.zh-TW.md                  # 繁體中文文檔
 ├── assets/
 │   ├── seed-a4-pdf.html             # A4 PDF HTML 骨架
