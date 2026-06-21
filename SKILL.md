@@ -1,8 +1,8 @@
 ---
 name: stargazer-interpreter
 description: |-
-  Interpret Lenormand card readings from Stargazer (stargazer.estework.site) and generate visual products from the interpretation. Three-phase workflow: (1) parse the Stargazer prompt → (2) interpret and persist the reading as structured JSON + human-readable Markdown → (3) generate products from the saved reading. Default product is Kami-styled A4 PDF; additional products include web page and 1080×1440 social cards. Past readings can be listed, queried, and regenerated into any product type via natural language. Supports all 6 spread types. Triggers on "Stargazer 解读 / 帮我解读 / Lenormand reading / 生成解读 PDF / 列出解读 / 生成社交卡片 / 上次的解读" etc.
-  Triggers on: "Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读".
+  Interpret Lenormand card readings from Stargazer (stargazer.estework.site) and generate visual products from the interpretation. Three-phase workflow: (1) parse the Stargazer prompt → (2) interpret and persist the reading as structured JSON + human-readable Markdown → (3) generate products from the saved reading. Default product is Kami-styled A4 PDF; additional products include web page and 1080×1440 social cards. Past readings can be listed, queried, and regenerated into any product type via natural language. Supports all 6 spread types.   Triggers on "Stargazer 解读 / 帮我解读 / Lenormand reading / 生成解读 PDF / 列出解读 / 生成社交卡片 / 上次的解读 / 請為我解讀 / 透過 Lenormand / 每日運勢 / consult Lenormand / daily fortune / deciding between" etc.
+  Triggers on: "Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读 / 請為我解讀 / 幫我解讀 / 每日運勢 / 今日運勢 / 我想透過 Lenormand / 透過 Lenormand / 二選一 / Lenormand 卡牌占卜 / consult the Lenormand cards / compare them with Lenormand / daily fortune / read my Lenormand / deciding between two options".
 version: 3.1.0
 agent_created: true
 ---
