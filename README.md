@@ -1,6 +1,6 @@
 # Stargazer Interpreter · 星解者
 
-A [WorkBuddy](https://www.codebuddy.ai) skill for interpreting Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/).
+A [WorkBuddy](https://www.codebuddy.ai) & [Claude Code](https://claude.ai/code) skill for interpreting Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/). Follows the [Agent Skills](https://agentskills.io) open standard.
 
 Parses AI prompts → produces traditional combination-reading interpretations → generates Kami-styled A4 PDF visualizations.
 
@@ -14,8 +14,15 @@ Parses AI prompts → produces traditional combination-reading interpretations �
 
 ## Install
 
+### WorkBuddy
 ```bash
 git clone https://github.com/locoda/stargazer-interpreter.git ~/.codebuddy/skills/stargazer-interpreter/
+```
+
+### Claude Code
+This skill follows the [Agent Skills](https://agentskills.io) open standard and is compatible with Claude Code:
+```bash
+git clone https://github.com/locoda/stargazer-interpreter.git ~/.claude/skills/stargazer-interpreter/
 ```
 
 Requires: Node.js + Puppeteer + Google Chrome for PDF generation.
