@@ -56,7 +56,7 @@ Spread: 3-card linear
 3. Snake
 ```
 
-→ Agent runs Phase 1–2 (parse + interpret + save), generates A4 PDF by default.
+→ Agent runs Phase 1–2 (parse + interpret + save), generates A4 PDF by default. Output language follows the prompt — **English prompt → English interpretation**.
 
 ### Generate a different product
 
