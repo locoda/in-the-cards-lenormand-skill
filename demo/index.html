@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stargazer · Public Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:ital,wght@0,200..900;1,200..900&family=Chiron+Sung+HK:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --bg: #faf8f3;
+  --text: #1a1a1a;
+  --brand: #1B365D;
+  --border: #e0ddd3;
+  --serif: "Chiron Sung HK", "Source Han Serif SC", "Noto Serif CJK SC", serif;
+  --sans: "Chiron Hei HK", -apple-system, "PingFang SC", sans-serif;
+  --sage: #7A8B7A;
+  --rose: #C4A0A0;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+
+/* ============================================================
+   PAGE LAYOUT
+   ============================================================ */
+body {
+  background: #e8e6dc;
+  font-family: var(--serif);
+  color: var(--text);
+  min-height: 100vh;
+}
+.page-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+header h1 {
+  font-family: var(--serif);
+  font-size: 40px;
+  font-weight: 500;
+  color: var(--brand);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+header .tagline {
+  font-family: var(--sans);
+  font-size: 15px;
+  color: #999;
+  letter-spacing: 3px;
+}
+
+/* ============================================================
+   SECTIONS — shared card style
+   ============================================================ */
+.section {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+.section-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--brand);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   SECTION A — Setup
+   ============================================================ */
+.form-row {
+  margin-bottom: 20px;
+}
+.form-row label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+.form-row .hint {
+  font-size: 12px;
+  color: #999;
+  margin-left: 6px;
+  font-weight: 400;
+}
+
+/* Spread type buttons */
+.spread-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.spread-opt {
+  padding: 12px 8px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  text-align: center;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: #888;
+  transition: all .15s;
+}
+.spread-opt:hover {
+  border-color: #c4c0b4;
+  color: #555;
+}
+.spread-opt.active {
+  border-color: var(--brand);
+  background: #f0f4fa;
+  color: var(--brand);
+  font-weight: 600;
+}
+
+/* ============================================================
+   DIVIDER
+   ============================================================ */
+.form-divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  color: #c5c2b7;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+.form-divider::before,
+.form-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.form-divider span {
+  padding: 0 16px;
+}
+
+/* Website import textarea */
+#website-textarea {
+  width: 100%;
+  min-height: 160px;
+  padding: 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--serif);
+  font-size: 14px;
+  line-height: 1.7;
+  resize: vertical;
+  background: #fcfcfa;
+  color: var(--text);
+}
+#website-textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+}
+#website-parse-error {
+  background: #fff0f0;
+  border: 1px solid #e8c0c0;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-top: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: #c0392b;
+  display: none;
+}
+#website-parse-error.show { display: block; }
+
+/* Question input */
+#question-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: var(--serif);
+  font-size: 16px;
+  background: #fcfcfa;
+  color: var(--text);
+  transition: border-color .15s;
+}
+#question-input:focus {
+  outline: none;
+  border-color: var(--brand);
+}
+
+/* Card inputs */
+.cards-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.card-input-group {
+  flex: 1 1 160px;
+  min-width: 140px;
+  background: #faf8f3;
+  border-radius: 10px;
+  padding: 14px;
+  border: 1.5px solid var(--border);
+}
+.card-input-group .pos-label {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: var(--brand);
+  margin-bottom: 8px;
+  text-align: center;
+}
+.card-input-group select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--serif);
+  font-size: 14px;
+  background: #fff;
+  color: var(--text);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all .15s;
+}
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+.btn-primary:hover { background: #2a4a7a; }
+.btn-primary:active { transform: scale(.98); }
+.btn-secondary {
+  background: #fff;
+  color: var(--brand);
+  border: 1.5px solid var(--brand);
+}
+.btn-secondary:hover { background: #f0f4fa; }
+.btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* ============================================================
+   SECTION B — Paste Reading
+   ============================================================ */
+#paste-textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: "SF Mono", "Menlo", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  resize: vertical;
+  background: #fcfcfa;
+  color: var(--text);
+}
+#paste-textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+}
+
+/* Error message */
+.error-msg {
+  background: #fff0f0;
+  border: 1px solid #e8c0c0;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-top: 16px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: #c0392b;
+  display: none;
+}
+.error-msg.show { display: block; }
+
+/* ============================================================
+   SECTION C — Preview
+   ============================================================ */
+.section-c-wrap {
+  display: none;
+}
+.section-c-wrap.show {
+  display: block;
+}
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.preview-meta {
+  font-family: var(--sans);
+  font-size: 13px;
+  color: #999;
+  letter-spacing: 2px;
+}
+
+/* Preview container — scrollable strip */
+.preview-container {
+  background: #e8e6dc;
+  border-radius: 12px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 75vh;
+  padding: 8px;
+}
+
+/* ============================================================
+   WEB FORMAT — Render target (Section D, captures as long image)
+   ============================================================ */
+.render-target {
+  width: 720px;
+}/* All web-format styles scoped to .render-target */
+.render-target {
+  --bg: #faf9f5;
+  --card-white: #ffffff;
+  --text: #1a1a1a;
+  --text-secondary: #6b6a64;
+  --brand: #1B365D;
+  --border: #e8e6dc;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  font-weight: 400;
+  line-height: 1.8;
+  padding: 32px 24px 64px;
+}
+.render-target .web-header {
+  text-align: center;
+  padding: 3rem 0 2.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+.render-target .web-header .label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--brand);
+  margin-bottom: 1rem;
+  font-family: var(--sans);
+}
+.render-target .web-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.render-target .web-header .date {
+  font-size: 15px;
+  color: var(--text-secondary);
+  font-weight: 350;
+}
+
+/* Card row */
+.render-target .card-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+.render-target .card-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.render-target .card-svg { border-radius: 6px; }
+.render-target .card-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+.render-target .card-pos {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 350;
+}
+
+/* Summary block */
+.render-target .summary-block {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 450;
+  color: var(--brand);
+  padding: 1.5rem;
+  margin: 2rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.7;
+}
+
+/* Chapter card */
+.render-target .chapter {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: var(--card-white);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.render-target .chapter h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--brand);
+  margin-bottom: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.render-target .chapter p {
+  margin-bottom: 0.8rem;
+  font-size: 15px;
+  line-height: 1.85;
+  text-align: justify;
+  font-weight: 400;
+}
+.render-target .chapter p:last-child { margin-bottom: 0; }
+
+/* Combo / insight boxes */
+.render-target .combo {
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  background: #f7f6f0;
+  border-left: 3px solid var(--brand);
+  border-radius: 0 6px 6px 0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.render-target .takeaway {
+  margin-top: 1.2rem;
+  padding: 0.8rem 1rem;
+  background: var(--brand);
+  color: #f5f4ed;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+/* Footer */
+.render-target .web-footer {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 13px;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  font-family: var(--sans);
+  font-weight: 350;
+}
+
+/* Render target — off-screen but fully rendered for html2canvas */
+#render-target {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+}
+
+/* ============================================================
+   LOADING SPINNER
+   ============================================================ */
+.spinner-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(232,230,220,.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.spinner-overlay.show {
+  display: flex;
+}
+.spinner-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 36px 48px;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,.08);
+}
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--brand);
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+  margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinner-box .spinner-msg {
+  font-family: var(--sans);
+  font-size: 14px;
+  color: #888;
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--brand);
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-family: var(--sans);
+  font-size: 14px;
+  letter-spacing: 1px;
+  opacity: 0;
+  transition: opacity .3s;
+  pointer-events: none;
+  z-index: 200;
+}
+.toast.show {
+  opacity: 1;
+}
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+@media (max-width: 640px) {
+  .page-wrap { padding: 24px 12px 60px; }
+  .section { padding: 20px; }
+  header h1 { font-size: 28px; }
+  .btn-row { flex-direction: column; }
+  .btn { width: 100%; }
+  .preview-container { padding: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE WRAPPER
+     ============================================================ -->
+<div class="page-wrap">
+
+  <header>
+    <h1>Stargazer</h1>
+    <div class="tagline">Lenormand · Public Demo</div>
+  </header>
+
+  <!-- ==========================================================
+       SECTION A — Setup
+       ========================================================== -->
+  <section class="section" id="section-a">
+    <div class="section-label">Step 1 · Paste Daily Fortune</div>
+
+    <!-- Website output import -->
+    <div class="form-row">
+      <label for="website-textarea">
+        貼上
+        <a href="https://stargazer.estework.site/" target="_blank" rel="noopener" style="color:var(--brand);text-decoration:underline;text-underline-offset:3px;">Stargazer's Oracle</a>
+        產生的每日運勢文字
+      </label>
+      <textarea id="website-textarea" placeholder="請為我解讀今天的每日運勢。
+
+【日期】2026/06/21
+
+【牌陣】每日運勢 3 張（由左至右連讀）
+1. 信 (Letter)
+2. 小孩 (Child)
+3. 錨 (Anchor)"></textarea>
+    </div>
+    <div class="error-msg" id="website-parse-error"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-parse-website">解析並複製 Prompt →</button>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       SECTION B — Paste Reading
+       ========================================================== -->
+  <section class="section" id="section-b">
+    <div class="section-label">Step 2 · Paste AI Reading</div>
+    <div class="form-row">
+      <label for="paste-textarea">
+        將 AI 回覆貼到此處
+        <span class="hint">Paste the complete AI output here</span>
+      </label>
+      <textarea id="paste-textarea" placeholder="===STARGAZER=== (或 =STARGAZER=)
+SPREAD: three
+QUESTION: 今天運勢如何？
+..."></textarea>
+    </div>
+    <div class="error-msg" id="parse-error"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-generate">生成預覽</button>
+      <button class="btn btn-secondary" id="btn-load-sample">載入範例</button>
+    </div>
+  </section>
+
+  <!-- ==========================================================
+       SECTION C — Preview
+       ========================================================== -->
+  <div class="section-c-wrap" id="section-c-wrap">
+    <section class="section" id="section-c">
+      <div class="section-label">Step 3 · Preview & Download</div>
+      <div class="preview-header">
+        <span class="preview-meta" id="preview-meta"></span>
+        <button class="btn btn-primary" id="btn-download">⬇ 下載長圖</button>
+      </div>
+      <div class="preview-container" id="preview-container">
+        <!-- Poster clones inserted here -->
+      </div>
+    </section>
+  </div>
+
+</div><!-- /page-wrap -->
+
+<!-- ============================================================
+     SECTION D — Render target (hidden, off-screen)
+     ============================================================ -->
+<div id="render-target" class="render-target">
+  <!-- Content built here by renderer -->
+</div>
+
+<!-- ============================================================
+     Shared SVG defs for card grid patterns
+     ============================================================ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="grid-major" width="72" height="72" patternUnits="userSpaceOnUse">
+      <path d="M72 0L72 72M0 72L72 72" fill="none" stroke="#7A8B7A" stroke-width="0.3" opacity=".12"/>
+    </pattern>
+    <pattern id="grid-minor" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M18 0L18 18M0 18L18 18" fill="none" stroke="#7A8B7A" stroke-width="0.2" opacity=".06"/>
+    </pattern>
+  </defs>
+</svg>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Loading overlay -->
+<div class="spinner-overlay" id="spinner">
+  <div class="spinner-box">
+    <div class="spinner"></div>
+    <div class="spinner-msg" id="spinner-msg">載入中...</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* ============================================================
+   CARD LOOKUP TABLE — all 36 standard Lenormand cards
+   ============================================================ */
+const CARD_LOOKUP = {
+   1: { slug:'rider',     zh:'騎士' },
+   2: { slug:'clover',    zh:'幸運草' },
+   3: { slug:'ship',      zh:'船' },
+   4: { slug:'house',     zh:'房屋' },
+   5: { slug:'tree',      zh:'樹' },
+   6: { slug:'clouds',    zh:'雲' },
+   7: { slug:'snake',     zh:'蛇' },
+   8: { slug:'coffin',    zh:'棺材' },
+   9: { slug:'bouquet',   zh:'花束' },
+  10: { slug:'scythe',    zh:'鐮刀' },
+  11: { slug:'whip',      zh:'鞭子' },
+  12: { slug:'birds',     zh:'鳥' },
+  13: { slug:'child',     zh:'小孩' },
+  14: { slug:'fox',       zh:'狐狸' },
+  15: { slug:'bear',      zh:'熊' },
+  16: { slug:'stars',     zh:'星星' },
+  17: { slug:'stork',     zh:'鸛' },
+  18: { slug:'dog',       zh:'狗' },
+  19: { slug:'tower',     zh:'塔' },
+  20: { slug:'garden',    zh:'花園' },
+  21: { slug:'mountain',  zh:'山' },
+  22: { slug:'crossroads',zh:'十字路口' },
+  23: { slug:'mice',      zh:'老鼠' },
+  24: { slug:'heart',     zh:'心' },
+  25: { slug:'ring',      zh:'戒指' },
+  26: { slug:'book',      zh:'書' },
+  27: { slug:'letter',    zh:'信' },
+  28: { slug:'man',       zh:'男人' },
+  29: { slug:'woman',     zh:'女人' },
+  30: { slug:'lily',      zh:'百合' },
+  31: { slug:'sun',       zh:'太陽' },
+  32: { slug:'moon',      zh:'月亮' },
+  33: { slug:'key',       zh:'鑰匙' },
+  34: { slug:'fish',      zh:'魚' },
+  35: { slug:'anchor',    zh:'錨' },
+  36: { slug:'cross',     zh:'十字架' },
+};
+
+/* ============================================================
+   SPREAD CONFIGURATIONS
+   ============================================================ */
+const SPREADS = {
+  yesno: {
+    labelZh: '是否牌陣',
+    labelEn: 'Yes / No',
+    cardCount: 1,
+    positions:  ['牌'],
+    chapterCount: 1,
+    verdictRequired: true,
+    optionsRequired: false
+  },
+  two: {
+    labelZh: '二張牌陣',
+    labelEn: 'Two Cards',
+    cardCount: 2,
+    positions:  ['左', '右'],
+    chapterCount: 2,
+    verdictRequired: false,
+    optionsRequired: false
+  },
+  three: {
+    labelZh: '三張牌陣',
+    labelEn: 'Three Cards',
+    cardCount: 3,
+    positions:  ['過去', '現在', '未來'],
+    chapterCount: 3,
+    verdictRequired: false,
+    optionsRequired: false
+  },
+  five: {
+    labelZh: '五張牌陣',
+    labelEn: 'Five Cards',
+    cardCount: 5,
+    positions:  ['過去', '現在', '未來', '原因', '環境'],
+    chapterCount: 5,
+    verdictRequired: false,
+    optionsRequired: false
+  },
+  nine: {
+    labelZh: '九宮格牌陣',
+    labelEn: 'Nine Cards (3×3)',
+    cardCount: 9,
+    positions:  ['①','②','③','④','⑤','⑥','⑦','⑧','⑨'],
+    chapterCount: 9,
+    verdictRequired: false,
+    optionsRequired: false
+  },
+  choice: {
+    labelZh: '選擇牌陣',
+    labelEn: 'Choice / Crossroads',
+    cardCount: 2,
+    positions:  ['選項A', '選項B'],
+    chapterCount: 2,
+    verdictRequired: false,
+    optionsRequired: true
+  }
+};
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let state = {
+  spread: 'three',
+  question: '',
+  cards: [],       // [{num, name, slug}]
+  parsed: null,    // result from parseReading()
+  cardSVGs: {},    // cache: num → SVG string
+  websiteInstructions: '' // interpretation instructions from website output
+};
+
+/* ============================================================
+   UI HELPERS
+   ============================================================ */
+function $(id) { return document.getElementById(id); }
+
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+function showSpinner(msg) {
+  $('spinner-msg').textContent = msg || '載入中...';
+  $('spinner').classList.add('show');
+}
+
+function hideSpinner() {
+  $('spinner').classList.remove('show');
+}
+
+function showError(msg) {
+  const el = $('parse-error');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+
+function hideError() {
+  $('parse-error').classList.remove('show');
+}
+
+/* ============================================================
+   SECTION A — Card Input Builder (unused, kept for reference)
+   ============================================================ */
+function buildCardInputs() {
+  // No-op: manual card inputs removed. Cards are populated via parseWebsiteOutput.
+}
+
+/* ============================================================
+   SECTION A — Prompt Generator
+   ============================================================ */
+function generatePrompt() {
+  const spread = SPREADS[state.spread];
+  const question = state.question.trim() || '日常占卜';
+  const today = new Date().toISOString().slice(0, 10);
+
+  // CARDS: simplified format — just card names in order
+  const cardsLine = state.cards.map((c, i) => {
+    const num = String(c.num).padStart(2, '0');
+    return `  ${spread.positions[i]}: ${num}. ${c.name}`;
+  }).join('\n');
+
+  // Chapter structure for daily fortune (3 cards):
+  // 1: 組合 1+2, 2: 組合 2+3, 3: 整體意義, 4: 今日提醒
+  const [c1, c2, c3] = state.cards;
+  const chapters = [
+    `===CHAPTER_1===\n**組合 1+2：${c1.name} + ${c2.name}**\n{串聯這兩張牌的意義，它們如何互相影響}`,
+    `===CHAPTER_2===\n**組合 2+3：${c2.name} + ${c3.name}**\n{串聯這兩張牌的意義，它們如何互相影響}`,
+    `===CHAPTER_3===\n**整體意義**\n{將三張牌連成一句完整、連貫的訊息}`,
+    `===CHAPTER_4===\n**今日提醒**\n{用一到兩句話，給出今天可以放在心上的提醒}`
+  ];
+
+  // Build prompt sections
+  const sections = [
+    '你是一位專業的諾曼底牌陣解讀師。請嚴格按照以下格式輸出解讀，',
+    '不要在格式之外添加任何文字，不要用代碼塊包裹輸出。',
+    '重要：所有標記必須使用三個等號 ===，不可簡化成單個等號 =。',
+    '',
+    '【牌陣資訊】',
+    `問題：${question}`,
+    `牌陣：${spread.labelZh}（${spread.labelEn}）`,
+    '抽到的牌：',
+    ...state.cards.map((c, i) => `  ${spread.positions[i]}: ${String(c.num).padStart(2, '0')}. ${c.name}`),
+  ];
+
+  // Append website interpretation instructions if available
+  if (state.websiteInstructions) {
+    sections.push('', '【解讀要求】', state.websiteInstructions);
+  } else {
+    sections.push(
+      '',
+      '【解讀要求】',
+      '以「組合」為核心，不要逐張單獨給牌義。先將相鄰的牌兩兩串連，再把三張連成一句完整、連貫的訊息。',
+      '最後用一到兩句話，給出一個今天可以放在心上的「今日提醒」。'
+    );
+  }
+
+  sections.push(
+    '',
+    '【輸出格式（請完整照填）】',
+    '',
+    '===STARGAZER===',
+    `SPREAD: ${state.spread}`,
+    `QUESTION: ${question}`,
+    `DATE: ${today}`,
+    'LANGUAGE: zh',
+    'CARDS:',
+    cardsLine,
+    '',
+    ...chapters,
+    '',
+    '===SUMMARY===',
+    '{請在此填入 2-4 句總結}',
+    '',
+    '===END==='
+  );
+
+  return sections.join('\n');
+}
+
+/* ============================================================
+   SECTION A — Website Output Parser
+   ============================================================ */
+function parseWebsiteOutput(rawText) {
+  const text = rawText.trim();
+  if (!text) throw new Error('請先貼上 Stargazer\'s Oracle 產生的文字');
+
+  // Build reverse lookup: Chinese name → card number
+  const nameToNum = {};
+  for (const [num, card] of Object.entries(CARD_LOOKUP)) {
+    nameToNum[card.zh] = parseInt(num);
+  }
+
+  // Extract date: 【日期】2026/06/21 or 2026-06-21
+  const dateMatch = text.match(/【日期】\s*(\d{4}[\/\-]\d{1,2}[\/\-]\d{1,2})/);
+  if (!dateMatch) throw new Error('找不到【日期】，請確認貼上了完整的 Stargazer\'s Oracle 文字');
+  const date = dateMatch[1].replace(/\//g, '-');
+
+  // Extract card count from spread line: 【牌陣】... N 張 ...
+  const spreadMatch = text.match(/【牌陣】/);
+  if (!spreadMatch) throw new Error('找不到【牌陣】，請確認貼上了完整的 Stargazer\'s Oracle 文字');
+
+  // Count numbered cards: 1. 信 (Letter), 2. 小孩 (Child), ...
+  const cardLines = [];
+  const cardRegex = /^(\d+)\.\s*(.+?)\s*\(([^)]+)\)/gm;
+  let m;
+  while ((m = cardRegex.exec(text)) !== null) {
+    cardLines.push({ index: m[1], name: m[2].trim(), enName: m[3].trim() });
+  }
+
+  if (cardLines.length === 0) {
+    throw new Error('找不到卡片列表（格式：1. 牌名 (English)）。請確認貼上了完整的 Stargazer\'s Oracle 文字');
+  }
+
+  // Map card names to numbers
+  const cards = [];
+  for (const cl of cardLines) {
+    const num = nameToNum[cl.name];
+    if (!num) throw new Error(`找不到牌「${cl.name}」的對應號碼，請確認牌名是否正確`);
+    cards.push({ num, name: cl.name, slug: CARD_LOOKUP[num].slug });
+  }
+
+  // Infer spread type from card count
+  const countToSpread = { 1: 'yesno', 2: 'two', 3: 'three', 5: 'five', 9: 'nine' };
+  const spread = countToSpread[cards.length] || 'three';
+
+  // Extract question from first line (e.g. "請為我解讀今天的每日運勢。")
+  const firstLine = text.split('\n')[0].replace(/^請為我解讀/, '').replace(/[。！]/g, '').trim();
+  const question = firstLine || '日常占卜';
+
+  // Extract interpretation instructions — everything after the last card line
+  const lastCardMatch = [...text.matchAll(cardRegex)].at(-1);
+  let instructions = '';
+  if (lastCardMatch) {
+    const afterCards = text.slice(lastCardMatch.index + lastCardMatch[0].length).trim();
+    // Remove leading blank lines
+    instructions = afterCards.replace(/^\n+/, '').trim();
+  }
+  state.websiteInstructions = instructions;
+
+  // Auto-fill state
+  state.spread = spread;
+  state.question = question;
+  state.cards = cards;
+
+  return { spread, question, date, cards };
+}
+
+async function parseWebsiteAndCopy() {
+  const errEl = $('website-parse-error');
+  errEl.classList.remove('show');
+  errEl.textContent = '';
+
+  try {
+    const rawText = $('website-textarea').value;
+    parseWebsiteOutput(rawText);
+
+    // Generate and copy prompt
+    const prompt = generatePrompt();
+    try {
+      await navigator.clipboard.writeText(prompt);
+      showToast('✓ 已解析並複製 Prompt！請貼到 AI 對話中。');
+    } catch {
+      const ta = document.createElement('textarea');
+      ta.value = prompt;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('✓ 已解析並複製 Prompt！請貼到 AI 對話中。');
+    }
+
+    // Clear website textarea
+    $('website-textarea').value = '';
+
+    // Scroll to top so user sees the filled form
+    $('section-a').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (err) {
+    errEl.textContent = err.message;
+    errEl.classList.add('show');
+  }
+}
+
+/* ============================================================
+   SECTION B — Parser
+   ============================================================ */
+function parseReading(rawText) {
+  // Step 1: Strip code fences
+  let text = rawText.trim();
+  if (text.startsWith('```')) {
+    text = text.replace(/^```[\w]*\n?/, '').replace(/\n?```$/, '');
+  }
+
+  // Step 2: Normalize markers — Gemini sometimes collapses === to = (or expands to ==== etc.)
+  // Match any number of = signs around known tags on standalone lines
+  text = text.replace(/^=+STARGAZER=+$/gm, '===STARGAZER===');
+  text = text.replace(/^=+CHAPTER_(\d+)=+$/gm, '===CHAPTER_$1===');
+  text = text.replace(/^=+SUMMARY=+$/gm, '===SUMMARY===');
+  text = text.replace(/^=+END=+$/gm, '===END===');
+
+  // Step 3: Extract main block
+  const startMarker = '===STARGAZER===';
+  const endMarker = '===END===';
+  const startIdx = text.indexOf(startMarker);
+  const endIdx = text.indexOf(endMarker);
+
+  if (startIdx === -1) {
+    throw new Error('找不到 ===STARGAZER=== 或 =STARGAZER= 標記 — 請確認完整複製了 AI 的輸出');
+  }
+  if (endIdx === -1) {
+    throw new Error('找不到 ===END=== 或 =END= 標記 — 請確認完整複製了 AI 的輸出');
+  }
+
+  const block = text.slice(startIdx + startMarker.length, endIdx).trim();
+
+  // Step 3: Extract chapter blocks — stop at next chapter, summary, or end
+  const chapters = [];
+  const chapterRegex = /===CHAPTER_(\d+)===\s*\n([\s\S]*?)(?=\n===CHAPTER_\d+===|\n===SUMMARY===|\n===END===|$)/g;
+  const chapterBlock = text.slice(startIdx + startMarker.length, endIdx);
+  let chMatch;
+  while ((chMatch = chapterRegex.exec(chapterBlock)) !== null) {
+    const raw = chMatch[2].trim();
+    const titleMatch = raw.match(/^\*\*(.+?)\*\*/);
+    const title = titleMatch ? titleMatch[1].trim() : `Chapter ${chMatch[1]}`;
+    const body = titleMatch ? raw.slice(titleMatch[0].length).trim() : raw;
+    chapters.push({ title, body });
+  }
+
+  // Step 4: Extract summary — content between ===SUMMARY=== and ===END===
+  const summaryRegex = /===SUMMARY===\s*\n([\s\S]*?)(?=\n===END===)/;
+  const summaryMatch = text.match(summaryRegex);
+  const summary = summaryMatch ? summaryMatch[1].trim() : '';
+
+  // Step 5: Parse header fields (case-insensitive)
+  function getField(name) {
+    const re = new RegExp(`^${name}\\s*:\\s*(.+)$`, 'im');
+    const m = block.match(re);
+    return m ? m[1].trim() : null;
+  }
+
+  const spread = getField('SPREAD');
+  if (!spread) throw new Error('找不到 SPREAD 欄位');
+  if (!SPREADS[spread]) throw new Error(`未知的牌陣類型：${spread}`);
+
+  const question = getField('QUESTION') || '日常占卜';
+  const date = getField('DATE') || new Date().toISOString().slice(0,10);
+  const language = getField('LANGUAGE') || 'zh';
+  const verdict = getField('VERDICT') || 'N/A';
+  const optionA = getField('OPTION_A') || 'N/A';
+  const optionB = getField('OPTION_B') || 'N/A';
+
+  // Step 6: Parse cards
+  const cardsBlock = block.match(/CARDS:\s*\n([\s\S]*?)(?=\n===|$)/i);
+  const cards = [];
+  if (cardsBlock) {
+    const cardLines = cardsBlock[1].trim().split('\n');
+    for (const line of cardLines) {
+      const m = line.trim().match(/^(.+?):\s*(\d{1,2})\.\s*(.+)$/);
+      if (m) {
+        const num = parseInt(m[2]);
+        cards.push({
+          position: m[1].trim(),
+          number: num,
+          name: m[3].trim()
+        });
+      }
+    }
+  }
+
+  if (cards.length === 0) {
+    throw new Error('找不到 CARDS 區塊或卡片格式不正確');
+  }
+
+  return { spread, question, date, language, verdict, optionA, optionB, cards, chapters, summary };
+}
+
+/* ============================================================
+   CARD SVG LOADING
+   ============================================================ */
+async function loadCardSVG(cardNum) {
+  if (state.cardSVGs[cardNum]) return state.cardSVGs[cardNum];
+
+  const card = CARD_LOOKUP[cardNum];
+  if (!card) return null;
+
+  const path = `../cards/card-${String(cardNum).padStart(2,'0')}-${card.slug}.svg`;
+
+  try {
+    const resp = await fetch(path);
+    if (!resp.ok) return null;
+    let svgText = await resp.text();
+
+    // Extract inner content (strip outer <svg> tags), KEEP defs
+    const innerMatch = svgText.match(/<svg[^>]*>([\s\S]*)<\/svg>/i);
+    if (innerMatch) {
+      svgText = innerMatch[1].trim();
+    }
+
+    state.cardSVGs[cardNum] = svgText;
+    return svgText;
+  } catch (e) {
+    console.warn(`Failed to load card ${cardNum}:`, e);
+    return null;
+  }
+}
+
+async function loadAllCardSVGs(cardNumbers) {
+  const uniqueNums = [...new Set(cardNumbers)];
+  const promises = uniqueNums.map(n => loadCardSVG(n));
+  await Promise.all(promises);
+}
+
+/* ============================================================
+   RENDERER — Build web-format page in Section D
+   ============================================================ */
+function getWebCardSize(cardCount) {
+  if (cardCount <= 3) return { w: 140, h: 210 };
+  if (cardCount <= 5) return { w: 110, h: 165 };
+  return { w: 80, h: 120 }; // 9 cards
+}
+
+function getSpreadLabel(spreadKey) {
+  const s = SPREADS[spreadKey];
+  return s ? `${s.labelZh} · ${s.labelEn}` : spreadKey;
+}
+
+function buildWebHeader(data) {
+  const { spread, question, date, cards, verdict, optionA, optionB } = data;
+  const cardSize = getWebCardSize(cards.length);
+
+  // Card row
+  let cardsHTML = '<div class="card-row">';
+  cards.forEach(card => {
+    const cardNum = String(card.number).padStart(2, '0');
+    const svgContent = state.cardSVGs[card.number] || `<text x="512" y="740" text-anchor="middle" font-size="80" fill="#ccc">${cardNum}</text>`;
+    cardsHTML += `
+      <div class="card-wrap">
+        <svg class="card-svg" viewBox="0 0 1024 1536" width="${cardSize.w}" height="${cardSize.h}">
+          ${svgContent}
+        </svg>
+        <span class="card-label">${card.name}</span>
+        <span class="card-pos">${card.position}</span>
+      </div>`;
+  });
+  cardsHTML += '</div>';
+
+  // Verdict
+  let verdictHTML = '';
+  if (verdict && verdict !== 'N/A') {
+    const vLabel = verdict === 'YES' ? '✓ YES' : verdict === 'NO' ? '✗ NO' : '~ MAYBE';
+    const vColor = verdict === 'YES' ? '#2e7d32' : verdict === 'NO' ? '#c62828' : '#f57f17';
+    verdictHTML = `<div style="text-align:center;font-family:var(--sans);font-size:16px;letter-spacing:3px;color:${vColor};margin-top:1rem;">${vLabel}</div>`;
+  }
+
+  // Options
+  let optionsHTML = '';
+  if (optionA && optionA !== 'N/A' && optionB && optionB !== 'N/A') {
+    optionsHTML = `<div style="text-align:center;font-size:14px;color:var(--text-secondary);margin-top:0.5rem;">A: ${escapeHTML(optionA)} 　 B: ${escapeHTML(optionB)}</div>`;
+  }
+
+  return `
+    <div class="web-header">
+      <div class="label">${getSpreadLabel(spread)}</div>
+      <h1>${escapeHTML(question)}</h1>
+      <div class="date">${date}</div>
+    </div>
+    ${cardsHTML}
+    ${verdictHTML}
+    ${optionsHTML}`;
+}
+
+function buildWebChapter(chapter) {
+  let bodyHTML = '';
+  const paragraphs = chapter.body.split(/\n\n+/).filter(p => p.trim());
+  for (const para of paragraphs) {
+    const formatted = para.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    bodyHTML += `<p>${formatted}</p>`;
+  }
+
+  return `
+    <div class="chapter">
+      <h2>${escapeHTML(chapter.title)}</h2>
+      ${bodyHTML}
+    </div>`;
+}
+
+function buildWebSummary(summary) {
+  let textHTML = '';
+  const paragraphs = summary.split(/\n\n+/).filter(p => p.trim());
+  for (const para of paragraphs) {
+    textHTML += `<p>${escapeHTML(para)}</p>`;
+  }
+
+  return `<div class="summary-block">${textHTML}</div>`;
+}
+
+function buildRenderTarget(data) {
+  const renderTarget = $('render-target');
+  const date = data.date || new Date().toISOString().slice(0, 10);
+
+  renderTarget.innerHTML = `
+    ${buildWebHeader(data)}
+    ${buildWebSummary(data.summary)}
+    ${data.chapters.map(ch => buildWebChapter(ch)).join('')}
+    <div class="web-footer">Lenormand Reading · Stargazer Interpreter · ${date}</div>`;
+}
+
+/* ============================================================
+   SECTION C — Preview clone
+   ============================================================ */
+function updatePreview(data) {
+  const container = $('preview-container');
+  const renderTarget = $('render-target');
+  container.innerHTML = '';
+
+  // Copy innerHTML from render target into preview wrapper
+  const preview = document.createElement('div');
+  preview.className = 'render-target';
+  preview.innerHTML = renderTarget.innerHTML;
+
+  container.appendChild(preview);
+
+  // Update meta
+  $('preview-meta').textContent =
+    `${getSpreadLabel(data.spread)} · ${data.question} · ${data.cards.length} 張牌 · ${data.chapters.length} 章`;
+
+  // Show section C
+  $('section-c-wrap').classList.add('show');
+}
+
+/* ============================================================
+   EXPORT — html2canvas long image
+   ============================================================ */
+async function exportLongImage() {
+  if (!state.parsed) return;
+
+  showSpinner('正在生成長圖...');
+  const renderTarget = $('render-target');
+
+  try {
+    await document.fonts.ready;
+
+    const canvas = await html2canvas(renderTarget, {
+      scale: 2,
+      backgroundColor: '#faf9f5',
+      width: 720,
+      windowWidth: 720,
+      useCORS: false
+    });
+
+    const date = state.parsed.date || new Date().toISOString().slice(0,10);
+    const link = document.createElement('a');
+    link.download = `stargazer-${date}-${state.parsed.spread}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+
+    showToast('✓ 長圖已下載！');
+  } catch (err) {
+    console.error('Export failed:', err);
+    showToast('✗ 匯出失敗，請重試');
+  } finally {
+    hideSpinner();
+  }
+}
+
+/* ============================================================
+   GENERATE PREVIEW FLOW
+   ============================================================ */
+async function generatePreview() {
+  hideError();
+  const rawText = $('paste-textarea').value.trim();
+
+  if (!rawText) {
+    showError('請先貼上 AI 的回覆內容');
+    return;
+  }
+
+  // Parse
+  let data;
+  try {
+    data = parseReading(rawText);
+    state.parsed = data;
+  } catch (err) {
+    showError(err.message);
+    return;
+  }
+
+  // Load card SVGs
+  showSpinner('載入卡牌圖像...');
+  const cardNums = data.cards.map(c => c.number);
+  try {
+    await loadAllCardSVGs(cardNums);
+  } catch (err) {
+    console.warn('Some card SVGs failed to load:', err);
+  }
+  hideSpinner();
+
+  // Build render target
+  buildRenderTarget(data);
+
+  // Update preview
+  updatePreview(data);
+
+  // Scroll to preview
+  $('section-c').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ============================================================
+   LOAD SAMPLE DATA
+   ============================================================ */
+function loadSample() {
+  // Fill website textarea (Section A)
+  $('website-textarea').value = `請為我解讀今天的每日運勢。
+
+【日期】2026/06/21
+
+【牌陣】每日運勢 3 張（由左至右連讀）
+1. 信 (Letter)
+2. 小孩 (Child)
+3. 錨 (Anchor)
+
+請以 Lenormand 的傳統牌義，為我描繪今天整體的基調與走向。
+
+請依以下方式解讀：
+  - 以「組合」為核心，不要逐張單獨給牌義。先將相鄰的牌兩兩串連（組合 1+2：信 (Letter) + 小孩 (Child)，組合 2+3：小孩 (Child) + 錨 (Anchor)），再把三張連成一句完整、連貫的訊息。
+  - 最後用一到兩句話，給我一個今天可以放在心上的「今日提醒」。`;
+
+  // Fill AI output textarea (Section B) with Gemini-collapsed = format
+  $('paste-textarea').value = `=STARGAZER=
+SPREAD: three
+QUESTION: 今天的每日運勢
+DATE: 2026-06-21
+LANGUAGE: zh
+CARDS:
+  過去: 27. 信
+  現在: 13. 小孩
+  未來: 35. 錨
+
+=CHAPTER_1=
+**組合 1+2：信 + 小孩**
+信代表訊息的傳遞，小孩代表嶄新的開始。這兩張牌串聯暗示：你今天收到的某個消息或資訊，正在為你打開一扇通往新體驗的門。保持開放心態去迎接它。
+
+=CHAPTER_2=
+**組合 2+3：小孩 + 錨**
+小孩的純真與錨的穩定形成了一個溫暖的張力：今天萌生的新想法或新嘗試，並不會是一閃而逝的衝動——它有著落地的潛力，正在往更穩固的方向發展。
+
+=CHAPTER_3=
+**整體意義**
+從信到小孩再到錨，三張牌描繪了一個清晰的弧線：一個消息開啟了新可能，這個新可能將穩定下來，成為你生活中可依靠的一部分。今天的主旋律是「接收 → 探索 → 紮根」。
+
+=CHAPTER_4=
+**今日提醒**
+保持好奇心去接收今天出現的任何訊息，別急著判斷——它可能是一個比你預期更長遠的起點。
+
+=SUMMARY=
+今天的能量從溝通開始，過渡到純真的探索，最終指向穩定與安心。信為你開路，小孩邀請你勇敢嘗試，錨則承諾這份嘗試會落地生根。
+
+=END=`;
+
+  showToast('✓ 已載入範例，點擊「解析並複製 Prompt」後貼到 AI，再把回覆貼到 Section B 生成預覽');
+}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+function escapeHTML(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ============================================================
+   EVENT BINDINGS
+   ============================================================ */
+// Parse website output
+$('btn-parse-website').addEventListener('click', parseWebsiteAndCopy);
+
+// Generate preview
+$('btn-generate').addEventListener('click', generatePreview);
+
+// Load sample
+$('btn-load-sample').addEventListener('click', loadSample);
+
+// Download
+$('btn-download').addEventListener('click', exportLongImage);
+
+/* ============================================================
+   INIT
+   ============================================================ */
+// No manual inputs to build — ready for website text paste
+
+console.log('Stargazer Public Demo ready.');
+console.log('Spread types:', Object.keys(SPREADS).join(', '));
+console.log('Cards loaded:', Object.keys(CARD_LOOKUP).length);
+</script>
+
+</body>
+</html>
