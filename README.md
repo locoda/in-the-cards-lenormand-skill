@@ -41,3 +41,15 @@ Requires: Node.js + Puppeteer + Google Chrome for PDF generation.
 ## License
 
 MIT
+
+## Credits & References
+
+**Typography**
+- [Chiron Sung HK (昭源宋體)](https://github.com/chiron-fonts/chiron-sung-hk) — the variable serif font used for both headings and body text. Derived from [Source Han Serif](https://github.com/adobe-fonts/source-han-serif) / [Noto Serif CJK](https://github.com/googlefonts/noto-cjk). Licensed under [SIL OFL 1.1](https://scripts.sil.org/OFL).
+
+**Design**
+- Visual style inspired by [Kami](https://github.com/tw93/Kami) — the warm parchment + ink-blue A4 typesetting aesthetic by [tw93](https://github.com/tw93). Kami is MIT-licensed.
+
+**Data**
+- [Stargazer's Oracle](https://stargazer.estework.site/) — the online Lenormand reading platform that generates the AI prompts this skill interprets. Card images are served from Stargazer's CDN.
+- Lenormand card meanings draw from traditional interpretations in the public domain, compiled and annotated for this skill.
