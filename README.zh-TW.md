@@ -102,7 +102,7 @@ Stargazer 提示詞
 ```
 ├── SKILL.md                         # 主技能指令
 ├── README.md                        # 英文文檔
-├── README.zh-CN.md                  # 简体中文文檔
+├── README.zh-CN.md                  # 簡體中文文檔
 ├── README.zh-TW.md                  # 繁體中文文檔
 ├── assets/
 │   ├── seed-a4-pdf.html             # A4 PDF HTML 骨架
