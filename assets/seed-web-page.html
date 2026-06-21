@@ -5,9 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{{TITLE}} — Lenormand Reading</title>
 <style>
-  /* Chiron Sung HK (昭源宋體) + Chiron Hei HK (昭源黑體) via jsDelivr CDN */
-  @import url('https://cdn.jsdelivr.net/npm/chiron-sung-hk-webfont@latest/css/vf.css');
-  @import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont@latest/css/vf.css');
 
   :root {
     --bg: #faf9f5;
@@ -170,6 +167,9 @@
     .combo { padding: 0.8rem 1rem; }
   }
 </style>
+<!-- Local fonts — {{SKILL_ROOT}} is filled at generation time -->
+<link rel="stylesheet" href="file://{{SKILL_ROOT}}/assets/fonts/chiron-sung-hk/woff2/css/vf.css">
+<link rel="stylesheet" href="file://{{SKILL_ROOT}}/assets/fonts/chiron-hei-hk/woff2/css/vf.css">
 </head>
 <body>
   <!--

@@ -3,13 +3,36 @@ name: stargazer-interpreter
 description: |-
   Interpret Lenormand card readings from Stargazer (stargazer.estework.site) and generate visual products from the interpretation. Three-phase workflow: (1) parse the Stargazer prompt → (2) interpret and persist the reading as structured JSON + human-readable Markdown → (3) generate products from the saved reading. Default product is Kami-styled A4 PDF; additional products include web page and 1080×1440 social cards. Past readings can be listed, queried, and regenerated into any product type via natural language. Supports all 6 spread types.   Triggers on "Stargazer 解读 / 帮我解读 / Lenormand reading / 生成解读 PDF / 列出解读 / 生成社交卡片 / 上次的解读 / 請為我解讀 / 透過 Lenormand / 每日運勢 / consult Lenormand / daily fortune / deciding between" etc.
   Triggers on: "Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读 / 請為我解讀 / 幫我解讀 / 每日運勢 / 今日運勢 / 我想透過 Lenormand / 透過 Lenormand / 二選一 / Lenormand 卡牌占卜 / consult the Lenormand cards / compare them with Lenormand / daily fortune / read my Lenormand / deciding between two options".
-version: 3.1.0
+version: 3.2.0
 agent_created: true
 ---
 
-# Stargazer Interpreter · 星解者 v3.1
+# Stargazer Interpreter · 星解者 v3.2
 
 Interpret Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/), persist them as reusable data, and generate visual products — A4 PDF, web pages, or social cards — by copying seed HTML files and filling in placeholders.
+
+## Startup Check
+
+On every load, run the following checks. Do not output results unless there is an update.
+
+```
+# ── AGENT — RUN ON LOAD ─────────────────────────────────────
+DATE_NOW=$(date +%s)
+LAST_CHECK=$(cat {{SKILL_ROOT}}/.last-update-check 2>/dev/null || echo 0)
+if [ $((DATE_NOW - LAST_CHECK)) -gt 604800 ]; then
+  echo "--- SKILL UPDATE CHECK ---"
+  echo "Checking stargazer-interpreter for updates..."
+  # (placeholder — actual update check mechanism TBD)
+  echo "No updates available."
+  echo "--- END UPDATE CHECK ---"
+  date +%s > {{SKILL_ROOT}}/.last-update-check
+else
+  : # skip — checked within the last 7 days
+fi
+# ── END AGENT RUN ON LOAD ───────────────────────────────────
+```
+
+`{{SKILL_ROOT}}` in the bash code block above resolves to the absolute path of this skill's root directory.
 
 ## Architecture
 
@@ -42,6 +65,13 @@ E.g., "把上次的解读生成社交卡片" / "用 #3 解读生成网页版" / 
 
 ## Phase 1: Parse the Prompt
 
+> **AGENT — REQUIRED BEFORE PARSING:**
+> Execute these two file reads now, in order, before doing anything else:
+> 1. Open and read `references/spread-parsing.md` in full
+> 2. Open and read `references/lenormand-cards.md` in full
+>
+> Do NOT begin parsing the prompt until both files have been read and their contents are in your context. Using training knowledge as a substitute is not permitted.
+
 Read `references/spread-parsing.md` for detailed parsing rules. Extract structured data:
 
 1. **Strip universal instruction prefix** — the "You are a traditional Lenormand reader..." / "你是一位傳統 Lenormand 占卜師..." block before `---`
@@ -51,7 +81,31 @@ Read `references/spread-parsing.md` for detailed parsing rules. Extract structur
 5. **Resolve card names** against `references/lenormand-cards.md`
 6. **Output** a structured data object
 
+> **AGENT — PHASE 1 CHECKPOINT:**
+> Before proceeding to Phase 2, emit the following block exactly as shown, filled with the parsed values. Do not continue until this block is visible in your output.
+
+```
+PHASE 1 COMPLETE
+─────────────────────────────
+spread_type  : {yesno-1|two|three|five|nine|choice}
+language     : {zh|en}
+question     : {extracted question text, or "daily fortune" if null}
+date         : {YYYY-MM-DD}
+cards        :
+  {position_label}: {card_number}. {card_name_zh} / {card_name_en}
+  ... (one line per card)
+verdict      : {YES/NO/MAYBE, or N/A}
+option_a     : {text, or N/A}
+option_b     : {text, or N/A}
+─────────────────────────────
+Proceeding to Phase 2.
+```
+
 ## Phase 2: Interpret & Save
+
+> **AGENT — REQUIRED BEFORE INTERPRETING:**
+> If `references/lenormand-cards.md` is not already in your current context from Phase 1, open and read it now before writing any interpretation.
+> Also open and read `references/template-a4-pdf.md` — you will need its chapter structure and page balance rules for Phase 2b and Phase 3.
 
 ### 2a. Interpret the Cards
 
@@ -163,6 +217,24 @@ A readable copy including:
 }
 ```
 
+> **AGENT — PHASE 2 CHECKPOINT:**
+> Before proceeding to Phase 3, confirm the following. Emit this block filled with actual values.
+
+```
+PHASE 2 COMPLETE
+─────────────────────────────
+reading_id   : {reading_id}
+json saved   : output/readings/{reading_id}.json — {EXISTS|FAILED}
+md saved     : output/readings/{reading_id}.md — {EXISTS|FAILED}
+index updated: output/readings/index.json — {EXISTS|FAILED}
+chapters     : {N} chapters in interpretation
+summary      : {first 80 characters of summary}...
+─────────────────────────────
+Proceeding to Phase 3.
+```
+
+If any field shows FAILED, stop and fix the save operation before continuing.
+
 ## Phase 3: Generate Products
 
 Products are generated from the saved reading JSON. The user may request one or more product types.
@@ -190,44 +262,99 @@ Instead of building HTML from scratch, **copy the seed HTML file** from `assets/
 
 ### 3a. A4 PDF (Default)
 
-1. Copy `assets/seed-a4-pdf.html` → `output/lenormand-{spread}-{topic}-{date}.html`
-2. Fill cover: `{{SPREAD_LABEL}}`, `{{TITLE}}`, `{{DATE}}`, card SVGs, position labels
-3. Delete unused spread templates (keep only the one matching `spread_type`)
-4. For each chapter in `interpretation.chapters[]`: duplicate the chapter block, fill `{{CHAPTER_TITLE}}` and `{{CHAPTER_CONTENT}}` with paragraphs/combinations/takeaway. Chapters 2+ need `style="break-before: page;"`.
-5. **Page balance check** (before finalizing):
-   - **(1) No page more than 40% blank**: Content must fill at least 60% of each page's printable area. **Estimate rendered height, not character count.**
-     - A4 printable area ≈ 170mm × 257mm (usable height after @page margins ≈ 728pt)
-     - h2 heading: ~25pt · body paragraph (80-150 chars): ~2-4 lines × ~16pt = 32-64pt
-     - combination block (label + body): ~5-8 lines = 80-128pt · takeaway box: ~3-4 lines + padding = 70-90pt
-     - **Target per chapter**: ≥ 3 substantial paragraphs + takeaway, or 4-5 combo blocks — total estimated ≥ 440pt to hit 60%
-     - If estimated height < 440pt, expand content; if > 650pt (90%), consider condensing
-   - **(2) Page breaks at natural boundaries**: Page breaks must fall at chapter headings (h2) or paragraph endings — never split a paragraph mid-sentence. Adjust chapter content so each page starts cleanly.
-   - **Fix strategies** (in priority order): (a) Expand thin chapters with additional reflection paragraphs or extended takeaways; (b) Condense verbose chapters to pull orphan content onto the preceding page; (c) If necessary, merge two thin chapters by removing the break-before so they share a page.
-   - See `references/template-a4-pdf.md` → Page Balance Rules for detailed guidance and spread-specific recommendations.
-6. Render: `node scripts/generate-pdf.js output/<html-file>`
-7. Run deliverable validation (R1-R4). Re-render if any rule fails.
-8. Record: `node scripts/manage-readings.js record-product {reading_id} --type a4-pdf`
+**Step 1 — Copy the seed file**
+```bash
+cp assets/seed-a4-pdf.html output/lenormand-{spread_type}-{topic_slug}-{date}.html
+```
+Do NOT write a new HTML file from scratch. You must copy the seed.
+
+**Step 2 — Fill all placeholders**
+Open `output/lenormand-{spread_type}-{topic_slug}-{date}.html`.
+Replace every `{{PLACEHOLDER}}` marker using str_replace or sed, sourcing all values from the saved reading JSON at `output/readings/{reading_id}.json`.
+Required replacements:
+- `{{SKILL_ROOT}}` → absolute path to this skill's root directory, no trailing slash (e.g., `/Users/1mether/.workbuddy/skills/stargazer-interpreter`)
+- `{{TITLE}}` → `meta.question`
+- `{{DATE}}` → `meta.date`
+- `{{SPREAD_LABEL}}` → `meta.spread_label`
+- `{{SUMMARY}}` → `interpretation.summary`
+- `{{CARD_N_SVG}}` for each card → inline SVG from `cards/card-{NN}-{slug}.svg` (strip outer `<defs>…</defs>`, inline inner content only, no nested `<svg><svg>`)
+- `{{CHAPTER_TITLE}}` / `{{CHAPTER_CONTENT}}` per chapter → from `interpretation.chapters[]`
+
+**Step 3 — Delete unused spread templates**
+Remove all spread template blocks from the HTML except the one matching `meta.spread_type`.
+
+**Step 4 — Duplicate chapter blocks**
+Find the `<!-- CHAPTER_LOOP_START -->` marker. For each chapter after the first, duplicate the chapter block. Chapters 2 and beyond must have `style="break-before: page;"` on their container element.
+
+**Step 5 — Render to PDF**
+```bash
+node scripts/generate-pdf.js output/lenormand-{spread_type}-{topic_slug}-{date}.html
+```
+
+**Step 6 — Validate**
+```bash
+node scripts/validate.js output/lenormand-{spread_type}-{topic_slug}-{date}.html --type a4-pdf
+```
+Exit code must be 0. If non-zero, fix all reported failures and re-run Step 5 before continuing.
+
+**Step 7 — Record in index**
+```bash
+node scripts/manage-readings.js record-product {reading_id} --type a4-pdf
+```
 
 ### 3b. Web Page
 
-1. Copy `assets/seed-web-page.html` → `output/lenormand-web-{topic}-{date}.html`
-2. Fill header, card tiles row, summary, chapters
-3. Self-contained — no rendering step needed
-4. Record: `node scripts/manage-readings.js record-product {reading_id} --type web-page`
+**Step 1 — Copy the seed file**
+```bash
+cp assets/seed-web-page.html output/lenormand-web-{topic_slug}-{date}.html
+```
+
+**Step 2 — Fill all placeholders**
+Same process as 3a Step 2. Source all values from `output/readings/{reading_id}.json`.
+
+**Step 3 — Validate**
+```bash
+node scripts/validate.js output/lenormand-web-{topic_slug}-{date}.html --type web-page
+```
+Exit code must be 0. Fix any failures before continuing.
+
+**Step 4 — Record in index**
+```bash
+node scripts/manage-readings.js record-product {reading_id} --type web-page
+```
 
 ### 3c. Social Card (1080×1440)
 
-1. Load the full interpretation from the saved reading JSON
-2. **Compress each chapter** for 1080×1440 fit (body-text area ~900×1100px at 30px font):
-   - **First: reduce spacing** — gap: 16px, combo padding: 20×28, insight margin: 12px (seed defaults are already set for this)
-   - **Then: compress text** — keep meaning, shorten sentences, merge paragraphs, cut filler. Max ~3 blocks per page (e.g. 2 combos + takeaway, or 3 short paragraphs + takeaway)
-   - **Never truncate mid-sentence** — if a point can't be compressed, drop it and keep the strongest ones
-3. Copy `assets/seed-social-card.html` → `output/lenormand-xhs-{topic}-{date}.html`
-4. Fill cover: badge, title, date, SVG cards
-5. For each chapter: duplicate the content-page block, fill compressed content
-6. Verify R6 (no overflow): estimate block heights — if >1100px total, compress further
-7. Render: `node scripts/render-social-cards.js output/<html-file>`
-8. Record: `node scripts/manage-readings.js record-product {reading_id} --type social-card`
+**Step 1 — Load and compress interpretation**
+Open `output/readings/{reading_id}.json`. For each chapter, produce a compressed version:
+- Max ~3 content blocks per card page (e.g. 2 combos + takeaway, or 3 short paragraphs + takeaway)
+- Shorten sentences, merge redundant points, cut filler
+- Never truncate mid-sentence — drop the weakest points instead
+- Estimated total block height per page must be ≤ 1100px at 30px font
+
+**Step 2 — Copy the seed file**
+```bash
+cp assets/seed-social-card.html output/lenormand-xhs-{topic_slug}-{date}.html
+```
+
+**Step 3 — Fill all placeholders**
+Same process as 3a Step 2, using compressed interpretation for chapter content.
+
+**Step 4 — Render to PNGs**
+```bash
+node scripts/render-social-cards.js output/lenormand-xhs-{topic_slug}-{date}.html
+```
+
+**Step 5 — Validate**
+```bash
+node scripts/validate.js output/lenormand-xhs-{topic_slug}-{date}.html --type social-card
+```
+Exit code must be 0. Fix any failures (overflow, thin pages, card sizing) and re-run Step 4 before continuing.
+
+**Step 6 — Record in index**
+```bash
+node scripts/manage-readings.js record-product {reading_id} --type social-card
+```
 
 ### Generating Multiple Products
 
@@ -283,50 +410,7 @@ output/
 
 ## Deliverable Validation
 
-Before presenting any product to the user, run these checks. All rules apply to every product type unless marked otherwise.
-
-### Common (All Products)
-
-**R1 · No visible placeholders**: Grep the intermediate HTML file for `{{`. Any unreplaced placeholder is a hard failure — fix and regenerate.
-
-**R2 · Fonts load correctly**: Verify Chinese text renders in Chiron Sung HK (serif) or Chiron Hei HK (sans):
-- Check `@import` for both `chiron-sung-hk-webfont` and `chiron-hei-hk-webfont` is present
-- For Puppeteer-rendered products (PDF, PNG): build script must `await page.evaluate(() => document.fonts.ready)` before capturing
-- For web page: open in browser to verify
-
-**R3 · SVG cards render**: On the cover/card row, SVG card faces must be visible:
-- SVGs were inlined correctly (stripped `<defs>`, wrapped in seed's `<svg>` with class + viewBox)
-- No nested `<svg><svg>` — inner content only
-- Global defs block present for pattern references
-
-**R4 · No raw code visible**: The rendered output (PDF, PNG, or viewed HTML) must NOT show raw markup:
-- No visible `<div`, `<p`, `</` fragments
-- No `{{PLACEHOLDER}}` strings in rendered text
-- No escaped entities where normal text is expected
-
-### A4 PDF (additional)
-
-**R5 · Page balance**: Each page must fill at least 60% of printable area (~170mm × 257mm).
-- Estimate content height per chapter (paragraphs, combinations, takeaway)
-- If < 60%: expand chapter or merge with adjacent chapter
-- Never split a paragraph mid-sentence across pages
-
-**R6 · Page breaks correct**: 
-- Cover page has `break-after: page`
-- Chapters 2+ have `style="break-before: page;"`
-- Chapter 1 (after cover) has no break-before (flows naturally)
-
-### Social Card (additional)
-
-**R7 · No overflow or thin pages**: Each content page must fill ~60% of 1080×1440 canvas without overflowing. **Fix strategies (in order):** (1) Reduce block spacing: gap 22px → 16px, combo-block padding 28px→20px; (2) Compress text: shorten sentences, merge redundant points, cut filler — never truncate mid-sentence; (3) Split into additional page if content is essential and can't be compressed. Body-text max ~1100px with 30px font. If too thin, expand or merge.
-
-**R8 · Card sizing correct**: SVG card faces on cover must be properly sized per spread type (240×360px for 3-card, scale proportionally for others).
-
-### Web Page (additional)
-
-**R9 · Self-contained**: The HTML file must work offline — no external JS, no API calls. Fonts via `@import` is acceptable since they load from CDN on first view.
-
-**R10 · Responsive**: Max-width 720px, centered, readable on mobile. Card row wraps gracefully on small screens.
+Validation is run automatically via `node scripts/validate.js` at the end of each product generation step. See Phase 3a–3c for usage. All checks must pass (exit code 0) before presenting any product to the user.
 
 ## Edge Cases & Notes
 

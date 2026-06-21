@@ -4,9 +4,6 @@
 <meta charset="utf-8">
 <title>Lenormand · 社交卡片</title>
 <style>
-  /* Chiron Sung HK (昭源宋體) + Chiron Hei HK (昭源黑體) via jsDelivr CDN */
-  @import url('https://cdn.jsdelivr.net/npm/chiron-sung-hk-webfont@latest/css/vf.css');
-  @import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont@latest/css/vf.css');
 
   :root {
     --bg: #faf8f3;
@@ -171,6 +168,9 @@
   }
   .page-break { width: 100%; height: 40px; }
 </style>
+<!-- Local fonts — {{SKILL_ROOT}} is filled at generation time -->
+<link rel="stylesheet" href="file://{{SKILL_ROOT}}/assets/fonts/chiron-sung-hk/woff2/css/vf.css">
+<link rel="stylesheet" href="file://{{SKILL_ROOT}}/assets/fonts/chiron-hei-hk/woff2/css/vf.css">
 </head>
 <body>
 
