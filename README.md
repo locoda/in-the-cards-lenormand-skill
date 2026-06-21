@@ -104,7 +104,8 @@ Stargazer Prompt
 ```
 ├── SKILL.md                         # Main instructions
 ├── README.md                        # English docs
-├── README.zh-CN.md                  # 中文文档
+├── README.zh-CN.md                  # Simplified Chinese docs
+├── README.zh-TW.md                  # Traditional Chinese docs
 ├── assets/
 │   ├── seed-a4-pdf.html             # A4 PDF HTML skeleton
 │   ├── seed-social-card.html        # 1080×1440 social card skeleton
@@ -114,7 +115,14 @@ Stargazer Prompt
 │   └── previews/                    # 36 PNG card previews
 ├── previews/                        # Sample reading outputs
 ├── public/                          # Landing page (deployed via Cloudflare Pages)
-│   ├── index.html
+│   ├── index.html                   # Main page
+│   ├── style.css                    # Styles
+│   ├── script.js                    # Interactivity + i18n
+│   ├── favicon.svg                  # Moon card favicon
+│   ├── locales/
+│   │   ├── en.json                  # English
+│   │   ├── zh-CN.json               # Simplified Chinese
+│   │   └── zh-TW.json               # Traditional Chinese
 │   ├── cards/                       # Card SVGs for web display
 │   └── previews/                    # Preview assets for showcase
 ├── references/

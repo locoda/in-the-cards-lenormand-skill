@@ -102,7 +102,8 @@ Stargazer 提示词
 ```
 ├── SKILL.md                         # 主技能指令
 ├── README.md                        # 英文文档
-├── README.zh-CN.md                  # 中文文档
+├── README.zh-CN.md                  # 简体中文文档
+├── README.zh-TW.md                  # 繁体中文文档
 ├── assets/
 │   ├── seed-a4-pdf.html             # A4 PDF HTML 骨架
 │   ├── seed-social-card.html        # 1080×1440 社交卡片骨架
@@ -112,7 +113,14 @@ Stargazer 提示词
 │   └── previews/                    # 36 张 PNG 预览
 ├── previews/                        # 解读样例输出
 ├── public/                          # Landing page（Cloudflare Pages 部署）
-│   ├── index.html
+│   ├── index.html                   # 主页面
+│   ├── style.css                    # 样式
+│   ├── script.js                    # 交互 + 多语言切换
+│   ├── favicon.svg                  # 月亮牌 favicon
+│   ├── locales/
+│   │   ├── en.json                  # 英文
+│   │   ├── zh-CN.json               # 简体中文
+│   │   └── zh-TW.json               # 繁体中文
 │   ├── cards/                       # 网页展示用牌面 SVG
 │   └── previews/                    # 产品展示预览素材
 ├── references/

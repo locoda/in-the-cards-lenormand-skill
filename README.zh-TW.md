@@ -113,7 +113,14 @@ Stargazer 提示詞
 │   └── previews/                    # 36 張 PNG 預覽
 ├── previews/                        # 解讀範例輸出
 ├── public/                          # Landing page（Cloudflare Pages 部署）
-│   ├── index.html
+│   ├── index.html                   # 主頁面
+│   ├── style.css                    # 樣式
+│   ├── script.js                    # 互動 + 多語言切換
+│   ├── favicon.svg                  # 月亮牌 favicon
+│   ├── locales/
+│   │   ├── en.json                  # 英文
+│   │   ├── zh-CN.json               # 簡體中文
+│   │   └── zh-TW.json               # 繁體中文
 │   ├── cards/                       # 網頁展示用牌面 SVG
 │   └── previews/                    # 產品展示預覽素材
 ├── references/
