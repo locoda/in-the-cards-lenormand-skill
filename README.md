@@ -44,14 +44,16 @@ Requires: Node.js + Puppeteer for PDF and social card rendering.
 ### First-time reading
 
 ```
-用户: 帮我解读这个牌阵
+User: Interpret this spread
 
-你是一位傳統 Lenormand 占卜師。請為我解讀今天的每日運勢。
-【日期】2026/06/20
-【牌陣】每日運勢 3 張（由左至右連讀）
-1. 幸運草 (Clover)
-2. 小孩 (Child)
-3. 蛇 (Snake)
+You are a traditional Lenormand reader. Read for me...
+---
+Question: How will my career change in the next 3 months?
+Date: 2026-06-20
+Spread: 3-card linear
+1. Clover
+2. Child
+3. Snake
 ```
 
 → Agent runs Phase 1–2 (parse + interpret + save), generates A4 PDF by default.
@@ -59,19 +61,19 @@ Requires: Node.js + Puppeteer for PDF and social card rendering.
 ### Generate a different product
 
 ```
-用户: 把上次的解读生成社交卡片
+User: Generate social cards from the latest reading
 ```
 
 → Agent loads the saved reading, compresses content for 1080×1440, generates carousel PNGs.
 
 ```
-用户: 列出最近的解读
+User: List my recent readings
 ```
 
 → Agent runs `manage-readings.js list`, shows the index.
 
 ```
-用户: 用 #2 解读生成网页版
+User: Generate web page from reading #2
 ```
 
 → Agent loads reading #2 from index, generates self-contained web page.
@@ -79,7 +81,7 @@ Requires: Node.js + Puppeteer for PDF and social card rendering.
 ### Request multiple products
 
 ```
-用户: 帮我解读这个牌阵，生成 PDF 和社交卡片
+User: Interpret this spread, generate PDF and social cards
 
 [Stargazer prompt...]
 ```
