@@ -41,6 +41,8 @@ git clone https://github.com/locoda/stargazer-interpreter.git ~/.workbuddy/skill
 
 ## 使用方式 — 对话示例
 
+**语言自动识别**：技能通过 `Question:`（英文）或 `【問題】`（中文）等关键词自动判断提示词语言。所有输出——解读正文、章节标题、牌名——与提示词语言一致。
+
 ### 首次解读
 
 ```

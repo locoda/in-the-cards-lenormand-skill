@@ -41,6 +41,8 @@ Requires: Node.js + Puppeteer for PDF and social card rendering.
 
 ## Usage — Conversation Examples
 
+**Language auto-detection**: The skill reads the prompt language from keywords like `Question:` (English) or `【問題】` (Chinese). All output — interpretation text, chapter titles, card names — follows the prompt language.
+
 ### First-time reading
 
 ```
@@ -56,7 +58,7 @@ Spread: 3-card linear
 3. Snake
 ```
 
-→ Agent runs Phase 1–2 (parse + interpret + save), generates A4 PDF by default. Output language follows the prompt — **English prompt → English interpretation**.
+→ Agent runs Phase 1–2 (parse + interpret + save), generates A4 PDF by default.
 
 ### Generate a different product
 
