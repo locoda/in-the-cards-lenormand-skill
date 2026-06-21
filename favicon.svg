@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" fill="#F5F0E8" rx="32"/>
+  <!-- Moon outer circle -->
+  <circle cx="108" cy="128" r="70" fill="none" stroke="#7A8B7A" stroke-width="6"/>
+  <!-- Crescent cutout: cream fill circle offset right -->
+  <circle cx="136" cy="128" r="52" fill="#F5F0E8" stroke="none"/>
+  <!-- Redraw outer stroke over cream cutout -->
+  <circle cx="108" cy="128" r="70" fill="none" stroke="#7A8B7A" stroke-width="6"/>
+  <!-- Horizontal reference line -->
+  <line x1="32" y1="128" x2="224" y2="128" stroke="#7A8B7A" stroke-width="1.5" opacity="0.25"/>
+  <!-- Rose accent dot -->
+  <circle cx="70" cy="128" r="6" fill="#C4A0A0"/>
+</svg>

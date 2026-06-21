@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stargazer Interpreter · 星解者</title>
+<meta name="description" content="A Lenormand reading engine for Stargazer's Oracle. 6 spread types, Geometric Silence deck, Kami-styled PDF &amp; social card output. 中英雙語。">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="lang-toggle">
+  <button onclick="I18N.switchTo('zh-TW')" data-lang-btn="zh-TW">繁中</button>
+  <button class="active" onclick="I18N.switchTo('zh-CN')" data-lang-btn="zh-CN">简中</button>
+  <button onclick="I18N.switchTo('en')" data-lang-btn="en">EN</button>
+</div>
+
+<!-- HERO -->
+<section class="hero"><div class="container">
+  <div class="hero-badge" data-i18n="hero.badge"></div>
+  <h1 class="hero-title" data-i18n="hero.title"></h1>
+  <p class="hero-tagline" data-i18n="hero.tagline"></p>
+  <p class="hero-credit" data-i18n="hero.design_credit"></p>
+  <div class="hero-cards">
+    <div class="hero-card"><img src="cards/card-01-rider.svg" alt="Rider"></div>
+    <div class="hero-card"><img src="cards/card-34-fish.svg" alt="Fish"></div>
+    <div class="hero-card"><img src="cards/card-08-coffin.svg" alt="Coffin"></div>
+  </div>
+  <div class="hero-cta">
+    <a href="#install" class="btn btn-primary" data-i18n="hero.cta_get_started"></a>
+    <a href="demo/" class="btn btn-outline">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+      <span data-i18n="hero.cta_demo"></span>
+    </a>
+    <a href="https://github.com/locoda/stargazer-interpreter" target="_blank" rel="noopener" class="btn btn-outline">
+      <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub
+    </a>
+    <a href="https://stargazer.estework.site/" target="_blank" rel="noopener" class="btn btn-outline">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span data-i18n="hero.cta_stargazer"></span>
+    </a>
+  </div>
+</div></section>
+
+<!-- FEATURES -->
+<div class="section-divider"><hr></div>
+<section id="features"><div class="container">
+  <div class="section-header">
+    <div class="section-label" data-i18n="features.heading"></div>
+    <h2 class="section-title" data-i18n="features.title"></h2>
+    <p class="section-subtitle" data-i18n="features.subtitle"></p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card animate-in"><div class="feature-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.8"><rect x="2" y="3" width="20" height="18" rx="2"/><line x1="6" y1="8" x2="18" y2="8"/><line x1="6" y1="12" x2="18" y2="12"/><line x1="6" y1="16" x2="14" y2="16"/></svg></div><h3 data-i18n="features.card1_title"></h3><p data-i18n="features.card1_desc"></p></div>
+    <div class="feature-card animate-in"><div class="feature-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.8"><path d="M5 8l3 3-3 3"/><path d="M12 8l3 3-3 3"/><path d="M19 8l-3 3 3 3"/></svg></div><h3 data-i18n="features.card2_title"></h3><p data-i18n="features.card2_desc"></p></div>
+    <div class="feature-card animate-in"><div class="feature-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.8"><circle cx="8" cy="12" r="3"/><circle cx="16" cy="12" r="3"/><line x1="11" y1="12" x2="13" y2="12"/></svg></div><h3 data-i18n="features.card3_title"></h3><p data-i18n="features.card3_desc"></p></div>
+    <div class="feature-card animate-in"><div class="feature-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div><h3 data-i18n="features.card4_title"></h3><p data-i18n="features.card4_desc"></p></div>
+    <div class="feature-card animate-in"><div class="feature-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></div><h3 data-i18n="features.card5_title"></h3><p data-i18n="features.card5_desc"></p></div>
+    <div class="feature-card animate-in"><div class="feature-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div><h3 data-i18n="features.card6_title"></h3><p data-i18n="features.card6_desc"></p></div>
+  </div>
+</div></section>
+
+<!-- HOW IT WORKS -->
+<div class="section-divider"><hr></div>
+<section id="how-it-works"><div class="container">
+  <div class="section-header">
+    <div class="section-label" data-i18n="workflow.heading"></div>
+    <h2 class="section-title" data-i18n="workflow.title"></h2>
+  </div>
+  <div class="workflow">
+    <div class="workflow-step animate-in"><div class="step-number">1</div><h3 data-i18n="workflow.step1_title"></h3><div class="step-label" data-i18n="workflow.step1_label"></div><p data-i18n="workflow.step1_desc"></p></div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step animate-in"><div class="step-number">2</div><h3 data-i18n="workflow.step2_title"></h3><div class="step-label" data-i18n="workflow.step2_label"></div><p data-i18n="workflow.step2_desc"></p></div>
+    <div class="workflow-arrow">→</div>
+    <div class="workflow-step animate-in"><div class="step-number">3</div><h3 data-i18n="workflow.step3_title"></h3><div class="step-label" data-i18n="workflow.step3_label"></div><p data-i18n="workflow.step3_desc"></p></div>
+  </div>
+</div></section>
+
+<!-- PRODUCT SHOWCASE -->
+<div class="section-divider"><hr></div>
+<section id="showcase"><div class="container">
+  <div class="section-header">
+    <div class="section-label" data-i18n="showcase.heading"></div>
+    <h2 class="section-title" data-i18n="showcase.title"></h2>
+    <p class="section-subtitle" data-i18n="showcase.subtitle"></p>
+  </div>
+  <div class="product-tabs">
+    <button class="product-tab active" data-tab="a4-pdf" onclick="switchTab('a4-pdf')" data-i18n="showcase.tab_pdf"></button>
+    <button class="product-tab" data-tab="web-page" onclick="switchTab('web-page')" data-i18n="showcase.tab_web"></button>
+    <button class="product-tab" data-tab="social-card" onclick="switchTab('social-card')" data-i18n="showcase.tab_social"></button>
+  </div>
+
+  <div class="product-panel active" id="panel-a4-pdf"><div class="product-showcase-card">
+    <div class="preview-grid">
+      <div class="preview-img-wrap"><img src="previews/showcase-pdf-1.png" alt="A4 PDF Cover"></div>
+      <div class="preview-img-wrap"><img src="previews/showcase-pdf-2.png" alt="A4 PDF Content"></div>
+    </div>
+    <p class="product-desc" data-i18n="showcase.pdf_desc"></p>
+  </div></div>
+
+  <div class="product-panel" id="panel-web-page"><div class="product-showcase-card">
+    <div class="iframe-showcase"><iframe src="previews/lenormand-web-下半年運勢-2026-06-20.html" title="Sample Web Page"></iframe></div>
+    <p class="product-desc" data-i18n="showcase.web_desc"></p>
+  </div></div>
+
+  <div class="product-panel" id="panel-social-card"><div class="product-showcase-card">
+    <div class="preview-grid">
+      <div class="preview-img-wrap"><img src="previews/lenormand-xhs-下半年運勢-2026-06-20-01.png" alt="Social Card 1"></div>
+      <div class="preview-img-wrap"><img src="previews/lenormand-xhs-下半年運勢-2026-06-20-02.png" alt="Social Card 2"></div>
+      <div class="preview-img-wrap"><img src="previews/lenormand-xhs-下半年運勢-2026-06-20-03.png" alt="Social Card 3"></div>
+      <div class="preview-img-wrap"><img src="previews/lenormand-xhs-下半年運勢-2026-06-20-04.png" alt="Social Card 4"></div>
+    </div>
+    <p class="product-desc" data-i18n="showcase.social_desc"></p>
+  </div></div>
+</div></section>
+
+<!-- SPREAD TYPES -->
+<div class="section-divider"><hr></div>
+<section id="spreads"><div class="container">
+  <div class="section-header">
+    <div class="section-label" data-i18n="spreads.heading"></div>
+    <h2 class="section-title" data-i18n="spreads.title"></h2>
+  </div>
+  <div class="spreads-grid">
+    <div class="spread-card animate-in"><div class="spread-visual"><div class="spread-dots"><span class="spread-dot accent"></span></div></div><h3 data-i18n="spreads.s1_title"></h3><p data-i18n="spreads.s1_desc"></p></div>
+    <div class="spread-card animate-in"><div class="spread-visual"><div class="spread-dots" style="gap:16px"><span class="spread-dot accent"></span><span class="spread-dot"></span></div></div><h3 data-i18n="spreads.s2_title"></h3><p data-i18n="spreads.s2_desc"></p></div>
+    <div class="spread-card animate-in"><div class="spread-visual"><div class="spread-dots" style="justify-content:space-between"><span class="spread-dot"></span><span class="spread-dot accent"></span><span class="spread-dot"></span></div></div><h3 data-i18n="spreads.s3_title"></h3><p data-i18n="spreads.s3_desc"></p></div>
+    <div class="spread-card animate-in"><div class="spread-visual"><div class="spread-dots" style="gap:4px"><span class="spread-dot" style="width:8px;height:8px"></span><span class="spread-dot" style="width:8px;height:8px"></span><span class="spread-dot accent" style="width:10px;height:10px"></span><span class="spread-dot" style="width:8px;height:8px"></span><span class="spread-dot" style="width:8px;height:8px"></span></div></div><h3 data-i18n="spreads.s4_title"></h3><p data-i18n="spreads.s4_desc"></p></div>
+    <div class="spread-card animate-in"><div class="spread-visual"><div class="spread-dots" style="display:grid;grid-template-columns:repeat(3,1fr);place-items:center;gap:8px"><span class="spread-dot"></span><span class="spread-dot"></span><span class="spread-dot"></span><span class="spread-dot"></span><span class="spread-dot accent"></span><span class="spread-dot"></span><span class="spread-dot"></span><span class="spread-dot"></span><span class="spread-dot"></span></div></div><h3 data-i18n="spreads.s5_title"></h3><p data-i18n="spreads.s5_desc"></p></div>
+    <div class="spread-card animate-in"><div class="spread-visual"><div class="spread-dots" style="display:grid;grid-template-columns:repeat(3,1fr);place-items:center;gap:4px"><span class="spread-dot"></span><span class="spread-dot"></span><span class="spread-dot"></span><span class="spread-dot" style="width:100%;height:1px;background:var(--sage);border-radius:0;grid-column:1/-1"></span><span class="spread-dot accent"></span><span class="spread-dot accent"></span><span class="spread-dot accent"></span></div></div><h3 data-i18n="spreads.s6_title"></h3><p data-i18n="spreads.s6_desc"></p></div>
+  </div>
+</div></section>
+
+<!-- CARD GALLERY -->
+<div class="section-divider"><hr></div>
+<section id="gallery"><div class="container">
+  <div class="section-header">
+    <div class="section-label" data-i18n="gallery.heading"></div>
+    <h2 class="section-title" data-i18n="gallery.title"></h2>
+    <p class="section-subtitle" data-i18n="gallery.subtitle"></p>
+  </div>
+  <div class="gallery-grid" id="card-gallery"></div>
+  <div class="gallery-rotate">
+    <button onclick="rotateGallery()" data-i18n="gallery.more"></button>
+  </div>
+</div></section>
+
+<!-- INSTALL -->
+<div class="section-divider"><hr></div>
+<section id="install"><div class="container">
+  <div class="section-header">
+    <div class="section-label" data-i18n="install.heading"></div>
+    <h2 class="section-title" data-i18n="install.title"></h2>
+  </div>
+  <div class="install-block">
+    <p class="install-note" data-i18n="install.note"></p>
+    <div style="margin:1.5rem 0;padding:1.5rem;background:var(--combo-bg);border-radius:var(--radius-sm);text-align:center">
+      <p style="font-size:1.1rem;font-weight:500;margin-bottom:0.5rem;color:var(--text)" data-i18n="install.prompt_label"></p>
+      <p style="font-size:1.05rem;color:var(--brand);font-style:italic" data-i18n="install.prompt_text"></p>
+    </div>
+    <details style="margin-top:0.5rem">
+      <summary style="font-family:var(--sans);font-size:0.85rem;color:var(--text-muted);cursor:pointer" data-i18n="install.git_manual"></summary>
+      <div class="code-block" style="margin-top:0.75rem">
+        <span class="comment"># Repo: https://github.com/locoda/stargazer-interpreter</span><br>
+        <span class="cmd">git clone</span> https://github.com/locoda/stargazer-interpreter.git \<br>
+        &nbsp;&nbsp;<span class="path">~/your-agent/skills/stargazer-interpreter/</span>
+      </div>
+    </details>
+    <div class="install-badges">
+      <a href="https://github.com/locoda/stargazer-interpreter" target="_blank" rel="noopener" class="badge-link">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        <span data-i18n="install.star_github"></span>
+      </a>
+      <a href="https://stargazer.estework.site/" target="_blank" rel="noopener" class="badge-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span data-i18n="install.try_stargazer"></span>
+      </a>
+      <a href="https://agentskills.io" target="_blank" rel="noopener" class="badge-link">Agent Skills Standard</a>
+    </div>
+  </div>
+</div></section>
+
+<!-- FOOTER -->
+<footer class="site-footer"><div class="container">
+  <div class="footer-brand">Stargazer Interpreter · 星解者</div>
+  <p class="footer-tagline" data-i18n="footer.tagline"></p>
+  <div class="footer-credits">
+    <span><a href="demo/">交互演示 Demo</a></span><br>
+    <span data-i18n="footer.fonts"></span><br>
+    <span data-i18n="footer.design_ref"></span><br>
+    <span data-i18n="footer.data_source"></span><br>
+    <span data-i18n="footer.repo"></span>
+  </div>
+</div></footer>
+
+<script src="script.js"></script>
+</body>
+</html>

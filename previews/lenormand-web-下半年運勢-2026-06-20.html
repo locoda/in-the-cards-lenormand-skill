@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下半年整體運勢如何？ — Lenormand Reading</title>
+<style>
+  /* Chiron Sung HK (昭源宋體) + Chiron Hei HK (昭源黑體) via jsDelivr CDN */
+  @import url('https://cdn.jsdelivr.net/npm/chiron-sung-hk-webfont@latest/css/vf.css');
+  @import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont@latest/css/vf.css');
+
+  :root {
+    --bg: #faf9f5;
+    --card: #ffffff;
+    --text: #1a1a1a;
+    --text-secondary: #6b6a64;
+    --brand: #1B365D;
+    --border: #e8e6dc;
+    --serif: "Chiron Sung HK WS", "Source Han Serif SC", "Noto Serif CJK SC", serif;
+    --sans: "Chiron Hei HK WS", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.8;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+  header {
+    text-align: center;
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2.5rem;
+  }
+  header .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--brand);
+    margin-bottom: 1rem;
+    font-family: var(--sans);
+  }
+  header h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  header .date {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    font-weight: 350;
+  }
+
+  /* SVG card row */
+  .card-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem;
+    margin: 2.5rem 0;
+  }
+  .card-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .card-svg { border-radius: 6px; }
+  .card-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .card-pos {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    font-weight: 350;
+  }
+
+  .summary {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 450;
+    color: var(--brand);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    line-height: 1.7;
+  }
+
+  .chapter {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .chapter h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--brand);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .chapter p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    line-height: 1.85;
+    text-align: justify;
+    font-weight: 400;
+  }
+  .combo {
+    margin: 1.2rem 0;
+    padding: 1rem 1.2rem;
+    background: #f7f6f0;
+    border-left: 3px solid var(--brand);
+    border-radius: 0 6px 6px 0;
+  }
+  .combo .combo-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--brand);
+    margin-bottom: 0.4rem;
+  }
+  .combo .combo-text {
+    font-weight: 400;
+    line-height: 1.8;
+  }
+  .takeaway {
+    margin-top: 1.5rem;
+    padding: 1rem 1.2rem;
+    background: var(--brand);
+    color: #f5f4ed;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 400;
+    line-height: 1.7;
+  }
+  footer {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--sans);
+    font-weight: 350;
+  }
+
+  /* Mobile */
+  @media (max-width: 520px) {
+    body { padding: 1.5rem 1rem 3rem; }
+    header { padding: 2.5rem 0 2rem; }
+    header h1 { font-size: 1.3rem; }
+    .card-row { gap: 0.4rem; }
+    .card-svg { width: 90px !important; height: 135px !important; }
+    .card-label { font-size: 0.72rem; }
+    .card-pos { font-size: 0.6rem; }
+    .chapter { padding: 1.25rem; margin: 2rem 0; }
+    .chapter h2 { font-size: 1.1rem; }
+    .chapter p { text-align: left; font-size: 0.92rem; }
+    .summary { font-size: 1rem; padding: 1.25rem; }
+    .combo { padding: 0.8rem 1rem; }
+  }
+</style>
+</head>
+<body>
+  <!--
+    SEED: Web Page — Stargazer Interpreter v3.1
+
+    Usage:
+      1. Copy to output/lenormand-web-{topic}-{date}.html
+      2. Replace  markers. Use .split(k).join(v) since some
+         placeholders (e.g. 下半年整體運勢如何？) appear in multiple locations.
+      3. Read SVGs from cards/card-NN-slug.svg, strip <defs>, inline in card-wrap blocks
+      4. Self-contained — no rendering step needed
+  -->
+  <!-- Global SVG defs for all inline cards -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <pattern id="g" width="72" height="72" patternUnits="userSpaceOnUse">
+        <path d="M72 0L72 72M0 72L72 72" fill="none" stroke="#7A8B7A" stroke-width="0.3" opacity=".12"/>
+      </pattern>
+      <pattern id="sg" width="18" height="18" patternUnits="userSpaceOnUse">
+        <path d="M18 0L18 18M0 18L18 18" fill="none" stroke="#7A8B7A" stroke-width="0.2" opacity=".06"/>
+      </pattern>
+    </defs>
+  </svg>
+
+  <header>
+    <div class="label">三張線性牌陣</div>
+    <h1>下半年整體運勢如何？</h1>
+    <div class="date">2026年6月20日</div>
+  </header>
+
+  <!-- SVG card row: 140×210px per card for 3-card spread -->
+  <div class="card-row">
+    
+    <div class="card-wrap">
+      <svg class="card-svg" viewBox="0 0 1024 1536" width="140" height="210">
+        <rect width="1024" height="1536" fill="#F5F0E8"/><rect width="1024" height="1536" fill="url(#g)"/><rect x="60" y="60" width="904" height="1416" fill="none" stroke="#7A8B7A" stroke-width="1.2" opacity=".3"/><rect x="72" y="72" width="880" height="1392" fill="none" stroke="#7A8B7A" stroke-width="0.5" opacity=".15"/><g stroke="#7A8B7A" stroke-width="0.8" opacity=".28"><line x1="44" y1="60" x2="56" y2="60"/><line x1="64" y1="60" x2="76" y2="60"/><line x1="60" y1="44" x2="60" y2="56"/><line x1="60" y1="64" x2="60" y2="76"/><line x1="948" y1="60" x2="960" y2="60"/><line x1="968" y1="60" x2="980" y2="60"/><line x1="964" y1="44" x2="964" y2="56"/><line x1="964" y1="64" x2="964" y2="76"/><line x1="44" y1="1476" x2="56" y2="1476"/><line x1="64" y1="1476" x2="76" y2="1476"/><line x1="60" y1="1460" x2="60" y2="1472"/><line x1="60" y1="1480" x2="60" y2="1492"/><line x1="948" y1="1476" x2="960" y2="1476"/><line x1="968" y1="1476" x2="980" y2="1476"/><line x1="964" y1="1460" x2="964" y2="1472"/><line x1="964" y1="1480" x2="964" y2="1492"/></g><path d="M379 570A266 247 0 0 0 683 931" fill="none" stroke="#7A8B7A" stroke-width="2.8"/><line x1="721" y1="570" x2="303" y2="931" stroke="#C4A0A0" stroke-width="2.8"/><circle cx="512" cy="744.8" r="8" fill="#C4A0A0"/><text x="512" y="1490" text-anchor="middle" font-family="Georgia, Palatino Linotype, Palatino, Book Antiqua, serif" font-size="34" fill="#7A8B7A" opacity=".45">10</text>
+      </svg>
+      <span class="card-label">10. 鐮刀</span>
+      <span class="card-pos">過去</span>
+    </div>
+    <div class="card-wrap">
+      <svg class="card-svg" viewBox="0 0 1024 1536" width="140" height="210">
+        <rect width="1024" height="1536" fill="#F5F0E8"/><rect width="1024" height="1536" fill="url(#g)"/><rect x="60" y="60" width="904" height="1416" fill="none" stroke="#7A8B7A" stroke-width="1.2" opacity=".3"/><rect x="72" y="72" width="880" height="1392" fill="none" stroke="#7A8B7A" stroke-width="0.5" opacity=".15"/><g stroke="#7A8B7A" stroke-width="0.8" opacity=".28"><line x1="44" y1="60" x2="56" y2="60"/><line x1="64" y1="60" x2="76" y2="60"/><line x1="60" y1="44" x2="60" y2="56"/><line x1="60" y1="64" x2="60" y2="76"/><line x1="948" y1="60" x2="960" y2="60"/><line x1="968" y1="60" x2="980" y2="60"/><line x1="964" y1="44" x2="964" y2="56"/><line x1="964" y1="64" x2="964" y2="76"/><line x1="44" y1="1476" x2="56" y2="1476"/><line x1="64" y1="1476" x2="76" y2="1476"/><line x1="60" y1="1460" x2="60" y2="1472"/><line x1="60" y1="1480" x2="60" y2="1492"/><line x1="948" y1="1476" x2="960" y2="1476"/><line x1="968" y1="1476" x2="980" y2="1476"/><line x1="964" y1="1460" x2="964" y2="1472"/><line x1="964" y1="1480" x2="964" y2="1492"/></g><circle cx="455" cy="760" r="216.6" fill="none" stroke="#7A8B7A" stroke-width="3"/><circle cx="546.2" cy="760" r="163.4" fill="#F5F0E8" stroke="none"/><circle cx="455" cy="760" r="216.6" fill="none" stroke="#7A8B7A" stroke-width="3"/><line x1="284" y1="760" x2="740" y2="760" stroke="#7A8B7A" stroke-width="0.5" opacity=".08"/><circle cx="417" cy="760" r="8" fill="#C4A0A0"/><text x="512" y="1490" text-anchor="middle" font-family="Georgia, Palatino Linotype, Palatino, Book Antiqua, serif" font-size="34" fill="#7A8B7A" opacity=".45">32</text>
+      </svg>
+      <span class="card-label">32. 月亮</span>
+      <span class="card-pos">現在</span>
+    </div>
+    <div class="card-wrap">
+      <svg class="card-svg" viewBox="0 0 1024 1536" width="140" height="210">
+        <rect width="1024" height="1536" fill="#F5F0E8"/><rect width="1024" height="1536" fill="url(#g)"/><rect x="60" y="60" width="904" height="1416" fill="none" stroke="#7A8B7A" stroke-width="1.2" opacity=".3"/><rect x="72" y="72" width="880" height="1392" fill="none" stroke="#7A8B7A" stroke-width="0.5" opacity=".15"/><g stroke="#7A8B7A" stroke-width="0.8" opacity=".28"><line x1="44" y1="60" x2="56" y2="60"/><line x1="64" y1="60" x2="76" y2="60"/><line x1="60" y1="44" x2="60" y2="56"/><line x1="60" y1="64" x2="60" y2="76"/><line x1="948" y1="60" x2="960" y2="60"/><line x1="968" y1="60" x2="980" y2="60"/><line x1="964" y1="44" x2="964" y2="56"/><line x1="964" y1="64" x2="964" y2="76"/><line x1="44" y1="1476" x2="56" y2="1476"/><line x1="64" y1="1476" x2="76" y2="1476"/><line x1="60" y1="1460" x2="60" y2="1472"/><line x1="60" y1="1480" x2="60" y2="1492"/><line x1="948" y1="1476" x2="960" y2="1476"/><line x1="968" y1="1476" x2="980" y2="1476"/><line x1="964" y1="1460" x2="964" y2="1472"/><line x1="964" y1="1480" x2="964" y2="1492"/></g><circle cx="512" cy="760" r="228" fill="none" stroke="#7A8B7A" stroke-width="3"/><circle cx="512" cy="760" r="114" fill="none" stroke="#7A8B7A" stroke-width="1.6"/><circle cx="512" cy="760" r="34.199999999999996" fill="none" stroke="#C4A0A0" stroke-width="1.8"/><line x1="637.4" y1="760" x2="740" y2="760" stroke="#7A8B7AAA" stroke-width="1.3"/><line x1="600.671190360793" y1="848.671190360793" x2="673.2203461105329" y2="921.2203461105328" stroke="#7A8B7AAA" stroke-width="1.3"/><line x1="512" y1="885.4" x2="512" y2="988" stroke="#7A8B7AAA" stroke-width="1.3"/><line x1="423.32880963920695" y1="848.671190360793" x2="350.77965388946717" y2="921.2203461105329" stroke="#7A8B7AAA" stroke-width="1.3"/><line x1="386.6" y1="760" x2="284" y2="760" stroke="#7A8B7AAA" stroke-width="1.3"/><line x1="423.32880963920695" y1="671.328809639207" x2="350.7796538894671" y2="598.7796538894672" stroke="#7A8B7AAA" stroke-width="1.3"/><line x1="512" y1="634.6" x2="511.99999999999994" y2="532" stroke="#7A8B7AAA" stroke-width="1.3"/><line x1="600.671190360793" y1="671.328809639207" x2="673.2203461105328" y2="598.7796538894671" stroke="#7A8B7AAA" stroke-width="1.3"/><circle cx="740" cy="760" r="7" fill="#C4A0A0AA"/><circle cx="673.2203461105329" cy="921.2203461105328" r="7" fill="#C4A0A0AA"/><circle cx="512" cy="988" r="7" fill="#C4A0A0AA"/><circle cx="350.77965388946717" cy="921.2203461105329" r="7" fill="#C4A0A0AA"/><circle cx="284" cy="760" r="7" fill="#C4A0A0AA"/><circle cx="350.7796538894671" cy="598.7796538894672" r="7" fill="#C4A0A0AA"/><circle cx="511.99999999999994" cy="532" r="7" fill="#C4A0A0AA"/><circle cx="673.2203461105328" cy="598.7796538894671" r="7" fill="#C4A0A0AA"/><circle cx="512" cy="760" r="10" fill="#C4A0A0"/><text x="512" y="1490" text-anchor="middle" font-family="Georgia, Palatino Linotype, Palatino, Book Antiqua, serif" font-size="34" fill="#7A8B7A" opacity=".45">16</text>
+      </svg>
+      <span class="card-label">16. 星星</span>
+      <span class="card-pos">未來</span>
+    </div>
+  </div>
+
+  <div class="summary">下半年將經歷一次必要的斷捨離，穿越情感的暗湧後，終將看清方向、重拾希望。</div>
+
+  
+  <div class="chapter">
+    <h2>組合解讀 · Chain Reading</h2>
+    
+    <div class="combo">
+      <div class="combo-label">組合 1+2：鐮刀 + 月亮</div>
+      <div class="combo-text">鐮刀收割，月亮感受——一場必要的切割，將你推向更深的情感真實。</div>
+    </div>
+    <p>鐮刀切入，月亮的直覺在切割的裂口處甦醒。這是一組矛盾的組合：鐮刀的鋒利帶來驟然的斷裂與警告，月亮則在意識的暗面中潛行，以情感、直覺和創造力回應。鐮刀收割的，正是月亮所掌管的一切——潛意識的湧動、未被命名的情緒、對認可的渴望。</p>
+    <p>下半年之初，你可能會經歷一次突然的切割或果斷的終結。這未必是災難——鐮刀也是收割的工具。某個模式、某段關係、某種你一直緊握不放的東西，可能會被一刀斬斷。這個過程不會舒適，但它為月亮打開了空間：你將被迫轉向內在，面對那些一直存在卻被日常噪音掩蓋的情感真相。</p>
+    <p>鐮刀的「警告」與月亮的「直覺」在此交集——你的潛意識可能已經察覺到某些事情不對，而鐮刀的出現只是將這個直覺變成了無法迴避的現實。這不是無意義的痛苦，而是一場有目的的收割。被切斷的，是需要被切斷的；浮現的，是需要被看見的。</p>
+    <p>月亮的「週期」屬性也在此刻被激活——鐮刀的切割不是終點，而是一個週期的結束與另一個週期的開始。月亮提醒你：情緒有潮汐，創造力有盈缺，直覺有時清晰有時模糊。下半年的這個階段，不要急著「修復」或「前進」——先停留，先感受，先讓月亮的光照進被鐮刀劃開的傷口。</p>
+    <div class="combo">
+      <div class="combo-label">組合 2+3：月亮 + 星星</div>
+      <div class="combo-text">直覺找到了方向——從情感的暗湧中浮現的，終將在星光下顯現為前路。</div>
+    </div>
+    <p>月亮的情感深度與星星的指引之光在此交匯——感性找到了方向，直覺獲得了清晰的輪廓。這是牌陣中最明亮的一對組合，因為兩張都是正向牌：月亮提供情感的厚度，星星給予前路的照見。</p>
+    <p>如果說鐮刀+月亮是「被動的內在轉向」，那麼月亮+星星就是「主動的意義建構」。在經歷了切割和內在探索之後，你開始從那些浮現的情感與直覺中，提煉出具體的方向。月亮的「認可」與星星的「目標」協同運作：你在這段時間的創作、表達或情感投入，會開始被看見、被肯定，而這份認可又進一步強化了你的方向感。</p>
+    <p>月亮的「夢境」與「潛意識」在星星的照耀下不再只是混沌的湧動。星星代表的是夜晚天空中唯一能辨認方向的恆星——它不是驅散黑夜的太陽，而是在黑暗中讓你知道自己沒有迷失的那一盞燈。下半年後段，你不會一夜之間萬事順遂，但你會清楚知道自己在朝哪裡走，以及為什麼要走。</p>
+    <p>這對組合也暗示著創造力與靈感的結晶。月亮掌管藝術感受力和情感表達，星星掌管靈感和更高層次的指引。當月亮的情感素材被星星點亮，你可能會發現自己正在將內在的體驗轉化為某種可被看見的成果——無論是創作、工作上的突破，還是人生方向的重新校準。月亮說：「我感受到的。」星星回答：「我看見它通向哪裡。」</p>
+  </div>
+
+  <div class="chapter">
+    <h2>整體意義 · Overall Meaning</h2>
+    
+    <p>三張牌串成一條清晰的敘事弧線：切割 → 沉潛 → 看見。這是一個先破後立、由暗轉明的下半年。</p>
+    <p>鐮刀帶來一個不容迴避的轉折——某個階段的終結、某次果斷的抉擇、或某種外來的衝擊。它確保你不可能繼續維持現狀。月亮作為牌陣的核心，定義了下半年的主調：這是一個「向內看」的時期。你的力量不在於對抗外部事件，而在於你如何感受、如何理解、如何讓直覺成為指南針。星星則承諾了一個充滿希望的出口：穿越月亮的暗湧之後，你會看見屬於你的那顆星——不是別人的成功藍圖，而是你真正想去的方向。</p>
+    <p>值得注意的是兩股張力之間的平衡。鐮刀是外在的、暴力的、不可商量的——它來自外界或來自你必須做出的決定。月亮和星星則都是內在的、溫暖的、正向的力量。這意味著下半年的「危險」或「困難」主要集中在開端，而在穿越那個入口之後，牌面給出的訊號整體是積極的。你的任務不是躲避鐮刀——那通常做不到——而是在被切割之後，允許自己去感受、去創造、去被指引。</p>
+    <p>月亮居中也暗示著：如果你一直在用理性壓抑情感，或習慣性地跳過「感受」直接進入「解決」，那麼下半年可能會強迫你慢下來。鐮刀的鋒利會讓你無法再忽視內在的聲音；月亮會拉長這個過程，讓你有足夠的時間去消化和轉化；而星星會在適當的時機出現，告訴你——你準備好了。</p>
+    <div class="takeaway">下半年的運勢軌跡是「先斷、後感、終見」。不要急著在鐮刀落下後立刻尋找答案——給月亮時間，星星自會出現。</div>
+  </div>
+
+  <div class="chapter">
+    <h2>指引 · Guidance</h2>
+    
+    <p>這組牌沒有叫你「樂觀就對了」——它給出的是一條更誠實的路徑。鐮刀說：有些東西必須斷。月亮說：斷了之後，去感受。星星說：感受夠了，你會看見。</p>
+    <p>具體而言：首先，不要抗拒下半年初的變動或終結。鐮刀雖是負面牌，但它出現在「過去/開端」的位置，意味著它不是終點而是起點。與其被動地被切割，不如主動檢視：有什麼是你一直知道該放下、卻還在勉強維繫的？主動揮下鐮刀，比被鐮刀砍中，傷口要淺得多。</p>
+    <p>其次，善待月亮階段。這不是「無所事事」的藉口，而是「有意識地沉浸」。記錄夢境、寫日記、進行創作、與信任的人深度對話——這些都是月亮的工作方式。月亮不求效率，求的是真實。當你允許自己真實地面對情緒和直覺，月亮的「認可」面向就會開始運作：你會在對的地方、對的時間、被對的人看見。</p>
+    <p>最後，信任星星會來，但不要強求它提前。星星不是靠意志力就能點亮的——它是月亮階段自然結出的果實。當你忠於自己的感受和直覺，方向會自己浮現。星星的指引往往是「啊，原來是這樣」而非「我決定了要這樣」——它是一種領悟，不是一個計劃。</p>
+    <div class="takeaway">下半年最重要的功課不是「解決問題」，而是「允許過程發生」。鐮刀會切，月亮會漲落，星星會亮——你的角色，是別在它們完成各自的工作之前，就急著寫結局。</div>
+  </div>
+
+  <footer>
+    Lenormand Reading · Stargazer Interpreter · 2026年6月20日
+  </footer>
+</body>
+</html>
