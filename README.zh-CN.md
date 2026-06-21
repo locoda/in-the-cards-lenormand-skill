@@ -1,27 +1,33 @@
-# Stargazer Interpreter · 星解者 v3.1
+# Stargazer Interpreter · 星解者
 
-> [English](README.md)
+> [English](README.md) · [展示页](https://github.com/locoda/stargazer-interpreter)
 
-一个 [WorkBuddy](https://www.codebuddy.ai) 技能，用于解读来自 [Stargazer's Oracle（观星者神谕）](https://stargazer.estework.site/) 的雷诺曼（Lenormand）牌阵。遵循 [Agent Skills](https://agentskills.io) 开放标准。
+遵循 [Agent Skills](https://agentskills.io) 开放标准的 Lenormand 雷诺曼解读技能，为 [Stargazer's Oracle（观星者神谕）](https://stargazer.estework.site/) 而生。兼容任何支持 Agent Skills 的 AI 助手，不绑定特定平台。
 
-粘贴 Stargazer AI 提示词 → 生成 A4 PDF、交互式网页、或 1080×1440 小​​红书社交卡片。
+粘贴 Stargazer 提示词 → 完成解读并保存为结构化数据，渲染为精美的 Kami 风格 A4 PDF、独立网页、或 1080×1440 社交卡片。
+
+## 设计
+
+所有产品共享统一视觉语言，灵感来自两个源头：
+
+- **[Kami](https://github.com/tw93/Kami)** — 暖羊皮纸底色 (#f5f4ed)、墨蓝强调色 (#1B365D)、昭源宋体排版。干净、文雅、留白从容。
+- **几何沉默 (Geometric Silence)** — 一套 36 张原创 Lenormand 牌组，建筑蓝图风格。灰鼠尾草绿 (#7A8B7A) 线条绘制于米白底色 (#F5F0E8) 之上，尘玫瑰色 (#C4A0A0) 点缀。瑞士国际主义风格遇上了科研标本图版。无任何神秘纹饰——纯粹几何抽象。
+
+二者共同营造出学术、温暖、安静优雅的阅读体验。
 
 ## 功能特性
 
-- **6 种牌阵**：1 张是非题、2 张对牌、3 张线性、5 张线性、9 张九宫格（3×3）、二选一
-- **双语**：自动识别中文或英文提示词
-- **组合优先解读**：相邻牌对链式解读 + 名词·形容词模型
-- **一次解读，三种产出**：A4 PDF（默认）、独立网页、1080×1440 社交卡片
-- **解读持久化**：保存为结构化 JSON + Markdown，后续可重新生成任意产品
-- **种子 HTML 骨架**：复制即用，不再从零构造 HTML
-- **Geometric Silence SVG 牌面**：粗线条内联 SVG（`cards/` 目录），米白/鼠尾草绿/灰玫瑰色
-- **昭源字体系列**：正文用昭源宋體，标签用昭源黑體
-- **Kami 风格 PDF**：暖羊皮纸 (#f5f4ed) + 墨蓝强调色 (#1B365D)
+- **6 种牌阵**：1 张是非题 · 2 张对牌 · 3 张线性 · 5 张线性 · 9 张九宫格（3×3）· 二选一
+- **双语自动识别**：中英文提示词自动检测，输出语言与输入一致
+- **组合优先解读**：相邻牌对链式解读，名词+形容词模型，中立诚实不做空洞安慰
+- **一次解读，三种产出**：A4 PDF（默认）· 独立网页 · 1080×1440 社交卡轮播
+- **解读持久化**：结构化 JSON + 人类可读 Markdown 双存，随时再生为任意产品形态
+- **种子 HTML**：复制即用，不再从零构造 HTML
+- **几何沉默牌组 (Geometric Silence)**：36 张原创 SVG 牌面，建筑蓝图风格
+- **昭源字体系列**：Chiron Sung HK（昭源宋體）正文 + Chiron Hei HK（昭源黑體）标签
 
 ## 预览
 
-| 类型 | 牌阵 | 牌面 | 链接 |
-|------|------|------|------|
 | 类型 | 牌阵 | 牌面 | 链接 |
 |------|------|------|------|
 | A4 PDF | 5 张 | 月亮 → 棺材 → 樹 → 雲 → 男人 | [PDF](previews/lenormand-five-創作瓶頸-2026-06-20.pdf) |
@@ -32,20 +38,21 @@
 
 对你的 AI 助手说：
 
-> 帮我安装 stargazer-interpreter 技能，地址是 https://github.com/locoda/stargazer-interpreter
+> 帮我从 GitHub 安装 stargazer-interpreter 技能：github.com/locoda/stargazer-interpreter
+
+或手动克隆到你的 agent 技能目录：
 
 ```bash
-# WorkBuddy
-git clone https://github.com/locoda/stargazer-interpreter.git ~/.workbuddy/skills/stargazer-interpreter/
+git clone https://github.com/locoda/stargazer-interpreter.git ~/your-agent/skills/stargazer-interpreter/
 ```
 
-需要 Node.js + Puppeteer（首次使用自动安装 Chromium）。
+需要 Node.js + Puppeteer（首次生成 PDF 或社交卡片时自动安装 Chromium）。
 
-## 使用方式 — 对话示例
-
-**语言自动识别**：技能通过 `Question:`（英文）或 `【問題】`（中文）等关键词自动判断提示词语言。所有输出——解读正文、章节标题、牌名——与提示词语言一致。
+## 使用方式
 
 ### 首次解读
+
+粘贴 Stargazer 提示词 — agent 自动执行 Phase 1（解析）+ Phase 2（解读+保存），默认生成 A4 PDF。
 
 ```
 用户: 帮我解读这个牌阵
@@ -58,37 +65,19 @@ git clone https://github.com/locoda/stargazer-interpreter.git ~/.workbuddy/skill
 3. 蛇 (Snake)
 ```
 
-→ Agent 执行 Phase 1–2（解析 + 解读 + 保存），默认生成 A4 PDF。
-
 ### 从已有解读生成不同产品
 
 ```
 用户: 把上次的解读生成社交卡片
-```
-
-→ Agent 加载保存的解读 JSON，压缩内容适配 1080×1440，生成轮播 PNG。
-
-```
-用户: 列出最近的解读
-```
-
-→ Agent 运行 `manage-readings.js list`，展示解读索引。
-
-```
 用户: 用 #2 解读生成网页版
 ```
-
-→ Agent 从索引加载 #2 解读，生成自包含网页。
 
 ### 一次生成多个产品
 
 ```
 用户: 帮我解读这个牌阵，生成 PDF 和社交卡片
-
 [Stargazer 提示词...]
 ```
-
-→ Agent 跑完整流程，交付两种产品。
 
 ### 三阶段架构
 
@@ -103,7 +92,7 @@ Stargazer 提示词
     │
     ▼
 [Phase 3] 从保存的解读生成产品
-           ├── A4 PDF（默认，Kami 风格）
+           ├── A4 PDF（默认）
            ├── 独立网页
            └── 社交卡片（1080×1440 轮播）
 ```
@@ -111,7 +100,7 @@ Stargazer 提示词
 ## 目录结构
 
 ```
-├── SKILL.md                         # 主技能指令（v3.1）
+├── SKILL.md                         # 主技能指令
 ├── README.md                        # 英文文档
 ├── README.zh-CN.md                  # 中文文档
 ├── assets/
@@ -122,15 +111,19 @@ Stargazer 提示词
 │   ├── card-01-rider.svg ...        # 36 张 Geometric Silence SVG
 │   └── previews/                    # 36 张 PNG 预览
 ├── previews/                        # 解读样例输出
+├── public/                          # Landing page（Cloudflare Pages 部署）
+│   ├── index.html
+│   ├── cards/                       # 网页展示用牌面 SVG
+│   └── previews/                    # 产品展示预览素材
 ├── references/
 │   ├── lenormand-cards.md           # 36 张牌数据库
 │   ├── spread-parsing.md            # 提示词解析规则
 │   ├── design-system.md             # 共享字体/颜色/牌名表
 │   ├── reading-schema.md            # 解读 JSON 结构
-│   └── template-*.md                # 模板参考文档
+│   └── template-a4-pdf.md           # A4 PDF 章节与分页平衡规则
 └── scripts/
-    ├── generate-pdf.js              # HTML → A4 PDF
-    ├── render-social-cards.js       # HTML → 1080×1440 PNG
+    ├── generate-pdf.js              # HTML → A4 PDF (Puppeteer)
+    ├── render-social-cards.js       # HTML → 1080×1440 PNG (Puppeteer)
     └── manage-readings.js           # 解读索引 CLI
 ```
 
@@ -145,7 +138,8 @@ MIT
 - [昭源黑體 (Chiron Hei HK)](https://github.com/chiron-fonts/chiron-hei-hk) — 可变黑体，SIL OFL 1.1
 
 **设计**
-- 视觉风格受到 [Kami](https://github.com/tw93/Kami) 启发 — MIT
+- [Kami](https://github.com/tw93/Kami) — 视觉风格启发，MIT
+- 几何沉默 (Geometric Silence) — 原创牌组设计
 
 **数据**
 - [Stargazer's Oracle（观星者神谕）](https://stargazer.estework.site/)

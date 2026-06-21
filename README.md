@@ -1,22 +1,30 @@
-# Stargazer Interpreter · 星解者 v3.1
+# Stargazer Interpreter · 星解者
 
-> [中文说明](README.zh-CN.md)
+> [中文说明](README.zh-CN.md) · [Landing Page](https://github.com/locoda/stargazer-interpreter)
 
-A [WorkBuddy](https://www.codebuddy.ai) skill for interpreting Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/). Follows the [Agent Skills](https://agentskills.io) open standard.
+An [Agent Skills](https://agentskills.io) compatible skill that interprets Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/). Works with any AI agent that supports the Agent Skills open standard — not tied to a specific platform.
 
-Paste a Stargazer prompt → get interpretation as A4 PDF, interactive web page, or 1080×1440 social cards (Xiaohongshu carousel).
+Paste a Stargazer prompt → get a full interpretation, saved as structured data, rendered into beautiful Kami-styled A4 PDFs, interactive web pages, or 1080×1440 social cards.
+
+## Design
+
+Every product shares a unified visual language inspired by two sources:
+
+- **[Kami](https://github.com/tw93/Kami)** — warm parchment background (#f5f4ed), ink-blue accent (#1B365D), Chiron Sung HK serif typography. Clean, literary, minimal.
+- **Geometric Silence** — a custom 36-card Lenormand deck in architectural blueprint style. Muted sage green (#7A8B7A) linework on cream (#F5F0E8), with dusty rose (#C4A0A0) accents. Swiss International Style meets scientific specimen plates. No mystical ornament — pure geometric abstraction.
+
+Together they create a reading experience that feels scholarly, warm, and quietly beautiful.
 
 ## Features
 
-- **6 spread types**: 1-card Yes/No, 2-card, 3-card, 5-card, 9-card Box Spread (3×3), A-or-B choice
-- **Bilingual**: Auto-detects Chinese or English prompts
-- **Combination-first reading**: Adjacent card pair chains, Noun+Adjective model
-- **3 product types from one reading**: A4 PDF (default), web page, 1080×1440 social cards
-- **Readings persist**: Saved as structured JSON + Markdown, regenerable into any product later
-- **Seed-based HTML**: Copy+fill HTML skeletons — no fragile from-scratch construction
-- **Geometric Silence SVG cards**: Bold inline SVG card faces ($cards/$) with cream/sage/rose Swiss International Style
-- **Chiron font pair**: Chiron Sung HK (昭源宋體) for body + Chiron Hei HK (昭源黑體) for labels
-- **Kami-styled PDFs**: Warm parchment (#f5f4ed) + ink-blue accent (#1B365D)
+- **6 spread types**: 1-card Yes/No · 2-card pair · 3-card linear · 5-card linear · 9-card Box Spread (3×3) · A-or-B choice
+- **Bilingual**: Auto-detects Chinese or English prompts; all output matches the prompt language
+- **Combination-first reading**: Adjacent card pair chains with Noun+Adjective model, neutral honest tone
+- **3 product types from one reading**: A4 PDF (default) · self-contained web page · 1080×1440 social card carousel
+- **Persistent readings**: Saved as structured JSON + human-readable Markdown; regenerate into any product format anytime
+- **Seed-based HTML**: Copy + fill HTML skeletons — no fragile from-scratch construction
+- **Geometric Silence deck**: 36 original SVG cards in architectural blueprint style
+- **Chiron font pair**: Chiron Sung HK (昭源宋體) serif + Chiron Hei HK (昭源黑體) sans
 
 ## Preview
 
@@ -30,20 +38,21 @@ Paste a Stargazer prompt → get interpretation as A4 PDF, interactive web page,
 
 Tell your agent:
 
-> Install the stargazer-interpreter skill from https://github.com/locoda/stargazer-interpreter
+> Install the stargazer-interpreter skill from GitHub: github.com/locoda/stargazer-interpreter
+
+Or clone manually into your agent's skills directory:
 
 ```bash
-# WorkBuddy
-git clone https://github.com/locoda/stargazer-interpreter.git ~/.workbuddy/skills/stargazer-interpreter/
+git clone https://github.com/locoda/stargazer-interpreter.git ~/your-agent/skills/stargazer-interpreter/
 ```
 
-Requires: Node.js + Puppeteer for PDF and social card rendering.
+Requires: Node.js + Puppeteer (auto-installs Chromium on first PDF/social card render).
 
-## Usage — Conversation Examples
-
-**Language auto-detection**: The skill reads the prompt language from keywords like `Question:` (English) or `【問題】` (Chinese). All output — interpretation text, chapter titles, card names — follows the prompt language.
+## Usage
 
 ### First-time reading
+
+Paste a Stargazer prompt — the agent runs Phase 1 (parse) + Phase 2 (interpret + save), generates A4 PDF by default.
 
 ```
 User: Interpret this spread
@@ -58,37 +67,19 @@ Spread: 3-card linear
 3. Snake
 ```
 
-→ Agent runs Phase 1–2 (parse + interpret + save), generates A4 PDF by default.
-
 ### Generate a different product
 
 ```
 User: Generate social cards from the latest reading
-```
-
-→ Agent loads the saved reading, compresses content for 1080×1440, generates carousel PNGs.
-
-```
-User: List my recent readings
-```
-
-→ Agent runs `manage-readings.js list`, shows the index.
-
-```
 User: Generate web page from reading #2
 ```
-
-→ Agent loads reading #2 from index, generates self-contained web page.
 
 ### Request multiple products
 
 ```
 User: Interpret this spread, generate PDF and social cards
-
 [Stargazer prompt...]
 ```
-
-→ Agent runs full pipeline, delivers both products.
 
 ### Three-phase workflow
 
@@ -103,15 +94,15 @@ Stargazer Prompt
     │
     ▼
 [Phase 3] Generate products from saved reading
-           ├── A4 PDF (default, Kami style)
-           ├── Web Page (standalone HTML)
+           ├── A4 PDF (default)
+           ├── Web Page
            └── Social Card (1080×1440 carousel)
 ```
 
 ## Structure
 
 ```
-├── SKILL.md                         # Main instructions (v3.1)
+├── SKILL.md                         # Main instructions
 ├── README.md                        # English docs
 ├── README.zh-CN.md                  # 中文文档
 ├── assets/
@@ -122,15 +113,19 @@ Stargazer Prompt
 │   ├── card-01-rider.svg ...        # 36 Geometric Silence SVG cards
 │   └── previews/                    # 36 PNG card previews
 ├── previews/                        # Sample reading outputs
+├── public/                          # Landing page (deployed via Cloudflare Pages)
+│   ├── index.html
+│   ├── cards/                       # Card SVGs for web display
+│   └── previews/                    # Preview assets for showcase
 ├── references/
 │   ├── lenormand-cards.md           # 36-card database
 │   ├── spread-parsing.md            # Prompt parsing rules
 │   ├── design-system.md             # Shared fonts, colors, card slugs
 │   ├── reading-schema.md            # JSON schema for persisted readings
-│   └── template-*.md                # Template references
+│   └── template-a4-pdf.md           # A4 PDF chapter & page balance rules
 └── scripts/
-    ├── generate-pdf.js              # HTML → A4 PDF
-    ├── render-social-cards.js       # HTML → 1080×1440 PNGs
+    ├── generate-pdf.js              # HTML → A4 PDF (Puppeteer)
+    ├── render-social-cards.js       # HTML → 1080×1440 PNGs (Puppeteer)
     └── manage-readings.js           # Reading index CLI
 ```
 
@@ -145,7 +140,8 @@ MIT
 - [Chiron Hei HK (昭源黑體)](https://github.com/chiron-fonts/chiron-hei-hk) — variable sans, SIL OFL 1.1
 
 **Design**
-- Visual style inspired by [Kami](https://github.com/tw93/Kami) — MIT
+- [Kami](https://github.com/tw93/Kami) — visual style inspiration, MIT
+- Geometric Silence — original card deck design
 
 **Data**
 - [Stargazer's Oracle](https://stargazer.estework.site/) — online Lenormand platform
