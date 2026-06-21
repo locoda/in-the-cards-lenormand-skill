@@ -1,6 +1,6 @@
 # Stargazer Interpreter · 星解者
 
-> [English](README.md) · [展示页](https://github.com/locoda/stargazer-interpreter)
+> [English](README.md)
 
 遵循 [Agent Skills](https://agentskills.io) 开放标准的 Lenormand 雷诺曼解读技能，为 [Stargazer's Oracle（观星者神谕）](https://stargazer.estework.site/) 而生。兼容任何支持 Agent Skills 的 AI 助手，不绑定特定平台。
 

@@ -1,6 +1,6 @@
 # Stargazer Interpreter · 星解者
 
-> [中文说明](README.zh-CN.md) · [Landing Page](https://github.com/locoda/stargazer-interpreter)
+> [中文说明](README.zh-CN.md)
 
 An [Agent Skills](https://agentskills.io) compatible skill that interprets Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/). Works with any AI agent that supports the Agent Skills open standard — not tied to a specific platform.
 
