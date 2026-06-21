@@ -1,49 +1,8 @@
-# Visual Templates — Lenormand Reading PDF Layouts
+# A4 PDF Template — Kami Style
 
-HTML templates for generating Kami-styled Lenormand reading PDFs. All templates share a common CSS foundation and A4 page format.
+> **Canonical seed file:** `assets/seed-a4-pdf.html`. Copy it, fill in placeholders, render with `scripts/generate-pdf.js`.
 
-## Global Design Constants
-
-```css
-/* -- Kami Lenormand Theme -- */
---parchment:   #f5f4ed;   /* page background */
---near-black:  #141413;   /* body text */
---dark-warm:   #3d3d3a;   /* secondary text */
---stone:       #6b6a64;   /* meta, page numbers */
---brand:       #1B365D;   /* ink-blue accent */
---border:      #e8e6dc;   /* page borders */
---border-soft: #e5e3d8;   /* soft borders */
-
-/* Card polarity colors */
---positive:    #E1F5EE;   /* soft teal fill */
---positive-stroke: #5DCAA5;
---negative:    #FAECE7;   /* soft terracotta fill */
---negative-stroke: #D85A30;
---neutral:     #EEEDFE;   /* soft purple fill */
---neutral-stroke: #AFA9EC;
-
-/* Typography */
---serif: "Chiron Sung HK WS", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
-```
-
-## Font Loading
-
-```html
-<style>
-/* Chiron Sung HK (昭源宋體) — variable font via jsDelivr CDN */
-@import url('https://cdn.jsdelivr.net/npm/chiron-sung-hk-webfont@latest/css/vf.css');
-</style>
-```
-
-Font family: `"Chiron Sung HK WS"`
-Weight range: 200–900 (variable)
-PADG axis: 0–10 for character spacing (body text benefits from 5)
-
----
-
-## Base Page Structure
-
-Every PDF HTML follows this skeleton:
+This reference documents the chapter structure, page balance rules, and spread-specific details for the A4 PDF product.
 
 ```html
 <!DOCTYPE html>
@@ -237,6 +196,13 @@ If the user wants visual cards, read the relevant SVG files and embed them inlin
 | Yes/No (1 card) | 130px | 195px |
 | Two-card | 110px | 165px |
 | Three-card | 112px | 168px |
+
+**When PNG output is required** (via pdftoppm / poppler rasterization), SVG strokes thinner than ~1.5 on a 1024 viewBox will appear nearly invisible after PDF→PNG conversion due to anti-aliasing of sub-pixel lines. Remedies:
+- Increase card display size (e.g. 180–200px width for 3-card spread)
+- Bump symbol stroke-widths to 1.5–1.8
+- Bump center dot radii to 4–5
+- Set `gap: 0` + `justify-content: space-evenly` to fit larger cards in row layout
+- Use a 2× viewport (1588×2246) when generating the PDF via Puppeteer for higher SVG rasterization fidelity
 | Five-card | 85px | 128px |
 | Box (9-card) | 80px | 120px |
 | A-or-B (3+3) | 95px | 143px |
@@ -245,15 +211,30 @@ Center card (position 3 in 5-card, position 5 in box) gets `outline: 2pt solid v
 
 ```css
 .card-svg {
-  border-radius: 3pt;
-  box-shadow: 0 1pt 4pt rgba(0,0,0,0.08);
+  /* No border, no box-shadow — the SVG card face is self-contained */
 }
 .card-svg-center {
-  box-shadow: 0 1pt 6pt rgba(27,54,93,0.15);
   outline: 2pt solid var(--brand);
   outline-offset: 2pt;
 }
 ```
+
+**SVG ID collision warning**: All 36 card SVGs share the same `<pattern>` defs (`id="g"`, `id="sg"`). When embedding multiple cards inline in the same HTML document, DO NOT include each SVG's `<defs>` block — duplicate IDs will cause Firefox/Puppeteer rendering issues. Instead, add a single hidden SVG with the defs at the top of `<body>`:
+
+```html
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <pattern id="g" width="72" height="72" patternUnits="userSpaceOnUse">
+      <path d="M72 0L72 72M0 72L72 72" fill="none" stroke="#7A8B7A" stroke-width="0.3" opacity=".12"/>
+    </pattern>
+    <pattern id="sg" width="18" height="18" patternUnits="userSpaceOnUse">
+      <path d="M18 0L18 18M0 18L18 18" fill="none" stroke="#7A8B7A" stroke-width="0.2" opacity=".06"/>
+    </pattern>
+  </defs>
+</svg>
+```
+
+Then strip `<defs>…</defs>` from each inline card SVG, keeping only the visual elements.
 
 ### Card CSS (Text Mode)
 
@@ -738,22 +719,3 @@ Using break-before on every chapter (Rule 2) naturally avoids all of these — e
 - **A-or-B Choice spreads**: 3 chapters. The 比較與傾向 comparison chapter often needs expansion to stand alone.
 
 ---
-
-## Card Slug Reference
-
-Card slugs (for internal lookup only — no image URLs used):
-
-| # | Slug | # | Slug | # | Slug |
-|---|------|---|------|---|------|
-| 1 | rider | 13 | child | 25 | ring |
-| 2 | clover | 14 | fox | 26 | book |
-| 3 | ship | 15 | bear | 27 | letter |
-| 4 | house | 16 | star | 28 | man |
-| 5 | tree | 17 | stork | 29 | woman |
-| 6 | clouds | 18 | dog | 30 | lily |
-| 7 | snake | 19 | tower | 31 | sun |
-| 8 | coffin | 20 | garden | 32 | moon |
-| 9 | bouquet | 21 | mountain | 33 | key |
-| 10 | scythe | 22 | crossroads | 34 | fish |
-| 11 | whip | 23 | mice | 35 | anchor |
-| 12 | birds | 24 | heart | 36 | cross |
