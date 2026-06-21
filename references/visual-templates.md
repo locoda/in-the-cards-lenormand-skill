@@ -241,15 +241,14 @@ Card CSS:
 .card-inner {
   width: 130px;
   height: 182px; /* 100:140 ratio ~= card proportions */
-  border-radius: 10px;
   overflow: hidden;
   margin: 0 auto;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
+/* Stargazer images have their own rounded corners in the artwork — no CSS frame */
 .card-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .card-fallback {
   width: 100%;
@@ -262,6 +261,13 @@ Card CSS:
 .card-caption { margin-top: 4pt; font-size: 9pt; }
 .card-number { color: var(--stone); margin-right: 4pt; }
 .card-name { color: var(--dark-warm); font-weight: 500; }
+
+/* Spread-specific card sizes for layout balance */
+.card-large  .card-inner { width: 160px; height: 224px; }  /* 1-card spread */
+.spread-two   .card-inner { width: 150px; height: 210px; }
+.spread-three .card-inner { width: 130px; height: 182px; }  /* 3-card, A-or-B */
+.spread-five  .card-inner { width: 90px;  height: 126px; }   /* 5-card — narrower to fit */
+.spread-box   .card-inner { width: 90px;  height: 126px; }   /* 9-card — narrower to fit */
 ```
 
 ### Spread Layout: 1-Card Yes/No
@@ -288,10 +294,6 @@ Rendered inside `.cover-cards`:
   flex-direction: column;
   align-items: center;
   padding: 0 0 10mm 0;
-}
-.card-large .card-inner {
-  width: 160px;
-  height: 224px;
 }
 .verdict-badge {
   margin-top: 6mm;
@@ -411,7 +413,6 @@ Rendered inside `.cover-cards`:
 }
 .card-center .card-inner {
   border: 3pt solid var(--brand);
-  box-shadow: 0 2px 12px rgba(27,54,93,0.2);
 }
 .spread-note {
   text-align: center;
@@ -477,7 +478,6 @@ Rendered inside `.cover-cards`:
 .col-label { width: 130px; text-align: center; }
 .card-center .card-inner {
   border: 3pt solid var(--brand);
-  box-shadow: 0 2px 12px rgba(27,54,93,0.2);
 }
 ```
 
@@ -656,6 +656,23 @@ Three chapters:
 1. **A 選項 · Option A** — Cards 1+2, 2+3 chain for Option A
 2. **B 選項 · Option B** — Cards 1+2, 2+3 chain for Option B
 3. **比較與傾向 · Comparison** — Side-by-side analysis + tendency + final reminder
+
+---
+
+## Page Balance Rules
+
+Each interpretation chapter must fit cleanly on its pages — no orphaned lines or half-sentences dangling at the bottom of a page. When building interpretation text:
+
+1. **Evaluate after writing**: Check whether the final chapter ends with fewer than 3 lines on its last page. If it does, the content is unbalanced.
+
+2. **Fix strategies** (in priority order):
+   - **Expand the last chapter**: Add a closing reflection paragraph or extend the final takeaway to push at least 4–5 lines onto the orphan page.
+   - **Condense into previous page**: Trim or tighten earlier chapters so the last chapter fits entirely on the preceding page.
+   - **Split into a new sub-section**: If the last topic has enough depth, promote it to a short standalone chapter with its own h2.
+
+3. **Aim for**: No page in the interpretation body ends with fewer than 5 lines of text. Each chapter section should either fill its page or flow naturally into the next.
+
+4. **5-card and A-or-B spreads** are most prone to this issue due to their chapter count. Pay extra attention after writing the final chapter.
 
 ---
 

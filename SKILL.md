@@ -115,7 +115,12 @@ Build the reading into a self-contained HTML document, then convert to PDF.
 
 5. **Name the PDF**: `lenormand-{spread_type}-{date_YYYY-MM-DD}.pdf`
 
-6. **Deliver**: Present the PDF to the user. If the user wants to keep the intermediate HTML, mention its location; otherwise, delete it after PDF generation.
+6. **Page balance check** (before finalizing): Review each chapter's last page. If fewer than 5 lines appear on the last page of any chapter, the content is unbalanced. Fix by:
+   - Expanding the thin chapter with an additional reflection paragraph or extended takeaway
+   - Or condensing earlier chapters so the orphan page disappears entirely
+   - See `references/visual-templates.md` Page Balance Rules for detailed guidance
+
+7. **Deliver**: Present the PDF to the user. If the user wants to keep the intermediate HTML, mention its location; otherwise, delete it after PDF generation.
 
 ### Step 4: Deliver
 
