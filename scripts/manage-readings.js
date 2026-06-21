@@ -13,7 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const OUTPUT_DIR = path.resolve(__dirname, '../../output');
+const OUTPUT_DIR = path.resolve(process.cwd(), 'output');
 const READINGS_DIR = path.join(OUTPUT_DIR, 'readings');
 const INDEX_PATH = path.join(READINGS_DIR, 'index.json');
 

@@ -67,11 +67,20 @@ check('R1', 'No unreplaced placeholders', placeholderCount === 0,
   placeholderCount > 0 ? `${placeholderCount} unreplaced {{ markers found — grep file for {{` : null);
 
 // R2 — Font declarations present in HTML source
-const hasSung = html.includes('chiron-sung-hk');
-const hasHei  = html.includes('chiron-hei-hk');
+// Check case-insensitively for multiple valid formats:
+//   - Google Fonts URL:  Chiron+Sung+HK / Chiron+Hei+HK
+//   - CSS font-family:   "Chiron Sung HK" / "Chiron Hei HK"
+//   - Hyphenated slug:   chiron-sung-hk / chiron-hei-hk
+const htmlLower = html.toLowerCase();
+const hasSung = htmlLower.includes('chiron+sung+hk')
+  || htmlLower.includes('chiron sung hk')
+  || htmlLower.includes('chiron-sung-hk');
+const hasHei  = htmlLower.includes('chiron+hei+hk')
+  || htmlLower.includes('chiron hei hk')
+  || htmlLower.includes('chiron-hei-hk');
 check('R2', 'Chiron font declarations present', hasSung && hasHei,
-  !hasSung ? 'chiron-sung-hk declaration missing'
-  : !hasHei ? 'chiron-hei-hk declaration missing'
+  !hasSung ? 'chiron-sung-hk declaration missing (check Google Fonts link or @font-face)'
+  : !hasHei ? 'chiron-hei-hk declaration missing (check Google Fonts link or @font-face)'
   : null);
 
 // R3 — SVG card elements present (any svg element with a card-related class or id)
