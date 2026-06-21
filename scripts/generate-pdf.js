@@ -43,13 +43,13 @@ const fs = require('fs');
   try {
     const page = await browser.newPage();
 
-    // Load HTML with network idle to ensure card images load
+    // Load HTML with network idle to ensure fonts load
     await page.goto('file://' + htmlPath, {
       waitUntil: 'networkidle0',
       timeout: 30000
     });
 
-    // Optional: give images a moment to render
+    // Allow font rendering to settle
     await new Promise(r => setTimeout(r, 1500));
 
     await page.pdf({

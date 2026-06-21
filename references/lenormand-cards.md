@@ -1,17 +1,6 @@
 # Lenormand Card Database — 36 Cards
 
-Full deck reference for interpretation. Each card entry includes traditional meanings, polarity, and image path on Stargazer.
-
-## Image URL Convention
-
-```
-https://stargazer.estework.site/cards/{number_padded}_{slug}.webp
-Thumbnail: https://stargazer.estework.site/cards/thumbs/{number_padded}_{slug}.webp
-```
-
-Example: `https://stargazer.estework.site/cards/01_rider.webp`
-
----
+Full deck reference for interpretation. Each card entry includes traditional meanings, polarity, and combination modifier notes. Cards are rendered as text blocks with polarity-colored backgrounds — no external images.
 
 ## Card Index
 
