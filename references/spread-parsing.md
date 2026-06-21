@@ -1,4 +1,4 @@
-# Spread Parsing Rules — Stargazer Prompt Extraction
+# Spread Parsing Rules — Stargazer Prompt Extraction (v3.3)
 
 How to parse a Stargazer-generated prompt into structured data for interpretation and visualization.
 
@@ -176,7 +176,7 @@ Extract: optionA text, optionB text, A cards (3), B cards (3).
 
 ### 2d. Card Name Resolution
 
-Card names in prompts are either **Chinese** (騎士, 幸運草...) or **English** (Rider, Clover...). Resolve to the canonical card number by matching against the card database:
+Card names in prompts are either **Chinese** (騎士, 幸運草...) or **English** (Rider, Clover...). Resolve to the canonical card number by matching against the card database in `references/lenormand-cards.md` (v3.3, MIT-licensed data).
 
 ```
 ZH name → card number (from lenormand-cards.md)

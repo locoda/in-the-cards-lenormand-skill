@@ -1,4 +1,4 @@
-# Design System — Stargazer Interpreter v3
+# Design System — Stargazer Interpreter v3.3
 
 Shared design tokens, typography, fonts, and card reference used across all product templates.
 
@@ -51,7 +51,7 @@ Card slugs (for internal lookup only — no image URLs used):
 | 1 | rider | 13 | child | 25 | ring |
 | 2 | clover | 14 | fox | 26 | book |
 | 3 | ship | 15 | bear | 27 | letter |
-| 4 | house | 16 | star | 28 | man |
+| 4 | house | 16 | stars | 28 | man |
 | 5 | tree | 17 | stork | 29 | woman |
 | 6 | clouds | 18 | dog | 30 | lily |
 | 7 | snake | 19 | tower | 31 | sun |

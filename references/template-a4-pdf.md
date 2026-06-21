@@ -1,4 +1,4 @@
-# A4 PDF Template — Kami Style
+# A4 PDF Template — Kami Style (v3.3)
 
 > **Canonical seed file:** `assets/seed-a4-pdf.html`. Copy it, fill in placeholders, render with `scripts/generate-pdf.js`.
 

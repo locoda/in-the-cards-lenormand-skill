@@ -1,4 +1,4 @@
-# Stargazer Interpreter · 星解者
+# Stargazer Interpreter · 星解者 `v3.3`
 
 > [English](README.md) · [简体中文](README.zh-CN.md)
 
@@ -19,7 +19,7 @@
 
 - **6 種牌陣**：1 張是非題 · 2 張對牌 · 3 張線性 · 5 張線性 · 9 張九宮格（3×3）· 二選一
 - **雙語自動辨識**：中英文提示詞自動偵測，輸出語言與輸入一致
-- **組合優先解讀**：相鄰牌對鏈式解讀，名詞+形容詞模型，中立誠實不做空洞安慰
+- **組合優先解讀**：系統性組合方法論——相鄰牌對鏈式解讀，修飾詞類型系統（名詞+修飾詞模型）。每張牌按修飾類型影響相鄰牌；8 張負面修飾牌自動壓低 tone。中立誠實，不做空洞安慰
 - **一次解讀，三種產出**：A4 PDF（預設）· 獨立網頁 · 1080×1440 社群卡輪播
 - **解讀持久化**：結構化 JSON + 人類可讀 Markdown 雙存，隨時再生為任意產品型態
 - **種子 HTML**：複製即用，不再從零建構 HTML
@@ -111,7 +111,7 @@ Stargazer 提示詞
 ├── cards/
 │   └── card-01-rider.svg ...        # 36 張 Geometric Silence SVG
 ├── references/
-│   ├── lenormand-cards.md           # 36 張牌資料庫
+│   ├── lenormand-cards.md           # 36 張牌資料庫 (MIT)、修飾類型、組合方法論
 │   ├── spread-parsing.md            # 提示詞解析規則
 │   ├── design-system.md             # 共享字體／顏色／牌名表
 │   ├── reading-schema.md            # 解讀 JSON 結構
@@ -141,4 +141,5 @@ MIT
 
 **資料**
 - [Stargazer's Oracle（觀星者神諭）](https://stargazer.estework.site/)
-- 雷諾曼牌義參考公有領域傳統解讀
+- [lenormand-oracle](https://github.com/jintianbaihe/lenormand-oracle) — 36 張牌雙語資料集，MIT
+- 組合修飾系統 — 基於公有領域雷諾曼傳統的原創 synthesis

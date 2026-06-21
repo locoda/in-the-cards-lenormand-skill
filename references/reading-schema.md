@@ -1,4 +1,4 @@
-# Reading Schema — Stargazer Interpreter v3
+# Reading Schema — Stargazer Interpreter v3.3
 
 Defines the canonical JSON structure for persisted Lenormand readings.
 Each reading is saved to `output/readings/{reading_id}.json` with a parallel `{reading_id}.md` human-readable copy.
@@ -7,7 +7,7 @@ Each reading is saved to `output/readings/{reading_id}.json` with a parallel `{r
 
 ```json
 {
-  "version": "3.0",
+  "version": "3.3",
   "reading_id": "2026-06-20-写作方向",
   "meta": { ... },
   "cards": [ ... ],

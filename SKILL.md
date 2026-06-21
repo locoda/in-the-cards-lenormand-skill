@@ -3,11 +3,11 @@ name: stargazer-interpreter
 description: |-
   Interpret Lenormand card readings from Stargazer (stargazer.estework.site) and generate visual products from the interpretation. Three-phase workflow: (1) parse the Stargazer prompt → (2) interpret and persist the reading as structured JSON + human-readable Markdown → (3) generate products from the saved reading. Default product is Kami-styled A4 PDF; additional products include web page and 1080×1440 social cards. Past readings can be listed, queried, and regenerated into any product type via natural language. Supports all 6 spread types.   Triggers on "Stargazer 解读 / 帮我解读 / Lenormand reading / 生成解读 PDF / 列出解读 / 生成社交卡片 / 上次的解读 / 請為我解讀 / 透過 Lenormand / 每日運勢 / consult Lenormand / daily fortune / deciding between" etc.
   Triggers on: "Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读 / 請為我解讀 / 幫我解讀 / 每日運勢 / 今日運勢 / 我想透過 Lenormand / 透過 Lenormand / 二選一 / Lenormand 卡牌占卜 / consult the Lenormand cards / compare them with Lenormand / daily fortune / read my Lenormand / deciding between two options".
-version: 3.2.0
+version: 3.3.0
 agent_created: true
 ---
 
-# Stargazer Interpreter · 星解者 v3.2
+# Stargazer Interpreter · 星解者 v3.3
 
 Interpret Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/), persist them as reusable data, and generate visual products — A4 PDF, web pages, or social cards — by copying seed HTML files and filling in placeholders.
 
@@ -112,15 +112,17 @@ Proceeding to Phase 2.
 #### Core Reading Principles
 
 - **Combination-first**: Never list individual card meanings in isolation. Read adjacent cards as overlapping pairs (1+2, 2+3, 3+4...) that modify each other. The meaning of a card shifts based on its neighbors.
+- **Noun + Modifier model**: The first card is the subject (noun), the second card modifies it (adjective/verb/adverb). Rider + Clover = "lucky news arriving." Clover + Rider = "a fleeting visitor."
+- **Use modifier types systematically**: Each card has a `modifier_type` in `references/lenormand-cards.md`. When interpreting A+B, apply B's modifier type to A's core meaning. Example: A=Heart (love), B=Mountain (blocking modifier) → "Love blocked or delayed."
+- **Check for negative modifiers**: 8 cards (Clouds, Snake, Coffin, Scythe, Whip, Mountain, Mice, Cross) darken adjacent cards. When one of these is the second card in a pair, the tone shifts darker regardless of the first card's polarity.
 - **Neutral tone**: Stay faithful to Lenormand's traditional meanings. Do not push toward positivity or negativity — the tone emerges from the cards themselves. Avoid empty reassurance and unfounded pessimism.
 - **Honesty**: The value of a reading lies in honesty, not in making the querent feel good or afraid.
 - **Center dominance**: In odd-numbered linear spreads, the center card is the core theme.
-- **Noun + Adjective model**: The first card is the subject, the second card modifies it. Rider + Clover = "lucky news arriving." Clover + Rider = "a fleeting visitor."
 - **Full-length interpretation**: The saved interpretation should be written at **PDF-ready length** — each chapter aiming for 4-5 paragraphs + takeaway (for 3-card/5-card spreads) or equivalent depth. The interpretation JSON stores the *full* version. Social card generation will compress this saved content.
 
 #### Card Knowledge
 
-Load `references/lenormand-cards.md` for each card's traditional meaning, keywords, polarity, and combination modifier notes. This reference contains the full 36-card Lenormand deck with Chinese and English support.
+Load `references/lenormand-cards.md` for each card's complete meaning (core, extended, career, love, health, person in both EN/ZH), keywords, polarity, modifier type, timing, and the systematic combination methodology. The modifier type system tells the agent HOW each card changes its neighbor — use this to synthesize pair meanings, rather than improvising from isolated keywords. Card data is sourced from [lenormand-oracle](https://github.com/jintianbaihe/lenormand-oracle) (MIT License).
 
 #### Spread-Specific Interpretation Frameworks
 
@@ -380,7 +382,7 @@ When the user references a past reading for a new product:
 
 | Resource | Purpose | When to Load |
 |----------|---------|-------------|
-| `references/lenormand-cards.md` | 36-card database: names, keywords, meanings, polarity | Phase 2 (always needed) |
+| `references/lenormand-cards.md` | 36-card database with MIT-licensed meanings (EN+ZH), modifier types, timing, negative modifier list, and systematic combination methodology | Phase 2 (always needed) |
 | `references/spread-parsing.md` | Prompt parsing rules for all 6 spread types | Phase 1 |
 | `references/design-system.md` | Shared design tokens, fonts, colors, card slugs | Phase 3 reference |
 | `references/template-a4-pdf.md` | A4 PDF chapter structure & page balance rules | Phase 3a reference |

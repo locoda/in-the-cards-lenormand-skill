@@ -1,4 +1,4 @@
-# Stargazer Interpreter · 星解者
+# Stargazer Interpreter · 星解者 `v3.3`
 
 > [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
@@ -19,7 +19,7 @@ Together they create a reading experience that feels scholarly, warm, and quietl
 
 - **6 spread types**: 1-card Yes/No · 2-card pair · 3-card linear · 5-card linear · 9-card Box Spread (3×3) · A-or-B choice
 - **Bilingual**: Auto-detects Chinese or English prompts; all output matches the prompt language
-- **Combination-first reading**: Adjacent card pair chains with Noun+Adjective model, neutral honest tone
+- **Combination-first reading**: Systematic combination methodology — adjacent card pair chains with modifier type system (Noun+Modifier model). Each card modifies its neighbor according to its modifier type; 8 negative modifiers automatically darken the tone. Neutral, honest, no empty reassurance.
 - **3 product types from one reading**: A4 PDF (default) · self-contained web page · 1080×1440 social card carousel
 - **Persistent readings**: Saved as structured JSON + human-readable Markdown; regenerate into any product format anytime
 - **Seed-based HTML**: Copy + fill HTML skeletons — no fragile from-scratch construction
@@ -114,7 +114,7 @@ Stargazer Prompt
 ├── cards/
 │   └── card-01-rider.svg ...        # 36 Geometric Silence SVG cards
 ├── references/
-│   ├── lenormand-cards.md           # 36-card database
+│   ├── lenormand-cards.md           # 36-card database (MIT), modifier types, methodology
 │   ├── spread-parsing.md            # Prompt parsing rules
 │   ├── design-system.md             # Shared fonts, colors, card slugs
 │   ├── reading-schema.md            # JSON schema for persisted readings
@@ -144,4 +144,5 @@ MIT
 
 **Data**
 - [Stargazer's Oracle](https://stargazer.estework.site/) — online Lenormand platform
-- Lenormand card meanings from traditional interpretations (public domain)
+- [lenormand-oracle](https://github.com/jintianbaihe/lenormand-oracle) — 36-card bilingual dataset, MIT
+- Combination modifier system — original synthesis based on public-domain Lenormand tradition
