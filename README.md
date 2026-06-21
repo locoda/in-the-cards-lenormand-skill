@@ -29,7 +29,17 @@ Tell your agent:
 
 > Install the stargazer-interpreter skill from https://github.com/locoda/stargazer-interpreter
 
-Requires: Node.js + Puppeteer + Google Chrome for PDF generation (installed automatically on first use).
+The agent will clone it to the correct location automatically. For manual reference:
+
+```bash
+# WorkBuddy
+git clone https://github.com/locoda/stargazer-interpreter.git ~/.workbuddy/skills/stargazer-interpreter/
+
+# Claude Code
+git clone https://github.com/locoda/stargazer-interpreter.git ~/.claude/skills/stargazer-interpreter/
+```
+
+Requires: Node.js + Puppeteer + Google Chrome for PDF generation (Puppeteer installs its own bundled Chromium automatically on first use).
 
 ## Usage
 

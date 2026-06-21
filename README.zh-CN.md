@@ -29,7 +29,17 @@
 
 > 帮我安装 stargazer-interpreter 技能，地址是 https://github.com/locoda/stargazer-interpreter
 
-需要 Node.js + Puppeteer + Google Chrome 用于 PDF 生成（首次使用时自动安装依赖）。
+助手会自动克隆到正确的目录。手动参考：
+
+```bash
+# WorkBuddy
+git clone https://github.com/locoda/stargazer-interpreter.git ~/.workbuddy/skills/stargazer-interpreter/
+
+# Claude Code
+git clone https://github.com/locoda/stargazer-interpreter.git ~/.claude/skills/stargazer-interpreter/
+```
+
+需要 Node.js + Puppeteer + Google Chrome 用于 PDF 生成（Puppeteer 首次使用时自动安装自带 Chromium，无需额外配置）。
 
 ## 使用方式
 
