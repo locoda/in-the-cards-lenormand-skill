@@ -3,11 +3,11 @@ name: stargazer-interpreter
 description: |-
   Interpret Lenormand card readings from Stargazer (stargazer.estework.site) and generate visual products from the interpretation. Three-phase workflow: (1) parse the Stargazer prompt → (2) interpret and persist the reading as structured JSON + human-readable Markdown → (3) generate products from the saved reading. Default product is Kami-styled A4 PDF; additional products include web page and 1080×1440 social cards. Past readings can be listed, queried, and regenerated into any product type via natural language. Supports all 6 spread types.   Triggers on "Stargazer 解读 / 帮我解读 / Lenormand reading / 生成解读 PDF / 列出解读 / 生成社交卡片 / 上次的解读 / 請為我解讀 / 透過 Lenormand / 每日運勢 / consult Lenormand / daily fortune / deciding between" etc.
   Triggers on: "Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读 / 請為我解讀 / 幫我解讀 / 每日運勢 / 今日運勢 / 我想透過 Lenormand / 透過 Lenormand / 二選一 / Lenormand 卡牌占卜 / consult the Lenormand cards / compare them with Lenormand / daily fortune / read my Lenormand / deciding between two options".
-version: 3.4.0
+version: 3.4.1
 agent_created: true
 ---
 
-# Stargazer Interpreter · 星解者 v3.3
+# Stargazer Interpreter · 星解者
 
 Interpret Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/), persist them as reusable data, and generate visual products — A4 PDF, web pages, or social cards — by copying seed HTML files and filling in placeholders.
 
@@ -167,7 +167,8 @@ Structure the interpretation as clear chapter sections with titles in the detect
 
 ### 2b. Save the Reading
 
-After interpretation, persist the reading in two parallel files under `output/readings/`:
+**Phase 2b is mandatory and must complete before Phase 3 begins.** Persist the reading
+in two parallel files under `output/readings/`:
 
 **1. Structured JSON** — `{reading_id}.json`
 
@@ -220,6 +221,9 @@ A readable copy including:
 }
 ```
 
+**Confirm before continuing**: Both `{reading_id}.json` and `{reading_id}.md` must exist
+on disk and the index must be updated. Only then proceed to Phase 3.
+
 > **AGENT — PHASE 2 CHECKPOINT:**
 > Before proceeding to Phase 3, confirm the following. Emit this block filled with actual values.
 
@@ -239,6 +243,11 @@ Proceeding to Phase 3.
 If any field shows FAILED, stop and fix the save operation before continuing.
 
 ## Phase 3: Generate Products
+
+> **Hard gate — do not begin Phase 3 until Phase 2b is confirmed complete.**
+> Verify that `output/readings/{reading_id}.json` exists and `output/readings/index.json`
+> has been updated. If either file is missing, complete Phase 2b first. Never generate
+> products from in-memory interpretation data that has not been persisted.
 
 Products are generated from the saved reading JSON. The user may request one or more product types.
 If no product type is specified, default to **A4 PDF**.
