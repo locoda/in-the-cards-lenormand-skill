@@ -1,4 +1,4 @@
-# Stargazer Interpreter · 星解者 `v3.3`
+# Stargazer Interpreter · 星解者
 
 > [English](README.md) · [简体中文](README.zh-CN.md)
 
@@ -20,7 +20,7 @@
 - **6 種牌陣**：1 張是非題 · 2 張對牌 · 3 張線性 · 5 張線性 · 9 張九宮格（3×3）· 二選一
 - **雙語自動辨識**：中英文提示詞自動偵測，輸出語言與輸入一致
 - **組合優先解讀**：系統性組合方法論——相鄰牌對鏈式解讀，修飾詞類型系統（名詞+修飾詞模型）。每張牌按修飾類型影響相鄰牌；8 張負面修飾牌自動壓低 tone。中立誠實，不做空洞安慰
-- **一次解讀，三種產出**：A4 PDF（預設）· 獨立網頁 · 1080×1440 社群卡輪播
+- **一次解讀，四種產出**：A4 PDF（預設）· 獨立網頁 · 1080×1440 社群卡輪播 · 全頁 PNG 長圖
 - **解讀持久化**：結構化 JSON + 人類可讀 Markdown 雙存，隨時再生為任意產品型態
 - **種子 HTML**：複製即用，不再從零建構 HTML
 - **幾何沉默牌組 (Geometric Silence)**：36 張原創 SVG 牌面，建築藍圖風格
@@ -94,7 +94,8 @@ Stargazer 提示詞
 [Phase 3] 從儲存的解讀生成產品
            ├── A4 PDF（預設）
            ├── 獨立網頁
-           └── 社群卡片（1080×1440 輪播）
+           ├── 社群卡片（1080×1440 輪播）
+           └── 全頁 PNG 長圖
 ```
 
 ## 目錄結構
@@ -119,6 +120,7 @@ Stargazer 提示詞
 └── scripts/
     ├── generate-pdf.js              # HTML → A4 PDF (Puppeteer)
     ├── render-social-cards.js       # HTML → 1080×1440 PNG (Puppeteer)
+    ├── render-long-image.js         # HTML → 全頁 PNG 長圖 (Puppeteer)
     ├── validate.js                  # 產物驗證（靜態 + Puppeteer）
     └── manage-readings.js           # 解讀索引 CLI
 ```

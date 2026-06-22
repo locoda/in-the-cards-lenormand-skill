@@ -1,4 +1,4 @@
-# Stargazer Interpreter · 星解者 `v3.3`
+# Stargazer Interpreter · 星解者
 
 > [English](README.md) · [繁體中文](README.zh-TW.md)
 
@@ -20,7 +20,7 @@
 - **6 种牌阵**：1 张是非题 · 2 张对牌 · 3 张线性 · 5 张线性 · 9 张九宫格（3×3）· 二选一
 - **双语自动识别**：中英文提示词自动检测，输出语言与输入一致
 - **组合优先解读**：系统性组合方法论——相邻牌对链式解读，修饰词类型系统（名词+修饰词模型）。每张牌按修饰类型影响相邻牌；8 张负面修饰牌自动压低 tone。中立诚实，不做空洞安慰
-- **一次解读，三种产出**：A4 PDF（默认）· 独立网页 · 1080×1440 社交卡轮播
+- **一次解读，四种产出**：A4 PDF（默认）· 独立网页 · 1080×1440 社交卡轮播 · 全页 PNG 长图
 - **解读持久化**：结构化 JSON + 人类可读 Markdown 双存，随时再生为任意产品形态
 - **种子 HTML**：复制即用，不再从零构造 HTML
 - **几何沉默牌组 (Geometric Silence)**：36 张原创 SVG 牌面，建筑蓝图风格
@@ -94,7 +94,8 @@ Stargazer 提示词
 [Phase 3] 从保存的解读生成产品
            ├── A4 PDF（默认）
            ├── 独立网页
-           └── 社交卡片（1080×1440 轮播）
+           ├── 社交卡片（1080×1440 轮播）
+           └── 全页 PNG 长图
 ```
 
 ## 目录结构
@@ -119,6 +120,7 @@ Stargazer 提示词
 └── scripts/
     ├── generate-pdf.js              # HTML → A4 PDF (Puppeteer)
     ├── render-social-cards.js       # HTML → 1080×1440 PNG (Puppeteer)
+    ├── render-long-image.js         # HTML → 全页 PNG 长图 (Puppeteer)
     ├── validate.js                  # 产物验证（静态 + Puppeteer）
     └── manage-readings.js           # 解读索引 CLI
 ```

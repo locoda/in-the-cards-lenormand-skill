@@ -1,4 +1,4 @@
-# Stargazer Interpreter · 星解者 `v3.3`
+# Stargazer Interpreter · 星解者
 
 > [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
@@ -20,7 +20,7 @@ Together they create a reading experience that feels scholarly, warm, and quietl
 - **6 spread types**: 1-card Yes/No · 2-card pair · 3-card linear · 5-card linear · 9-card Box Spread (3×3) · A-or-B choice
 - **Bilingual**: Auto-detects Chinese or English prompts; all output matches the prompt language
 - **Combination-first reading**: Systematic combination methodology — adjacent card pair chains with modifier type system (Noun+Modifier model). Each card modifies its neighbor according to its modifier type; 8 negative modifiers automatically darken the tone. Neutral, honest, no empty reassurance.
-- **3 product types from one reading**: A4 PDF (default) · self-contained web page · 1080×1440 social card carousel
+- **4 product types from one reading**: A4 PDF (default) · self-contained web page · 1080×1440 social card carousel · full-page PNG long image
 - **Persistent readings**: Saved as structured JSON + human-readable Markdown; regenerate into any product format anytime
 - **Seed-based HTML**: Copy + fill HTML skeletons — no fragile from-scratch construction
 - **Geometric Silence deck**: 36 original SVG cards in architectural blueprint style
@@ -97,7 +97,8 @@ Stargazer Prompt
 [Phase 3] Generate products from saved reading
            ├── A4 PDF (default)
            ├── Web Page
-           └── Social Card (1080×1440 carousel)
+           ├── Social Card (1080×1440 carousel)
+           └── Long Image (full-page PNG)
 ```
 
 ## Structure
@@ -122,6 +123,7 @@ Stargazer Prompt
 └── scripts/
     ├── generate-pdf.js              # HTML → A4 PDF (Puppeteer)
     ├── render-social-cards.js       # HTML → 1080×1440 PNGs (Puppeteer)
+    ├── render-long-image.js         # HTML → full-page PNG (Puppeteer)
     ├── validate.js                  # Product validation (static + Puppeteer)
     └── manage-readings.js           # Reading index CLI
 ```

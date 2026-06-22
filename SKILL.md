@@ -3,7 +3,7 @@ name: stargazer-interpreter
 description: |-
   Interpret Lenormand card readings from Stargazer (stargazer.estework.site) and generate visual products from the interpretation. Three-phase workflow: (1) parse the Stargazer prompt → (2) interpret and persist the reading as structured JSON + human-readable Markdown → (3) generate products from the saved reading. Default product is Kami-styled A4 PDF; additional products include web page and 1080×1440 social cards. Past readings can be listed, queried, and regenerated into any product type via natural language. Supports all 6 spread types.   Triggers on "Stargazer 解读 / 帮我解读 / Lenormand reading / 生成解读 PDF / 列出解读 / 生成社交卡片 / 上次的解读 / 請為我解讀 / 透過 Lenormand / 每日運勢 / consult Lenormand / daily fortune / deciding between" etc.
   Triggers on: "Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读 / 請為我解讀 / 幫我解讀 / 每日運勢 / 今日運勢 / 我想透過 Lenormand / 透過 Lenormand / 二選一 / Lenormand 卡牌占卜 / consult the Lenormand cards / compare them with Lenormand / daily fortune / read my Lenormand / deciding between two options".
-version: 3.3.0
+version: 3.4.0
 agent_created: true
 ---
 
@@ -49,7 +49,8 @@ Stargazer Prompt
 [Phase 3] Generate products from saved reading
            ├── A4 PDF (default, Kami style)
            ├── Web Page (standalone interactive HTML)
-           └── Social Card (1080×1440 carousel, 3:4)
+           ├── Social Card (1080×1440 carousel, 3:4)
+           └── Long Image (full-page PNG screenshot of web page)
 ```
 
 Every reading is saved before product generation. Saved readings can be regenerated into any product type later.
@@ -258,9 +259,12 @@ Instead of building HTML from scratch, **copy the seed HTML file** from `assets/
 
 | Product | Seed file | Render script | Output name |
 |---------|-----------|---------------|-------------|
+| Product | Seed file | Render script | Output name |
+|---------|-----------|---------------|-------------|
 | `a4-pdf` | `assets/seed-a4-pdf.html` | `scripts/generate-pdf.js` | `lenormand-{spread}-{topic}-{date}.pdf` |
 | `web-page` | `assets/seed-web-page.html` | — (self-contained) | `lenormand-web-{topic}-{date}.html` |
 | `social-card` | `assets/seed-social-card.html` | `scripts/render-social-cards.js` | `lenormand-xhs-{topic}-{date}-NN.png` |
+| `long-image` | `assets/seed-web-page.html` | `scripts/render-long-image.js` | `lenormand-web-{topic}-{date}.png` |
 
 ### 3a. A4 PDF (Default)
 
@@ -357,6 +361,36 @@ Exit code must be 0. Fix any failures (overflow, thin pages, card sizing) and re
 node scripts/manage-readings.js record-product {reading_id} --type social-card
 ```
 
+### 3d. Long Image (Full-Page PNG)
+
+Generates a full-page PNG screenshot of the web page version. Useful for sharing on social media, messaging apps, or as a long single-image reading.
+
+**Workflow**: Generate web page first (Phase 3b), then screenshot it.
+
+**Step 1 — Generate web page (ensure Phase 3b is complete)**
+If the web page HTML does not already exist, run Phase 3b Steps 1–2.
+
+**Step 2 — Render to PNG**
+```bash
+NODE_PATH=/Users/1mether/.workbuddy/binaries/node/workspace/node_modules \
+  /Users/1mether/.workbuddy/binaries/node/versions/22.22.2/bin/node \
+  {{SKILL_ROOT}}/scripts/render-long-image.js output/lenormand-web-{topic_slug}-{date}.html
+```
+The script automatically derives the output path (`{same_name}.png`).
+
+**Step 3 — Verify output**
+Check that the PNG file exists and has non-zero size:
+```bash
+ls -lh output/lenormand-web-{topic_slug}-{date}.png
+```
+
+**Step 4 — Record in index**
+```bash
+node scripts/manage-readings.js record-product {reading_id} --type long-image
+```
+
+> **Note**: The full-page PNG inherits the web page's viewport width (720px). The height is determined by the page content length. For best results, run on a reading with all chapters filled. CSS `@media print` and page-specific styles are NOT applied — the PNG uses the screen layout.
+
 ### Generating Multiple Products
 
 User may request multiple product types at once: "生成 PDF 和网页版". Generate each as described above.
@@ -393,6 +427,7 @@ When the user references a past reading for a new product:
 | `scripts/generate-pdf.js` | Puppeteer: HTML → A4 PDF | Phase 3a |
 | `scripts/manage-readings.js` | CLI: list, find, update reading index | Phase 2b, post-hoc regen |
 | `scripts/render-social-cards.js` | Puppeteer: social card HTML → 1080×1440 PNGs | Phase 3c |
+| `scripts/render-long-image.js` | Puppeteer: web page HTML → full-page PNG | Phase 3d |
 | `cards/*.svg` | Geometric Silence 36-card deck | Phase 3a, 3c (SVG card faces) |
 | `cards/previews/*.png` | PNG previews of all 36 cards | Quick reference |
 
@@ -406,7 +441,8 @@ output/
 │   └── 2026-06-20-写作方向.md         # Human-readable copy
 ├── lenormand-three-写作方向-2026-06-20.pdf    # A4 PDF product
 ├── lenormand-web-写作方向-2026-06-20.html     # Web page product
-└── lenormand-xhs-写作方向-2026-06-20-01.png   # Social card product (page 1)
+├── lenormand-xhs-写作方向-2026-06-20-01.png   # Social card product (page 1)
+└── lenormand-web-写作方向-2026-06-20.png      # Long image (full-page PNG)
 ```
 
 ## Deliverable Validation
@@ -424,3 +460,5 @@ Validation is run automatically via `node scripts/validate.js` at the end of eac
 - **Duplicate generation**: If a product type already recorded in index, still regenerate (overwrite) but log a note
 - **Social card chapter count**: If a reading has only 1 chapter (yesno-1, two), produce a cover-only card (single 1080×1440 image)
 - **Web page immutability**: Web pages are standalone and self-contained — they don't link back to the reading data
+- **Long image prerequisite**: `long-image` depends on the web page already being generated (Phase 3b). If the user requests long image without specifying web page, silently generate both (web page first, then the screenshot).
+- **Puppeteer v25+ `--no-sandbox`**: When using Puppeteer v25 (bundled in workspace), the browser launch MUST include `args: ['--no-sandbox', '--disable-setuid-sandbox']`. Without these flags, `page.setContent()` and `page.goto()` fail with "Requesting main frame too early!"
