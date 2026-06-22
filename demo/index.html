@@ -612,7 +612,6 @@ QUESTION: 今天運勢如何？
     <div class="error-msg" id="parse-error"></div>
     <div class="btn-row">
       <button class="btn btn-primary" id="btn-generate">生成預覽</button>
-      <button class="btn btn-secondary" id="btn-load-sample">載入範例</button>
     </div>
   </section>
 
@@ -1041,20 +1040,45 @@ function parseReading(rawText) {
   const block = text.slice(startIdx + startMarker.length, endIdx).trim();
 
   // Step 3: Extract chapter blocks — stop at next chapter, summary, or end
+  // Uses \s* instead of \s*\n to handle both multi-line and same-line chapter content
   const chapters = [];
-  const chapterRegex = /===CHAPTER_(\d+)===\s*\n([\s\S]*?)(?=\n===CHAPTER_\d+===|\n===SUMMARY===|\n===END===|$)/g;
+  const chapterRegex = /===CHAPTER_(\d+)===\s*([\s\S]*?)(?=\n===CHAPTER_\d+===|\n===SUMMARY===|\n===END===|$)/g;
   const chapterBlock = text.slice(startIdx + startMarker.length, endIdx);
   let chMatch;
   while ((chMatch = chapterRegex.exec(chapterBlock)) !== null) {
     const raw = chMatch[2].trim();
+    // First try: standard format with **...** title
     const titleMatch = raw.match(/^\*\*(.+?)\*\*/);
-    const title = titleMatch ? titleMatch[1].trim() : `Chapter ${chMatch[1]}`;
-    const body = titleMatch ? raw.slice(titleMatch[0].length).trim() : raw;
+    let title, body;
+    if (titleMatch) {
+      title = titleMatch[1].trim();
+      body = raw.slice(titleMatch[0].length).trim();
+    } else {
+      // Fallback: condensed format — detect title patterns for AI-generated output
+      // Pattern for combo chapters (1+2, 2+3): 「組合 X+Y：CardName + CardName」
+      const comboMatch = raw.match(/^(組合 \d+\+\d+：.+? \+ .+?)(?=[，。！？\s]|$)/);
+      if (comboMatch) {
+        title = comboMatch[1].trim();
+        body = raw.slice(comboMatch[0].length).trim();
+      } else if (/^整體意義/.test(raw)) {
+        title = '整體意義';
+        body = raw.replace(/^整體意義\s*/, '').trim();
+      } else if (/^今日提醒/.test(raw)) {
+        title = '今日提醒';
+        body = raw.replace(/^今日提醒\s*/, '').trim();
+      } else {
+        // Last-resort fallback: first sentence as title
+        const firstSentence = raw.match(/^(.+?)(?=[，。！？]|\s{2,}|$)/);
+        title = firstSentence ? firstSentence[1].trim() : `Chapter ${chMatch[1]}`;
+        body = firstSentence ? raw.slice(firstSentence[0].length).trim() : raw;
+      }
+    }
     chapters.push({ title, body });
   }
 
   // Step 4: Extract summary — content between ===SUMMARY=== and ===END===
-  const summaryRegex = /===SUMMARY===\s*\n([\s\S]*?)(?=\n===END===)/;
+  // Uses \s* instead of \s*\n to handle same-line summary content
+  const summaryRegex = /===SUMMARY===\s*([\s\S]*?)(?=\n===END===|$)/;
   const summaryMatch = text.match(summaryRegex);
   const summary = summaryMatch ? summaryMatch[1].trim() : '';
 
@@ -1065,34 +1089,77 @@ function parseReading(rawText) {
     return m ? m[1].trim() : null;
   }
 
-  const spread = getField('SPREAD');
-  if (!spread) throw new Error('找不到 SPREAD 欄位');
-  if (!SPREADS[spread]) throw new Error(`未知的牌陣類型：${spread}`);
+  // Step 5a: Detect condensed header format — all fields on the same line as ===STARGAZER===
+  // In condensed format, getField() would capture everything after "SPREAD: " to end of line,
+  // which would include subsequent fields like QUESTION, DATE, CARDS etc.
+  // We parse the first line specially when multiple field patterns are detected.
+  const firstLine = block.split('\n')[0].trim();
+  const condensedFieldCount = (firstLine.match(/\b(?:SPREAD|QUESTION|DATE|LANGUAGE|CARDS|VERDICT|OPTION_A|OPTION_B)\s*:/gi) || []).length;
 
-  const question = getField('QUESTION') || '日常占卜';
-  const date = getField('DATE') || new Date().toISOString().slice(0,10);
-  const language = getField('LANGUAGE') || 'zh';
-  const verdict = getField('VERDICT') || 'N/A';
-  const optionA = getField('OPTION_A') || 'N/A';
-  const optionB = getField('OPTION_B') || 'N/A';
+  let spread, question, date, language, verdict, optionA, optionB, cards;
 
-  // Step 6: Parse cards
-  const cardsBlock = block.match(/CARDS:\s*\n([\s\S]*?)(?=\n===|$)/i);
-  const cards = [];
-  if (cardsBlock) {
-    const cardLines = cardsBlock[1].trim().split('\n');
-    for (const line of cardLines) {
-      const m = line.trim().match(/^(.+?):\s*(\d{1,2})\.\s*(.+)$/);
-      if (m) {
-        const num = parseInt(m[2]);
-        cards.push({
-          position: m[1].trim(),
-          number: num,
-          name: m[3].trim()
-        });
+  if (condensedFieldCount > 1) {
+    // Condensed format: parse all fields from the first line
+    const fieldParts = firstLine.split(/\s+(?=(?:SPREAD|QUESTION|DATE|LANGUAGE|VERDICT|OPTION_A|OPTION_B|CARDS)\s*:)/i);
+    const fields = {};
+    for (const part of fieldParts) {
+      const m = part.match(/^(SPREAD|QUESTION|DATE|LANGUAGE|VERDICT|OPTION_A|OPTION_B|CARDS)\s*:\s*(.*)$/i);
+      if (m) fields[m[1].toUpperCase()] = m[2].trim();
+    }
+
+    spread = fields.SPREAD || '';
+    question = fields.QUESTION || '日常占卜';
+    date = fields.DATE || new Date().toISOString().slice(0,10);
+    language = fields.LANGUAGE || 'zh';
+    verdict = fields.VERDICT || 'N/A';
+    optionA = fields.OPTION_A || 'N/A';
+    optionB = fields.OPTION_B || 'N/A';
+    cards = [];
+
+    // Parse inline CARDS: "1: 09. 花束 2: 33. 鑰匙 3: 25. 戒指"
+    if (fields.CARDS) {
+      const cardEntries = fields.CARDS.split(/\s+(?=\d+:)/);
+      for (const entry of cardEntries) {
+        const m = entry.match(/^(\d+):\s*(\d{1,2})\.\s*(.+)$/);
+        if (m) {
+          cards.push({
+            position: m[1].trim(),
+            number: parseInt(m[2]),
+            name: m[3].trim()
+          });
+        }
+      }
+    }
+  } else {
+    // Standard format: fields on separate lines
+    spread = getField('SPREAD');
+    question = getField('QUESTION') || '日常占卜';
+    date = getField('DATE') || new Date().toISOString().slice(0,10);
+    language = getField('LANGUAGE') || 'zh';
+    verdict = getField('VERDICT') || 'N/A';
+    optionA = getField('OPTION_A') || 'N/A';
+    optionB = getField('OPTION_B') || 'N/A';
+    cards = [];
+
+    // Parse cards — standard multi-line format
+    const cardsBlock = block.match(/CARDS:\s*\n([\s\S]*?)(?=\n===|$)/i);
+    if (cardsBlock) {
+      const cardLines = cardsBlock[1].trim().split('\n');
+      for (const line of cardLines) {
+        const m = line.trim().match(/^(.+?):\s*(\d{1,2})\.\s*(.+)$/);
+        if (m) {
+          cards.push({
+            position: m[1].trim(),
+            number: parseInt(m[2]),
+            name: m[3].trim()
+          });
+        }
       }
     }
   }
+
+  if (!spread) throw new Error('找不到 SPREAD 欄位');
+  if (!SPREADS[spread]) throw new Error(`未知的牌陣類型：${spread}`);
 
   if (cards.length === 0) {
     throw new Error('找不到 CARDS 區塊或卡片格式不正確');
@@ -1333,61 +1400,6 @@ async function generatePreview() {
 }
 
 /* ============================================================
-   LOAD SAMPLE DATA
-   ============================================================ */
-function loadSample() {
-  // Fill website textarea (Section A)
-  $('website-textarea').value = `請為我解讀今天的每日運勢。
-
-【日期】2026/06/21
-
-【牌陣】每日運勢 3 張（由左至右連讀）
-1. 信 (Letter)
-2. 小孩 (Child)
-3. 錨 (Anchor)
-
-請以 Lenormand 的傳統牌義，為我描繪今天整體的基調與走向。
-
-請依以下方式解讀：
-  - 以「組合」為核心，不要逐張單獨給牌義。先將相鄰的牌兩兩串連（組合 1+2：信 (Letter) + 小孩 (Child)，組合 2+3：小孩 (Child) + 錨 (Anchor)），再把三張連成一句完整、連貫的訊息。
-  - 最後用一到兩句話，給我一個今天可以放在心上的「今日提醒」。`;
-
-  // Fill AI output textarea (Section B) with Gemini-collapsed = format
-  $('paste-textarea').value = `=STARGAZER=
-SPREAD: three
-QUESTION: Daily Fortune
-DATE: 2026-06-21
-LANGUAGE: zh
-CARDS:
-  1: 27. 信
-  2: 13. 小孩
-  3: 35. 錨
-
-=CHAPTER_1=
-**組合 1+2：信 + 小孩**
-信代表訊息的傳遞，小孩代表嶄新的開始。這兩張牌串聯暗示：你今天收到的某個消息或資訊，正在為你打開一扇通往新體驗的門。保持開放心態去迎接它。
-
-=CHAPTER_2=
-**組合 2+3：小孩 + 錨**
-小孩的純真與錨的穩定形成了一個溫暖的張力：今天萌生的新想法或新嘗試，並不會是一閃而逝的衝動——它有著落地的潛力，正在往更穩固的方向發展。
-
-=CHAPTER_3=
-**整體意義**
-從信到小孩再到錨，三張牌描繪了一個清晰的弧線：一個消息開啟了新可能，這個新可能將穩定下來，成為你生活中可依靠的一部分。今天的主旋律是「接收 → 探索 → 紮根」。
-
-=CHAPTER_4=
-**今日提醒**
-保持好奇心去接收今天出現的任何訊息，別急著判斷——它可能是一個比你預期更長遠的起點。
-
-=SUMMARY=
-今天的能量從溝通開始，過渡到純真的探索，最終指向穩定與安心。信為你開路，小孩邀請你勇敢嘗試，錨則承諾這份嘗試會落地生根。
-
-=END=`;
-
-  showToast('✓ 已載入範例，點擊「解析並複製 Prompt」後貼到 AI，再把回覆貼到 Section B 生成預覽');
-}
-
-/* ============================================================
    UTILITY
    ============================================================ */
 function escapeHTML(str) {
@@ -1404,9 +1416,6 @@ $('btn-parse-website').addEventListener('click', parseWebsiteAndCopy);
 
 // Generate preview
 $('btn-generate').addEventListener('click', generatePreview);
-
-// Load sample
-$('btn-load-sample').addEventListener('click', loadSample);
 
 // Download
 $('btn-download').addEventListener('click', exportLongImage);
