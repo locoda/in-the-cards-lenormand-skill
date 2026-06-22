@@ -6,7 +6,6 @@
   "hero.cta_get_started": "Get Started",
   "hero.cta_stargazer": "Stargazer",
   "hero.cta_demo": "Live Demo",
-
   "features.heading": "Features",
   "features.title": "Everything you need to interpret and present",
   "features.subtitle": "From a Stargazer prompt to a polished reading — fully automated.",
@@ -22,7 +21,6 @@
   "features.card5_desc": "Every reading saved as structured JSON + human-readable Markdown. List, query, and regenerate into any product type later.",
   "features.card6_title": "Geometric Silence Deck",
   "features.card6_desc": "36 SVG cards in architectural blueprint style. Muted sage green on warm parchment, with dusty rose accents. Pure geometric abstraction.",
-
   "workflow.heading": "How It Works",
   "workflow.title": "Three phases, one reading",
   "workflow.step1_title": "Parse",
@@ -34,7 +32,6 @@
   "workflow.step3_title": "Generate",
   "workflow.step3_label": "Phase 3",
   "workflow.step3_desc": "Copy seed HTML, fill placeholders, render to A4 PDF, web page, or 1080×1440 social cards. One reading, any product.",
-
   "showcase.heading": "Product Showcase",
   "showcase.title": "See what you'll get",
   "showcase.subtitle": "Real readings, real output. Three product types from the same interpretation.",
@@ -44,7 +41,6 @@
   "showcase.pdf_desc": "<strong>A4 PDF</strong> — Kami-inspired design: warm parchment background, ink-blue accents, Chiron Sung HK typography. Cover page with card grid, interpretation chapters with combination blocks and takeaway boxes.",
   "showcase.web_desc": "<strong>Self-contained web page</strong> — Kami-inspired, responsive, centered layout. Card row with SVG faces, white chapter cards with subtle shadows. No external JS, works offline.",
   "showcase.social_desc": "<strong>1080×1440 social card carousel</strong> — Kami-inspired, optimized for Xiaohongshu and social sharing. Cover page with title + card display, compressed content pages with insight boxes. 4 pages per reading.",
-
   "spreads.heading": "Spread Types",
   "spreads.title": "Six ways to read",
   "spreads.s1_title": "Yes / No",
@@ -59,24 +55,23 @@
   "spreads.s5_desc": "Triple perspective: Time Axis by columns, Three Layers by rows, and Cross Method.",
   "spreads.s6_title": "A or B Choice",
   "spreads.s6_desc": "Two parallel 3-card chains, side-by-side comparison. Choice stays with the querent.",
-
   "gallery.heading": "The Deck",
   "gallery.title": "Geometric Silence",
   "gallery.subtitle": "36 SVG cards. Architectural blueprint meets Swiss International Style. Pure geometric abstraction on warm parchment.",
   "gallery.more": "Show more cards",
-
   "install.heading": "Get Started",
   "install.title": "Install in one command",
   "install.note": "Requires Node.js and an AI agent with Agent Skills support.",
   "install.prompt_label": "Just tell your AI assistant:",
-  "install.prompt_text": "\"Install the stargazer-interpreter skill from GitHub:<br>github.com/locoda/stargazer-interpreter\"",
+  "install.prompt_text": "\"Install this skill for me: https://github.com/locoda/stargazer-interpreter\"",
   "install.git_manual": "Or install manually via Git",
   "install.star_github": "Star on GitHub",
   "install.try_stargazer": "Try Stargazer",
-
   "footer.tagline": "Let the cards speak. Let the geometry listen.",
   "footer.fonts": "Fonts: <a href=\"https://github.com/chiron-fonts/chiron-sung-hk\" target=\"_blank\" rel=\"noopener\">Chiron Sung HK</a> &amp; <a href=\"https://github.com/chiron-fonts/chiron-hei-hk\" target=\"_blank\" rel=\"noopener\">Chiron Hei HK</a> · SIL OFL 1.1",
   "footer.design_ref": "Design: <a href=\"https://github.com/tw93/Kami\" target=\"_blank\" rel=\"noopener\">Kami</a> · MIT &nbsp;|&nbsp; Deck: Geometric Silence",
   "footer.data_source": "Card data: <a href=\"https://stargazer.estework.site/\" target=\"_blank\" rel=\"noopener\">Stargazer's Oracle</a>",
-  "footer.repo": "<a href=\"https://github.com/locoda/stargazer-interpreter\" target=\"_blank\" rel=\"noopener\">github.com/locoda/stargazer-interpreter</a> · MIT"
+  "footer.repo": "<a href=\"https://github.com/locoda/stargazer-interpreter\" target=\"_blank\" rel=\"noopener\">github.com/locoda/stargazer-interpreter</a> · MIT",
+  "install.copy_prompt": "Copy prompt",
+  "install.copied": "Copied"
 }

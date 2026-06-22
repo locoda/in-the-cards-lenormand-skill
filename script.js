@@ -30,7 +30,7 @@ const I18N = {
       el.innerHTML = this.t(el.getAttribute('data-i18n'));
     });
     const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle && this._lang === 'zh-CN' || this._lang === 'zh-TW') {
+    if (heroTitle && (this._lang === 'zh-CN' || this._lang === 'zh-TW')) {
       heroTitle.style.fontSize = '3.4rem';
     }
   },
@@ -47,6 +47,37 @@ const I18N = {
     });
   }
 };
+
+
+// ---- Install Prompt Copy ----
+async function copyInstallPrompt() {
+  const promptEl = document.querySelector('[data-i18n="install.prompt_text"]');
+  const button = document.querySelector('.copy-prompt-btn');
+  if (!promptEl || !button) return;
+
+  const prompt = promptEl.textContent.replace(/^"|"$/g, '');
+
+  try {
+    await navigator.clipboard.writeText(prompt);
+  } catch (err) {
+    const ta = document.createElement('textarea');
+    ta.value = prompt;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+  }
+
+  const original = I18N.t('install.copy_prompt');
+  button.textContent = I18N.t('install.copied');
+  button.classList.add('is-copied');
+  setTimeout(function() {
+    button.textContent = original;
+    button.classList.remove('is-copied');
+  }, 1600);
+}
 
 // ---- Product Tabs ----
 function switchTab(tabId) {
