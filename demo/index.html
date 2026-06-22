@@ -92,35 +92,6 @@ header .tagline {
   font-weight: 400;
 }
 
-/* Spread type buttons */
-.spread-options {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-}
-.spread-opt {
-  padding: 12px 8px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  background: #fff;
-  cursor: pointer;
-  text-align: center;
-  font-family: var(--sans);
-  font-size: 13px;
-  color: #888;
-  transition: all .15s;
-}
-.spread-opt:hover {
-  border-color: #c4c0b4;
-  color: #555;
-}
-.spread-opt.active {
-  border-color: var(--brand);
-  background: #f0f4fa;
-  color: var(--brand);
-  font-weight: 600;
-}
-
 /* ============================================================
    DIVIDER
    ============================================================ */
@@ -586,7 +557,13 @@ header .tagline {
 【牌陣】每日運勢 3 張（由左至右連讀）
 1. 信 (Letter)
 2. 小孩 (Child)
-3. 錨 (Anchor)"></textarea>
+3. 錨 (Anchor)
+
+請以 Lenormand 的傳統牌義，為我描繪今天整體的基調與走向。
+
+請依以下方式解讀：
+  - 以「組合」為核心，不要逐張單獨給牌義。先將相鄰的牌兩兩串連（組合 1+2：信 (Letter) + 小孩 (Child)，組合 2+3：小孩 (Child) + 錨 (Anchor)），再把三張連成一句完整、連貫的訊息。
+  - 最後用一到兩句話，給我一個今天可以放在心上的「今日提醒」。"></textarea>
     </div>
     <div class="error-msg" id="website-parse-error"></div>
     <div class="btn-row">
@@ -604,10 +581,36 @@ header .tagline {
         將 AI 回覆貼到此處
         <span class="hint">Paste the complete AI output here</span>
       </label>
-      <textarea id="paste-textarea" placeholder="===STARGAZER=== (或 =STARGAZER=)
-SPREAD: three
-QUESTION: 今天運勢如何？
-..."></textarea>
+      <textarea id="paste-textarea" placeholder="===STARGAZER===
+QUESTION: Daily Fortune
+DATE: 2026-06-22
+LANGUAGE: zh
+CARDS:
+1: 27. 信
+2: 13. 小孩
+3: 35. 錨
+
+===CHAPTER_1===
+**組合 1+2：信 + 小孩**
+一則訊息、通知或交流內容（信），帶著新開始、學習或嘗試的色彩（小孩）。今天可能收到一個新的安排、一項新任務，或是一個值得探索的想法。這則消息本身不一定複雜，但它會開啟某個新的方向，讓你產生進一步了解或行動的念頭。
+
+===CHAPTER_2===
+**組合 2+3：小孩 + 錨**
+一個剛開始萌芽的事物（小孩），朝向穩定與落實發展（錨）。今天適合把剛出現的計畫、想法或學習內容固定下來，例如建立流程、安排時間或持續跟進。即使只是小小的開始，也有機會逐漸成為可靠的基礎。
+
+===CHAPTER_3===
+**整體意義**
+今天的主旋律是：一則新的消息帶來新的開始，而這個開始有機會逐步穩定下來。事情的發展不一定快速或戲劇化，但有利於把新的資訊、新的機會或新的嘗試，轉化成實際且可持續的成果。今天適合接受新資訊，並為後續發展建立穩固的第一步。
+
+===CHAPTER_4===
+**今日提醒**
+留意今天收到的訊息或通知，不要因為看起來微不足道就忽略它。
+如果有新的想法或機會出現，先採取一個小而具體的行動，把它落實到日常安排中。
+
+===SUMMARY===
+今天的能量圍繞著「新消息」與「穩定發展」。某個新的資訊、學習機會或計畫可能進入你的生活，並且具有長期延續的潛力。與其急著看到成果，不如專注於建立規律與基礎。小小的開始，今天特別值得認真對待。
+
+===END==="></textarea>
     </div>
     <div class="error-msg" id="parse-error"></div>
     <div class="btn-row">
@@ -712,70 +715,9 @@ const CARD_LOOKUP = {
 };
 
 /* ============================================================
-   SPREAD CONFIGURATIONS
-   ============================================================ */
-const SPREADS = {
-  yesno: {
-    labelZh: '是否牌陣',
-    labelEn: 'Yes / No',
-    cardCount: 1,
-    positions:  ['牌'],
-    chapterCount: 1,
-    verdictRequired: true,
-    optionsRequired: false
-  },
-  two: {
-    labelZh: '二張牌陣',
-    labelEn: 'Two Cards',
-    cardCount: 2,
-    positions:  ['左', '右'],
-    chapterCount: 2,
-    verdictRequired: false,
-    optionsRequired: false
-  },
-  three: {
-    labelZh: '三張牌陣',
-    labelEn: 'Three Cards',
-    cardCount: 3,
-    positions:  ['過去', '現在', '未來'],
-    chapterCount: 3,
-    verdictRequired: false,
-    optionsRequired: false
-  },
-  five: {
-    labelZh: '五張牌陣',
-    labelEn: 'Five Cards',
-    cardCount: 5,
-    positions:  ['過去', '現在', '未來', '原因', '環境'],
-    chapterCount: 5,
-    verdictRequired: false,
-    optionsRequired: false
-  },
-  nine: {
-    labelZh: '九宮格牌陣',
-    labelEn: 'Nine Cards (3×3)',
-    cardCount: 9,
-    positions:  ['①','②','③','④','⑤','⑥','⑦','⑧','⑨'],
-    chapterCount: 9,
-    verdictRequired: false,
-    optionsRequired: false
-  },
-  choice: {
-    labelZh: '選擇牌陣',
-    labelEn: 'Choice / Crossroads',
-    cardCount: 2,
-    positions:  ['選項A', '選項B'],
-    chapterCount: 2,
-    verdictRequired: false,
-    optionsRequired: true
-  }
-};
-
-/* ============================================================
    STATE
    ============================================================ */
 let state = {
-  spread: 'three',
   question: '',
   cards: [],       // [{num, name, slug}]
   parsed: null,    // result from parseReading()
@@ -854,7 +796,6 @@ function generatePrompt() {
   const sections = [
     '你是一位專業的諾曼底牌陣解讀師。請嚴格按照以下格式輸出解讀，',
     '不要在格式之外添加任何文字，不要用代碼塊包裹輸出。',
-    '重要：所有標記必須使用三個等號 ===，不可簡化成單個等號 =。',
     '',
     '【牌陣資訊】',
     `問題：Daily Fortune`,
@@ -886,7 +827,6 @@ function generatePrompt() {
     '【輸出格式（請完整照填）】',
     '',
     '===STARGAZER===',
-    'SPREAD: three',
     'QUESTION: Daily Fortune',
     `DATE: ${today}`,
     'LANGUAGE: zh',
@@ -934,8 +874,8 @@ function parseWebsiteOutput(rawText) {
     cardLines.push({ index: m[1], name: m[2].trim(), enName: m[3].trim() });
   }
 
-  if (cardLines.length === 0) {
-    throw new Error('找不到卡片列表（格式：1. 牌名 (English)）。請確認貼上了完整的 Stargazer\'s Oracle 文字');
+  if (cardLines.length !== 3) {
+    throw new Error('目前僅支援 3 張牌的每日運勢，請確認貼上正確的文字');
   }
 
   // Map card names to numbers
@@ -945,10 +885,6 @@ function parseWebsiteOutput(rawText) {
     if (!num) throw new Error(`找不到牌「${cl.name}」的對應號碼，請確認牌名是否正確`);
     cards.push({ num, name: cl.name, slug: CARD_LOOKUP[num].slug });
   }
-
-  // Infer spread type from card count
-  const countToSpread = { 1: 'yesno', 2: 'two', 3: 'three', 5: 'five', 9: 'nine' };
-  const spread = countToSpread[cards.length] || 'three';
 
   // Extract question from first line (e.g. "請為我解讀今天的每日運勢。")
   const firstLine = text.split('\n')[0].replace(/^請為我解讀/, '').replace(/[。！]/g, '').trim();
@@ -965,11 +901,10 @@ function parseWebsiteOutput(rawText) {
   state.websiteInstructions = instructions;
 
   // Auto-fill state
-  state.spread = spread;
   state.question = question;
   state.cards = cards;
 
-  return { spread, question, date, cards };
+  return { question, date, cards };
 }
 
 async function parseWebsiteAndCopy() {
@@ -1089,25 +1024,21 @@ function parseReading(rawText) {
     return m ? m[1].trim() : null;
   }
 
-  // Step 5a: Detect condensed header format — all fields on the same line as ===STARGAZER===
-  // In condensed format, getField() would capture everything after "SPREAD: " to end of line,
-  // which would include subsequent fields like QUESTION, DATE, CARDS etc.
-  // We parse the first line specially when multiple field patterns are detected.
+  // Step 4a: Detect condensed header format — all fields on the same line as ===STARGAZER===
   const firstLine = block.split('\n')[0].trim();
-  const condensedFieldCount = (firstLine.match(/\b(?:SPREAD|QUESTION|DATE|LANGUAGE|CARDS|VERDICT|OPTION_A|OPTION_B)\s*:/gi) || []).length;
+  const condensedFieldCount = (firstLine.match(/\b(?:QUESTION|DATE|LANGUAGE|CARDS|VERDICT|OPTION_A|OPTION_B)\s*:/gi) || []).length;
 
-  let spread, question, date, language, verdict, optionA, optionB, cards;
+  let question, date, language, verdict, optionA, optionB, cards;
 
   if (condensedFieldCount > 1) {
     // Condensed format: parse all fields from the first line
-    const fieldParts = firstLine.split(/\s+(?=(?:SPREAD|QUESTION|DATE|LANGUAGE|VERDICT|OPTION_A|OPTION_B|CARDS)\s*:)/i);
+    const fieldParts = firstLine.split(/\s+(?=(?:QUESTION|DATE|LANGUAGE|VERDICT|OPTION_A|OPTION_B|CARDS)\s*:)/i);
     const fields = {};
     for (const part of fieldParts) {
-      const m = part.match(/^(SPREAD|QUESTION|DATE|LANGUAGE|VERDICT|OPTION_A|OPTION_B|CARDS)\s*:\s*(.*)$/i);
+      const m = part.match(/^(QUESTION|DATE|LANGUAGE|VERDICT|OPTION_A|OPTION_B|CARDS)\s*:\s*(.*)$/i);
       if (m) fields[m[1].toUpperCase()] = m[2].trim();
     }
 
-    spread = fields.SPREAD || '';
     question = fields.QUESTION || '日常占卜';
     date = fields.DATE || new Date().toISOString().slice(0,10);
     language = fields.LANGUAGE || 'zh';
@@ -1132,7 +1063,6 @@ function parseReading(rawText) {
     }
   } else {
     // Standard format: fields on separate lines
-    spread = getField('SPREAD');
     question = getField('QUESTION') || '日常占卜';
     date = getField('DATE') || new Date().toISOString().slice(0,10);
     language = getField('LANGUAGE') || 'zh';
@@ -1158,14 +1088,11 @@ function parseReading(rawText) {
     }
   }
 
-  if (!spread) throw new Error('找不到 SPREAD 欄位');
-  if (!SPREADS[spread]) throw new Error(`未知的牌陣類型：${spread}`);
-
   if (cards.length === 0) {
     throw new Error('找不到 CARDS 區塊或卡片格式不正確');
   }
 
-  return { spread, question, date, language, verdict, optionA, optionB, cards, chapters, summary };
+  return { question, date, language, verdict, optionA, optionB, cards, chapters, summary };
 }
 
 /* ============================================================
@@ -1213,13 +1140,8 @@ function getWebCardSize(cardCount) {
   return { w: 80, h: 120 }; // 9 cards
 }
 
-function getSpreadLabel(spreadKey) {
-  const s = SPREADS[spreadKey];
-  return s ? `${s.labelZh} · ${s.labelEn}` : spreadKey;
-}
-
 function buildWebHeader(data) {
-  const { spread, question, date, cards, verdict, optionA, optionB } = data;
+  const { date, cards, verdict, optionA, optionB } = data;
   const cardSize = getWebCardSize(cards.length);
 
   // Card row
@@ -1344,7 +1266,7 @@ async function exportLongImage() {
 
     const date = state.parsed.date || new Date().toISOString().slice(0,10);
     const link = document.createElement('a');
-    link.download = `stargazer-${date}-${state.parsed.spread}.png`;
+    link.download = `stargazer-${date}.png`;
     link.href = canvas.toDataURL('image/png');
     link.click();
 
@@ -1425,8 +1347,7 @@ $('btn-download').addEventListener('click', exportLongImage);
    ============================================================ */
 // No manual inputs to build — ready for website text paste
 
-console.log('Stargazer Public Demo ready.');
-console.log('Spread types:', Object.keys(SPREADS).join(', '));
+console.log('Stargazer Demo ready.');
 console.log('Cards loaded:', Object.keys(CARD_LOOKUP).length);
 </script>
 
