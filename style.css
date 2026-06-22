@@ -181,6 +181,31 @@ section { padding: 5rem 0; position: relative; }
 /* ---- Install ---- */
 .install-block { background: var(--card-white); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow-md); max-width: 720px; margin: 0 auto; text-align: center; }
 .install-note { font-size: 1rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+
+.install-prompt-text {
+  color: var(--brand);
+  font-size: 1.05rem;
+  font-style: italic;
+  overflow-wrap: anywhere;
+}
+.copy-prompt-btn {
+  align-items: center;
+  background: var(--brand);
+  border: 1.5px solid var(--brand);
+  border-radius: 8px;
+  color: var(--parchment);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 500;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 0.55rem 1.2rem;
+  transition: all var(--transition);
+}
+.copy-prompt-btn:hover { background: var(--brand-light); transform: translateY(-1px); }
+.copy-prompt-btn.is-copied { background: var(--sage); border-color: var(--sage); }
 .code-block {
   background: #1a1d23; color: #e0e0e0; font-family: 'SF Mono','Fira Code','Cascadia Code',monospace;
   font-size: 0.85rem; padding: 1.25rem 1.5rem; border-radius: var(--radius-sm);

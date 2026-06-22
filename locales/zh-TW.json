@@ -6,7 +6,6 @@
   "hero.cta_get_started": "開始使用",
   "hero.cta_stargazer": "星解原站",
   "hero.cta_demo": "線上演示",
-
   "features.heading": "功能特色",
   "features.title": "從解析到呈現，一應俱全",
   "features.subtitle": "從一則 Stargazer 提示詞到精美的解讀產出，全流程自動化。",
@@ -22,7 +21,6 @@
   "features.card5_desc": "每次解讀儲存為結構化 JSON + 人類可讀 Markdown。可隨時檢索、查詢、再生為任意產品型態。",
   "features.card6_title": "幾何沉默牌組",
   "features.card6_desc": "36 張 SVG 牌面，建築藍圖風格。灰鼠尾草綠於暖羊皮紙上，點綴塵玫瑰色。純粹幾何抽象。",
-
   "workflow.heading": "工作流程",
   "workflow.title": "三段流程，一次解讀",
   "workflow.step1_title": "解析",
@@ -34,7 +32,6 @@
   "workflow.step3_title": "生成",
   "workflow.step3_label": "第三階段",
   "workflow.step3_desc": "複製種子 HTML，填入資料，渲染為 A4 PDF、網頁或社群卡片。一次解讀，任意型態。",
-
   "showcase.heading": "產品展示",
   "showcase.title": "看看你能得到什麼",
   "showcase.subtitle": "以下是真實解讀生成的三種產品型態。",
@@ -44,7 +41,6 @@
   "showcase.pdf_desc": "<strong>A4 PDF</strong> — Kami 風格設計：暖羊皮紙底色，墨藍強調色，昭源宋體排版。封面含牌陣網格，解讀章節配有組合解讀塊與重點摘要框。",
   "showcase.web_desc": "<strong>獨立網頁版</strong> — Kami 風格，響應式居中佈局。SVG 牌面展示行，白色章節卡片配柔和陰影。無外部依賴，離線可用。",
   "showcase.social_desc": "<strong>1080×1440 社群卡輪播</strong> — Kami 風格，適合小紅書及社群分享。封面含標題與牌面展示，內容頁精煉解讀，重點摘要框。每次解讀 4 頁。",
-
   "spreads.heading": "牌陣類型",
   "spreads.title": "六種解讀方式",
   "spreads.s1_title": "是非題",
@@ -59,24 +55,23 @@
   "spreads.s5_desc": "三重視角：列向時間軸、行向三意識層、再加十字交叉法。",
   "spreads.s6_title": "二選一",
   "spreads.s6_desc": "兩條並行的三張鏈，左右對比。選擇權始終留給問者。",
-
   "gallery.heading": "牌組",
   "gallery.title": "幾何沉默",
   "gallery.subtitle": "36 張 SVG 牌面。建築藍圖與瑞士國際主義風格的相遇。暖羊皮紙上的純粹幾何抽象。",
   "gallery.more": "檢視更多牌面",
-
   "install.heading": "開始使用",
   "install.title": "一行指令安裝",
   "install.note": "需要 Node.js 及支援 Agent Skills 的 AI 助理即可使用。",
   "install.prompt_label": "直接告訴你的 AI 助理：",
-  "install.prompt_text": "\"幫我從 GitHub 安裝 stargazer-interpreter 技能：<br>github.com/locoda/stargazer-interpreter\"",
+  "install.prompt_text": "\"幫我安裝這個 skill：https://github.com/locoda/stargazer-interpreter\"",
   "install.git_manual": "或透過 Git 手動安裝",
   "install.star_github": "GitHub 加星",
   "install.try_stargazer": "試試星解",
-
   "footer.tagline": "牌說了，幾何在聽。",
   "footer.fonts": "字體：<a href=\"https://github.com/chiron-fonts/chiron-sung-hk\" target=\"_blank\" rel=\"noopener\">Chiron Sung HK</a> &amp; <a href=\"https://github.com/chiron-fonts/chiron-hei-hk\" target=\"_blank\" rel=\"noopener\">Chiron Hei HK</a> · SIL OFL 1.1",
   "footer.design_ref": "設計參考：<a href=\"https://github.com/tw93/Kami\" target=\"_blank\" rel=\"noopener\">Kami</a> · MIT &nbsp;|&nbsp; 牌面設計：Geometric Silence",
   "footer.data_source": "牌義來源：<a href=\"https://stargazer.estework.site/\" target=\"_blank\" rel=\"noopener\">Stargazer's Oracle</a>",
-  "footer.repo": "<a href=\"https://github.com/locoda/stargazer-interpreter\" target=\"_blank\" rel=\"noopener\">github.com/locoda/stargazer-interpreter</a> · MIT"
+  "footer.repo": "<a href=\"https://github.com/locoda/stargazer-interpreter\" target=\"_blank\" rel=\"noopener\">github.com/locoda/stargazer-interpreter</a> · MIT",
+  "install.copy_prompt": "複製提示詞",
+  "install.copied": "已複製"
 }
