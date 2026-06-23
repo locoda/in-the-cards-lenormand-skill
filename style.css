@@ -182,6 +182,12 @@ section { padding: 5rem 0; position: relative; }
 .install-block { background: var(--card-white); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow-md); max-width: 720px; margin: 0 auto; text-align: center; }
 .install-note { font-size: 1rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
 
+.install-prompt-box { margin: 1.5rem 0; padding: 1.5rem; background: var(--combo-bg); border-radius: var(--radius-sm); text-align: center; }
+.install-prompt-label { font-size: 1.1rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text); }
+.install-git-manual { margin-top: 0.5rem; }
+.install-git-manual summary { font-family: var(--sans); font-size: 0.85rem; color: var(--text-muted); cursor: pointer; }
+.install-git-manual .code-block { margin-top: 0.75rem; }
+
 .install-prompt-text {
   color: var(--brand);
   font-size: 1.05rem;
