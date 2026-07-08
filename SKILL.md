@@ -17,22 +17,21 @@ On every load, run the following checks. Do not output results unless there is a
 
 ```
 # ── AGENT — RUN ON LOAD ─────────────────────────────────────
-DATE_NOW=$(date +%s)
-LAST_CHECK=$(cat {{SKILL_ROOT}}/.last-update-check 2>/dev/null || echo 0)
-if [ $((DATE_NOW - LAST_CHECK)) -gt 604800 ]; then
-  echo "--- SKILL UPDATE CHECK ---"
-  echo "Checking stargazer-interpreter for updates..."
-  # (placeholder — actual update check mechanism TBD)
-  echo "No updates available."
-  echo "--- END UPDATE CHECK ---"
-  date +%s > {{SKILL_ROOT}}/.last-update-check
-else
-  : # skip — checked within the last 7 days
-fi
+node {{SKILL_ROOT}}/scripts/check-skill-update.js --skill-root {{SKILL_ROOT}} --cache-days 7 || true
 # ── END AGENT RUN ON LOAD ───────────────────────────────────
 ```
 
-`{{SKILL_ROOT}}` in the bash code block above resolves to the absolute path of this skill's root directory.
+`{{SKILL_ROOT}}` in the bash code block above resolves to the absolute path of this skill's root directory. The update checker compares this skill's frontmatter `version` with an upstream `SKILL.md` and stays silent unless a newer version exists. It resolves the upstream source in this order:
+
+1. `STARGAZER_INTERPRETER_UPDATE_SOURCE` environment variable
+2. `.update-source` file in the skill root
+3. GitHub `origin` or `upstream` remote, converted to a raw `SKILL.md` URL
+
+For manual checks or debugging, run:
+
+```bash
+node {{SKILL_ROOT}}/scripts/check-skill-update.js --skill-root {{SKILL_ROOT}} --force --verbose
+```
 
 ## Architecture
 
@@ -435,6 +434,7 @@ When the user references a past reading for a new product:
 | `assets/seed-social-card.html` | Copy-and-fill social card HTML skeleton | Phase 3c (copy to output/) |
 | `scripts/generate-pdf.js` | Puppeteer: HTML → A4 PDF | Phase 3a |
 | `scripts/manage-readings.js` | CLI: list, find, update reading index | Phase 2b, post-hoc regen |
+| `scripts/check-skill-update.js` | CLI: check the installed skill version against upstream `SKILL.md` | Startup check, manual update checks |
 | `scripts/render-social-cards.js` | Puppeteer: social card HTML → 1080×1440 PNGs | Phase 3c |
 | `scripts/render-long-image.js` | Puppeteer: web page HTML → full-page PNG | Phase 3d |
 | `cards/*.svg` | Geometric Silence 36-card deck | Phase 3a, 3c (SVG card faces) |
