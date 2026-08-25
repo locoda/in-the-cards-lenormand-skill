@@ -48,7 +48,10 @@ const fs = require('fs');
       timeout: 30000
     });
 
-    // Allow font rendering to settle
+    // Wait for web fonts (LXGW Neo ZhiSong subsets from ZeoSeven CDN), then let
+    // rendering settle before printing — the font is embedded into the PDF, which the
+    // IPA Font License 1.0 permits for display and printing.
+    await page.evaluate(() => document.fonts.ready);
     await new Promise(r => setTimeout(r, 1500));
 
     await page.pdf({

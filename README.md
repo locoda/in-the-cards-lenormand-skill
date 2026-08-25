@@ -10,7 +10,7 @@ Paste a Stargazer prompt → get a full interpretation, saved as structured data
 
 Every product shares a unified visual language inspired by two sources:
 
-- **[Kami](https://github.com/tw93/Kami)** — warm parchment background (#f5f4ed), ink-blue accent (#1B365D), Chiron Sung HK serif typography. Clean, literary, minimal.
+- **[Kami](https://github.com/tw93/Kami)** — warm parchment background (#f5f4ed), ink-blue accent (#1B365D), LXGW Neo ZhiSong serif typography. Clean, literary, minimal.
 - **Geometric Silence** — a custom 36-card Lenormand deck in architectural blueprint style. Muted sage green (#7A8B7A) linework on cream (#F5F0E8), with dusty rose (#C4A0A0) accents. Swiss International Style meets scientific specimen plates. No mystical ornament — pure geometric abstraction.
 
 Together they create a reading experience that feels scholarly, warm, and quietly beautiful.
@@ -24,7 +24,7 @@ Together they create a reading experience that feels scholarly, warm, and quietl
 - **Persistent readings**: Saved as structured JSON + human-readable Markdown; regenerate into any product format anytime
 - **Seed-based HTML**: Copy + fill HTML skeletons — no fragile from-scratch construction
 - **Geometric Silence deck**: 36 original SVG cards in architectural blueprint style
-- **Chiron font pair**: Chiron Sung HK (昭源宋體) serif + Chiron Hei HK (昭源黑體) sans, loaded from Google Fonts CDN with CN mirror fallback
+- **Single site font**: LXGW Neo ZhiSong (霞鹜新致宋) serif for everything, loaded from the ZeoSeven Fonts CDN; small labels fall back to the system sans stack
 
 ## Preview
 
@@ -137,8 +137,19 @@ MIT
 ## Credits & References
 
 **Typography**
-- [Chiron Sung HK (昭源宋體)](https://github.com/chiron-fonts/chiron-sung-hk) — variable serif, SIL OFL 1.1
-- [Chiron Hei HK (昭源黑體)](https://github.com/chiron-fonts/chiron-hei-hk) — variable sans, SIL OFL 1.1
+
+Site font: [LXGW Neo ZhiSong (霞鹜新致宋)](https://github.com/lxgw/LxgwNeoZhiSong), licensed under
+[IPA Font License 1.0](https://opensource.org/licenses/IPA), distributed by
+[ZeoSeven Fonts](https://fonts.zeoseven.com/items/22/).
+
+The font is derived from IPAex Mincho / IPAmj Mincho, so its license is IPA FL 1.0 rather than OFL:
+
+- Embedding it into the generated A4 PDFs for display and printing is explicitly permitted, and
+  those PDFs may be redistributed freely.
+- Generated web pages serve it as a webfont, which counts as redistribution — they carry a footer
+  notice with the license URL and tell readers they may substitute the original
+  [IPA font](https://moji.or.jp/ipafont/) via a browser font override. Keep that notice when
+  editing the web-page seed.
 
 **Design**
 - [Kami](https://github.com/tw93/Kami) — visual style inspiration, MIT

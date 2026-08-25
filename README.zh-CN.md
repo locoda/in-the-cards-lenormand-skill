@@ -10,7 +10,7 @@
 
 所有产品共享统一视觉语言，灵感来自两个源头：
 
-- **[Kami](https://github.com/tw93/Kami)** — 暖羊皮纸底色 (#f5f4ed)、墨蓝强调色 (#1B365D)、昭源宋体排版。干净、文雅、留白从容。
+- **[Kami](https://github.com/tw93/Kami)** — 暖羊皮纸底色 (#f5f4ed)、墨蓝强调色 (#1B365D)、霞鹜新致宋排版。干净、文雅、留白从容。
 - **几何沉默 (Geometric Silence)** — 一套 36 张原创 Lenormand 牌组，建筑蓝图风格。灰鼠尾草绿 (#7A8B7A) 线条绘制于米白底色 (#F5F0E8) 之上，尘玫瑰色 (#C4A0A0) 点缀。瑞士国际主义风格遇上了科研标本图版。无任何神秘纹饰——纯粹几何抽象。
 
 二者共同营造出学术、温暖、安静优雅的阅读体验。
@@ -24,7 +24,7 @@
 - **解读持久化**：结构化 JSON + 人类可读 Markdown 双存，随时再生为任意产品形态
 - **种子 HTML**：复制即用，不再从零构造 HTML
 - **几何沉默牌组 (Geometric Silence)**：36 张原创 SVG 牌面，建筑蓝图风格
-- **昭源字体系列**：Chiron Sung HK（昭源宋體）正文 + Chiron Hei HK（昭源黑體）标签，通过 Google Fonts CDN 加载，国内自动切换镜像
+- **单一站点字体**：霞鹜新致宋（LXGW Neo ZhiSong）通篇使用，经 ZeoSeven Fonts CDN 加载；小号标签回退到系统无衬线字体
 
 ## 预览
 
@@ -134,8 +134,16 @@ MIT
 ## 致谢与参考
 
 **字体**
-- [昭源宋體 (Chiron Sung HK)](https://github.com/chiron-fonts/chiron-sung-hk) — 可变宋体，SIL OFL 1.1
-- [昭源黑體 (Chiron Hei HK)](https://github.com/chiron-fonts/chiron-hei-hk) — 可变黑体，SIL OFL 1.1
+
+使用站点字体：[霞鹜新致宋](https://github.com/lxgw/LxgwNeoZhiSong)，依
+[IPA Font License 1.0](https://opensource.org/licenses/IPA) 授权，由
+[ZeoSeven Fonts](https://fonts.zeoseven.com/items/22/) 分发。
+
+该字体衍生自 IPAex 明朝 / IPAmj 明朝，授权为 IPA FL 1.0 而非 OFL：
+
+- 将其嵌入生成的 A4 PDF 用于显示与打印，是协议明确允许的用途，此类 PDF 可自由再分发。
+- 生成的网页以 Web Font 形式加载该字体，构成再分发——网页页脚附有许可协议链接，并告知读者
+  可用浏览器字体覆盖换回原始 [IPA 字体](https://moji.or.jp/ipafont/)。修改网页种子文件时请保留该声明。
 
 **设计**
 - [Kami](https://github.com/tw93/Kami) — 视觉风格启发，MIT

@@ -66,21 +66,20 @@ const placeholderCount = countMatches(html, /\{\{/g);
 check('R1', 'No unreplaced placeholders', placeholderCount === 0,
   placeholderCount > 0 ? `${placeholderCount} unreplaced {{ markers found — grep file for {{` : null);
 
-// R2 — Font declarations present in HTML source
-// Check case-insensitively for multiple valid formats:
-//   - Google Fonts URL:  Chiron+Sung+HK / Chiron+Hei+HK
-//   - CSS font-family:   "Chiron Sung HK" / "Chiron Hei HK"
-//   - Hyphenated slug:   chiron-sung-hk / chiron-hei-hk
+// R2 — Site font declaration present in HTML source
+// The site font is LXGW Neo ZhiSong (霞鹜新致宋), served by ZeoSeven Fonts.
+// Check case-insensitively for the valid formats:
+//   - CSS font-family:   "LXGW Neo ZhiSong"
+//   - Hyphenated slug:   lxgw-neo-zhisong
+//   - CDN stylesheet:    fontsapi.zeoseven.com/22/main/result.css
 const htmlLower = html.toLowerCase();
-const hasSung = htmlLower.includes('chiron+sung+hk')
-  || htmlLower.includes('chiron sung hk')
-  || htmlLower.includes('chiron-sung-hk');
-const hasHei  = htmlLower.includes('chiron+hei+hk')
-  || htmlLower.includes('chiron hei hk')
-  || htmlLower.includes('chiron-hei-hk');
-check('R2', 'Chiron font declarations present', hasSung && hasHei,
-  !hasSung ? 'chiron-sung-hk declaration missing (check Google Fonts link or @font-face)'
-  : !hasHei ? 'chiron-hei-hk declaration missing (check Google Fonts link or @font-face)'
+const hasZhiSong = htmlLower.includes('lxgw neo zhisong')
+  || htmlLower.includes('lxgw-neo-zhisong');
+const hasFontCss = htmlLower.includes('zeoseven.com/22/')
+  || htmlLower.includes('@font-face');
+check('R2', 'LXGW Neo ZhiSong font declarations present', hasZhiSong && hasFontCss,
+  !hasZhiSong ? '"LXGW Neo ZhiSong" declaration missing — check the --serif custom property'
+  : !hasFontCss ? 'font stylesheet missing — add <link rel="stylesheet" href="https://fontsapi.zeoseven.com/22/main/result.css"> or an @font-face rule'
   : null);
 
 // R3 — SVG card elements present (any svg element with a card-related class or id)
@@ -110,9 +109,10 @@ if (productType === 'a4-pdf') {
 
 if (productType === 'web-page') {
   // R9 — Self-contained: no external JS scripts (font CDN is acceptable)
-  // Allowed external hosts: fonts.googleapis.com, fonts.gstatic.com, cdnjs.cloudflare.com, cdn.jsdelivr.net
+  // Allowed external hosts: fontsapi.zeoseven.com, fonts.googleapis.com, fonts.gstatic.com,
+  //                         cdnjs.cloudflare.com, cdn.jsdelivr.net
   const externalScripts = (html.match(/<script[^>]+src=["']https?:\/\/[^"']+["']/g) || [])
-    .filter(tag => !/fonts\.googleapis\.com|fonts\.gstatic\.com|cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net/.test(tag));
+    .filter(tag => !/zeoseven\.com|fonts\.googleapis\.com|fonts\.gstatic\.com|cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net/.test(tag));
   check('R9', 'No unexpected external script dependencies', externalScripts.length === 0,
     externalScripts.length > 0 ? `External scripts found:\n  ${externalScripts.join('\n  ')}` : null);
 
@@ -158,7 +158,7 @@ if (productType === 'web-page') {
     await page.goto(`file://${absolutePath}`, { waitUntil: 'networkidle0', timeout: 30000 });
     await page.evaluate(() => document.fonts.ready);
 
-    // R2b — Chiron fonts actually rendered (not fallback serif/sans)
+    // R2b — LXGW Neo ZhiSong actually rendered (not fallback serif/sans)
     const fontCheck = await page.evaluate(() => {
       const candidates = ['h1', 'h2', '.chapter-title', '.summary', 'p'];
       for (const sel of candidates) {
@@ -166,7 +166,7 @@ if (productType === 'web-page') {
         if (el) {
           const font = window.getComputedStyle(el).fontFamily.toLowerCase();
           return {
-            ok: font.includes('chiron'),
+            ok: font.includes('lxgw neo zhisong'),
             fontFamily: font,
             element: sel,
           };
@@ -174,9 +174,9 @@ if (productType === 'web-page') {
       }
       return { ok: false, fontFamily: 'no text element found', element: null };
     });
-    check('R2b', 'Chiron font actually rendered in browser', fontCheck.ok,
+    check('R2b', 'LXGW Neo ZhiSong actually rendered in browser', fontCheck.ok,
       !fontCheck.ok
-        ? `Element "${fontCheck.element}" computed font-family: "${fontCheck.fontFamily}" — font may not be loading; verify @font-face src paths`
+        ? `Element "${fontCheck.element}" computed font-family: "${fontCheck.fontFamily}" — font may not be loading; verify the ZeoSeven stylesheet link is reachable`
         : null);
 
     // ── A4 PDF checks ──────────────────────────────────────────────────────

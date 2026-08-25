@@ -43,6 +43,8 @@ const html = fs.readFileSync(htmlPath, 'utf8');
   });
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: 'networkidle0' });
+  // Wait for web fonts to fully load (LXGW Neo ZhiSong subsets from ZeoSeven CDN)
+  await page.evaluate(() => document.fonts.ready);
   await page.screenshot({ path: outPath, fullPage: true });
 
   const stats = fs.statSync(outPath);

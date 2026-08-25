@@ -23,24 +23,54 @@ Shared design tokens, typography, fonts, and card reference used across all prod
 --neutral-stroke: #AFA9EC;
 
 /* Typography */
---serif: "Chiron Sung HK WS", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+--serif: "LXGW Neo ZhiSong", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+--sans:  -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
 ```
 
 ## Font Loading
 
-**All product templates MUST include font loading.** Chiron Sung HK (昭源宋體) and Chiron Hei HK (昭源黑體) variable fonts are served via jsDelivr CDN.
+**All product templates MUST include font loading.** The site font is LXGW Neo ZhiSong
+(霞鹜新致宋), served by [ZeoSeven Fonts](https://fonts.zeoseven.com/items/22/) (item 22).
 
 ```html
-<style>
-/* Chiron Sung HK (昭源宋體) + Chiron Hei HK (昭源黑體) via jsDelivr CDN */
-@import url('https://cdn.jsdelivr.net/npm/chiron-sung-hk-webfont@latest/css/vf.css');
-@import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont@latest/css/vf.css');
-</style>
+<!-- Site font: LXGW Neo ZhiSong (霞鹜新致宋) via ZeoSeven Fonts -->
+<link rel="stylesheet" href="https://fontsapi.zeoseven.com/22/main/result.css">
 ```
 
 Font families:
-- Serif: `"Chiron Sung HK WS"` — weight 200–900 (variable), PADG axis 0–10
-- Sans: `"Chiron Hei HK WS"` — weight 200–900 (variable)
+- Serif — `"LXGW Neo ZhiSong"`, the single site font: body copy, headings, card names, verdicts
+- Sans — system UI stack (no webfont): small uppercase labels, badges, page meta
+
+Working with a single-weight face:
+- The font ships **Regular (400) only**, upright, no italic. Any `font-weight` ≤ 500 renders
+  identically; ≥ 600 renders as browser-synthesized bold, and `font-style: italic` is
+  synthesized obliquely. Existing templates keep their weight declarations — synthetic bold
+  still separates headings from body — but for new work prefer size, color, and letter-spacing
+  as the primary hierarchy signals rather than adding more weight steps.
+- No variable axes. The Chiron `PADG` axis (`font-variation-settings`) no longer applies;
+  do not add it to templates.
+- ZeoSeven's stylesheet declares `src: local("LXGW Neo ZhiSong"), url(...)`, so a locally
+  installed copy is preferred over the network subsets.
+- The stylesheet is split into unicode-range subsets, so renderers must wait for
+  `document.fonts.ready` (all scripts under `scripts/` already do) before screenshotting
+  or printing.
+
+## Font Licensing — IPA Font License 1.0
+
+LXGW Neo ZhiSong is derived from IPAex Mincho / IPAmj Mincho and is released under the
+[IPA Font License 1.0](https://opensource.org/licenses/IPA), not OFL. Two consequences for
+this project:
+
+- **A4 PDF product — no obligation.** Embedding the font into a PDF for display and printing
+  is explicitly permitted by the license, and the resulting PDF may be redistributed freely,
+  commercially or not. (Extracting the font back out of a PDF to build a new font program
+  would create a Derived Program still bound by the license.)
+- **Web page / long-image products — attribute and offer the original.** Serving the font as
+  a webfont counts as redistribution, so generated web pages carry a footer credit naming the
+  font, its license URL, and a note that readers may substitute the original IPA font (via a
+  browser font override or an extension such as Stylus). The seed templates already include
+  this line — keep it when filling placeholders. Social-card and long-image PNGs are raster
+  output with no embedded font program, so they need no notice.
 
 ## Card Slug Reference
 

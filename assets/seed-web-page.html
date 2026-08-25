@@ -13,8 +13,8 @@
     --text-secondary: #6b6a64;
     --brand: #1B365D;
     --border: #e8e6dc;
-    --serif: "Chiron Sung HK", "Chiron Sung HK WS", "Source Han Serif SC", "Noto Serif CJK SC", serif;
-    --sans: "Chiron Hei HK", "Chiron Hei HK WS", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --serif: "LXGW Neo ZhiSong", "Source Han Serif SC", "Noto Serif CJK SC", "Songti SC", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
@@ -150,6 +150,14 @@
     font-family: var(--sans);
     font-weight: 350;
   }
+  footer .font-credit {
+    margin-top: 0.6rem;
+    font-size: 0.7rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    opacity: 0.75;
+  }
+  footer .font-credit a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--border); }
 
   /* Mobile */
   @media (max-width: 520px) {
@@ -167,11 +175,8 @@
     .combo { padding: 0.8rem 1rem; }
   }
 </style>
-<!-- Fonts: Google Fonts primary, CN mirror fallback -->
-<link id="font-css" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chiron+Hei+HK:ital,wght@0,200..900;1,200..900&family=Chiron+Sung+HK:ital,wght@0,200..900;1,200..900&display=swap">
-<script>
-(function(){var t=setTimeout(function(){var l=document.getElementById('font-css');if(l)l.href=l.href.replace('fonts.googleapis.com','fonts.loli.net');},2500);document.fonts.ready.then(function(){clearTimeout(t);});})();
-</script>
+<!-- Site font: LXGW Neo ZhiSong (霞鹜新致宋) via ZeoSeven Fonts — IPA Font License 1.0 -->
+<link id="font-css" rel="stylesheet" href="https://fontsapi.zeoseven.com/22/main/result.css">
 </head>
 <body>
   <!--
@@ -226,6 +231,18 @@
 
   <footer>
     Lenormand Reading · Stargazer Interpreter · {{DATE}}
+    <!--
+      Font credit — required. The site font is served as a webfont, which the IPA Font
+      License 1.0 treats as redistribution: the notice below carries the license URL and
+      tells readers how to fall back to the original IPA font. Keep this block intact.
+    -->
+    <p class="font-credit">
+      站点字体 / Site font ·
+      <a href="https://github.com/lxgw/LxgwNeoZhiSong" target="_blank" rel="noopener">霞鹜新致宋 LXGW Neo ZhiSong</a> ·
+      <a href="https://opensource.org/licenses/IPA" target="_blank" rel="noopener">IPA Font License 1.0</a> ·
+      <a href="https://fonts.zeoseven.com/items/22/" target="_blank" rel="noopener">ZeoSeven Fonts</a> 分发 / distributed by<br>
+      可用浏览器字体覆盖换回原始 IPA 字体 · Readers may substitute the original IPA font via a browser font override.
+    </p>
   </footer>
 </body>
 </html>

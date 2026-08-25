@@ -36,7 +36,7 @@ const fs = require('fs');
       timeout: 30000
     });
 
-    // Wait for web fonts to fully load (Chiron Sung HK from CDN)
+    // Wait for web fonts to fully load (LXGW Neo ZhiSong subsets from ZeoSeven CDN)
     await page.evaluate(() => document.fonts.ready);
     await new Promise(r => setTimeout(r, 2000));
 
