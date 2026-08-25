@@ -1,13 +1,13 @@
-@import url('https://cdn.jsdelivr.net/npm/chiron-sung-hk-webfont@latest/css/vf.css');
-@import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont@latest/css/vf.css');
+/* Site font: LXGW Neo ZhiSong 霞鹜新致宋 — IPA Font License 1.0, via ZeoSeven Fonts */
+@import url('https://fontsapi.zeoseven.com/22/main/result.css');
 
 :root {
   --bg: #faf9f5; --parchment: #f5f4ed; --card-white: #ffffff; --brand: #1B365D;
   --brand-light: #2a5080; --text: #141413; --text-secondary: #6b6a64;
   --text-muted: #9a9890; --border: #e8e6dc; --sage: #7A8B7A;
   --sage-light: #a3b0a3; --rose: #C4A0A0; --rose-light: #d4b8b8; --combo-bg: #f7f6f0;
-  --serif: "Chiron Sung HK WS","Source Han Serif SC","Noto Serif CJK SC","Songti SC",Georgia,serif;
-  --sans: "Chiron Hei HK WS",-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
+  --serif: "LXGW Neo ZhiSong","Source Han Serif SC","Noto Serif CJK SC","Songti SC",Georgia,serif;
+  --sans: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.04); --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
   --shadow-lg: 0 8px 30px rgba(0,0,0,0.08); --radius: 12px; --radius-sm: 8px;
   --transition: 0.3s cubic-bezier(0.25,0.1,0.25,1);
@@ -51,7 +51,7 @@ section { padding: 5rem 0; position: relative; }
   letter-spacing: 4px; color: var(--brand); margin-bottom: 0.75rem;
 }
 .section-title { font-size: 2.2rem; font-weight: 600; color: var(--text); margin-bottom: 0.75rem; line-height: 1.3; }
-.section-title em { font-style: normal; color: var(--brand); font-variation-settings: "PADG" 2; }
+.section-title em { font-style: normal; color: var(--brand); }
 .section-subtitle { font-size: 1.05rem; color: var(--text-secondary); font-weight: 350; max-width: 560px; margin: 0 auto; }
 
 /* ---- Hero ---- */
@@ -66,7 +66,7 @@ section { padding: 5rem 0; position: relative; }
   padding: 0.3rem 1rem; border-radius: 20px; margin-bottom: 2rem; opacity: 0.8;
 }
 .hero-title {
-  font-size: 3.4rem; font-weight: 700; font-variation-settings: "PADG" 2;
+  font-size: 3.4rem; font-weight: 700;
   line-height: 1.2; margin-bottom: 1rem; color: var(--text);
 }
 .hero-tagline {

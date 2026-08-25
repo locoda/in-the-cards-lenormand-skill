@@ -5,8 +5,8 @@
   --bg: #faf8f3;
   --text: #1a1a1a;
   --border: #e0ddd3;
-  --serif: "Chiron Sung HK WS", "Chiron Sung HK", "Source Han Serif SC", "Noto Serif CJK SC", serif;
-  --sans: "Chiron Hei HK WS", "Chiron Hei HK", -apple-system, "PingFang SC", sans-serif;
+  --serif: "LXGW Neo ZhiSong","Source Han Serif SC","Noto Serif CJK SC","Songti SC",Georgia,serif;
+  --sans: -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
 }
 body {
   background: #e8e6dc;

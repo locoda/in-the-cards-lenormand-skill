@@ -68,7 +68,7 @@
   "install.star_github": "GitHub 加星",
   "install.try_stargazer": "试试星解",
   "footer.tagline": "牌说了，几何在听。",
-  "footer.fonts": "字体：<a href=\"https://github.com/chiron-fonts/chiron-sung-hk\" target=\"_blank\" rel=\"noopener\">Chiron Sung HK</a> &amp; <a href=\"https://github.com/chiron-fonts/chiron-hei-hk\" target=\"_blank\" rel=\"noopener\">Chiron Hei HK</a> · SIL OFL 1.1",
+  "footer.fonts": "使用站点字体：<a href=\"https://github.com/lxgw/LxgwNeoZhiSong\" target=\"_blank\" rel=\"noopener\">霞鹜新致宋</a>，依 <a href=\"https://opensource.org/licenses/IPA\" target=\"_blank\" rel=\"noopener\">IPA Font License 1.0</a> 授权，由 <a href=\"https://fonts.zeoseven.com/items/22/\" target=\"_blank\" rel=\"noopener\">ZeoSeven Fonts</a> 分发。",
   "footer.design_ref": "设计参考：<a href=\"https://github.com/tw93/Kami\" target=\"_blank\" rel=\"noopener\">Kami</a> · MIT &nbsp;|&nbsp; 牌面设计：Geometric Silence",
   "footer.data_source": "牌义来源：<a href=\"https://stargazer.estework.site/\" target=\"_blank\" rel=\"noopener\">Stargazer's Oracle</a>",
   "footer.repo": "<a href=\"https://github.com/locoda/stargazer-interpreter\" target=\"_blank\" rel=\"noopener\">github.com/locoda/stargazer-interpreter</a> · MIT",

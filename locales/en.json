@@ -68,7 +68,7 @@
   "install.star_github": "Star on GitHub",
   "install.try_stargazer": "Try Stargazer",
   "footer.tagline": "Let the cards speak. Let the geometry listen.",
-  "footer.fonts": "Fonts: <a href=\"https://github.com/chiron-fonts/chiron-sung-hk\" target=\"_blank\" rel=\"noopener\">Chiron Sung HK</a> &amp; <a href=\"https://github.com/chiron-fonts/chiron-hei-hk\" target=\"_blank\" rel=\"noopener\">Chiron Hei HK</a> · SIL OFL 1.1",
+  "footer.fonts": "Site font: <a href=\"https://github.com/lxgw/LxgwNeoZhiSong\" target=\"_blank\" rel=\"noopener\">LXGW Neo ZhiSong</a> · licensed under <a href=\"https://opensource.org/licenses/IPA\" target=\"_blank\" rel=\"noopener\">IPA Font License 1.0</a> · distributed by <a href=\"https://fonts.zeoseven.com/items/22/\" target=\"_blank\" rel=\"noopener\">ZeoSeven Fonts</a>",
   "footer.design_ref": "Design: <a href=\"https://github.com/tw93/Kami\" target=\"_blank\" rel=\"noopener\">Kami</a> · MIT &nbsp;|&nbsp; Deck: Geometric Silence",
   "footer.data_source": "Card data: <a href=\"https://stargazer.estework.site/\" target=\"_blank\" rel=\"noopener\">Stargazer's Oracle</a>",
   "footer.repo": "<a href=\"https://github.com/locoda/stargazer-interpreter\" target=\"_blank\" rel=\"noopener\">github.com/locoda/stargazer-interpreter</a> · MIT",
