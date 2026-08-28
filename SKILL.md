@@ -1,15 +1,17 @@
 ---
-name: stargazer-interpreter
+name: in_the_cards_lenormand
 description: |-
-  Interpret Lenormand card readings from Stargazer (stargazer.estework.site) and generate visual products from the interpretation. Three-phase workflow: (1) parse the Stargazer prompt → (2) interpret and persist the reading as structured JSON + human-readable Markdown → (3) generate products from the saved reading. Default product is Kami-styled A4 PDF; additional products include web page and 1080×1440 social cards. Past readings can be listed, queried, and regenerated into any product type via natural language. Supports all 6 spread types.   Triggers on "Stargazer 解读 / 帮我解读 / Lenormand reading / 生成解读 PDF / 列出解读 / 生成社交卡片 / 上次的解读 / 請為我解讀 / 透過 Lenormand / 每日運勢 / consult Lenormand / daily fortune / deciding between" etc.
-  Triggers on: "Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读 / 請為我解讀 / 幫我解讀 / 每日運勢 / 今日運勢 / 我想透過 Lenormand / 透過 Lenormand / 二選一 / Lenormand 卡牌占卜 / consult the Lenormand cards / compare them with Lenormand / daily fortune / read my Lenormand / deciding between two options".
-version: 3.4.1
+  Interpret Lenormand card readings from freeform spreads or compatible Stargazer’s Oracle prompts, persist each interpretation as structured JSON plus human-readable Markdown, and generate polished A4 PDF, web, social-card, or long-image products. Uses a three-phase workflow: parse → interpret and save → generate. Supports six spread types, combination-first reading, bilingual Chinese/English output, natural-language retrieval, and regeneration of past readings.
+  Triggers on: "牌间 / In the Cards / Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读 / 請為我解讀 / 幫我解讀 / 每日運勢 / 今日運勢 / 我想透過 Lenormand / 透過 Lenormand / 二選一 / Lenormand 卡牌占卜 / consult the Lenormand cards / compare them with Lenormand / daily fortune / read my Lenormand / deciding between two options".
+version: 3.5.0
 agent_created: true
 ---
 
-# Stargazer Interpreter · 星解者
+# In the Cards · 牌间
 
-Interpret Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/), persist them as reusable data, and generate visual products — A4 PDF, web pages, or social cards — by copying seed HTML files and filling in placeholders.
+**Lenormand Interpreter**
+
+Interpret Lenormand card spreads, persist them as reusable data, and generate visual products — A4 PDF, web pages, social cards, or long images — by copying seed HTML files and filling in placeholders. Accepts freeform spreads and prompts from [Stargazer’s Oracle](https://lenor.star-oracle.app/).
 
 ## Startup Check
 
@@ -23,9 +25,10 @@ node {{SKILL_ROOT}}/scripts/check-skill-update.js --skill-root {{SKILL_ROOT}} --
 
 `{{SKILL_ROOT}}` in the bash code block above resolves to the absolute path of this skill's root directory. The update checker compares this skill's frontmatter `version` with an upstream `SKILL.md` and stays silent unless a newer version exists. It resolves the upstream source in this order:
 
-1. `STARGAZER_INTERPRETER_UPDATE_SOURCE` environment variable
-2. `.update-source` file in the skill root
-3. GitHub `origin` or `upstream` remote, converted to a raw `SKILL.md` URL
+1. `IN_THE_CARDS_UPDATE_SOURCE` environment variable
+2. Legacy `STARGAZER_INTERPRETER_UPDATE_SOURCE` environment variable
+3. `.update-source` file in the skill root
+4. GitHub `origin` or `upstream` remote, converted to a raw `SKILL.md` URL
 
 For manual checks or debugging, run:
 
@@ -36,7 +39,8 @@ node {{SKILL_ROOT}}/scripts/check-skill-update.js --skill-root {{SKILL_ROOT}} --
 ## Architecture
 
 ```
-Stargazer Prompt
+Lenormand Prompt
+(Stargazer-compatible)
     │
     ▼
 [Phase 1] Parse → structured card data
@@ -56,7 +60,7 @@ Every reading is saved before product generation. Saved readings can be regenera
 
 ## When to Use
 
-**First-time reading:** User pastes a Stargazer prompt and asks for interpretation.
+**First-time reading:** User pastes a Lenormand spread or compatible Stargazer prompt and asks for interpretation.
 → Run Phase 1 → Phase 2 → Phase 3 (generate default A4 PDF).
 
 **Product regeneration (post hoc):** User references a past reading and asks for a different product type.

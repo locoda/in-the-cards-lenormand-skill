@@ -1,5 +1,5 @@
 /**
- * Stargazer Interpreter — HTML to PDF Converter
+ * In the Cards — HTML to PDF Converter
  *
  * Usage:
  *   node generate-pdf.js <input.html> [output.pdf]

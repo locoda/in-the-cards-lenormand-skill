@@ -1,5 +1,5 @@
 /**
- * Stargazer Interpreter — Reading Manager
+ * In the Cards — Reading Manager
  *
  * Manage saved readings: list, find, update index, generate products.
  *

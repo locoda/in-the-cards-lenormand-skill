@@ -1,10 +1,10 @@
-# Stargazer Interpreter · 星解者
+# 牌間 · In the Cards
+
+**Lenormand Interpreter · 雷諾曼解牌**
 
 > [English](README.md) · [简体中文](README.zh-CN.md)
 
-遵循 [Agent Skills](https://agentskills.io) 開放標準的 Lenormand 雷諾曼解讀技能，為 [Stargazer's Oracle（觀星者神諭）](https://stargazer.estework.site/) 而生。相容任何支援 Agent Skills 的 AI 助理，不綁定特定平臺。
-
-貼上 Stargazer 提示詞 → 完成解讀並儲存為結構化資料，渲染為精美的 Kami 風格 A4 PDF、獨立網頁、或 1080×1440 社群卡片。
+遵循 [Agent Skills](https://agentskills.io) 開放標準的 Lenormand 雷諾曼解讀 skill。它讀出牌與牌之間的意義，將每次解讀儲存為結構化資料，並生成 A4 PDF、獨立網頁、社群卡片或長圖。既支援自由輸入牌陣，也相容 [Stargazer’s Oracle（觀星者神諭）](https://lenor.star-oracle.app/) 提示詞，不綁定單一平台。
 
 ## 設計
 
@@ -28,31 +28,29 @@
 
 ## 預覽
 
-| 類型 | 牌陣 | 牌面 | 連結 |
-|------|------|------|------|
-| A4 PDF | 5 張 | 月亮 → 棺材 → 樹 → 雲 → 男人 | [PDF](https://stargazer-interpreter.1mether.me/previews/lenormand-five-創作瓶頸-2026-06-20.pdf) |
-| A4 PDF | 二選一 (EN) | Ship·Bear vs Mountain·Ring·Book | [PDF](https://stargazer-interpreter.1mether.me/previews/lenormand-choice-speak-or-hold-2026-06-20.pdf) |
-| 社群卡片 | 3 張每日運勢 | 完整 4 頁輪播 | [P1](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-01.png) · [P2](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-02.png) · [P3](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-03.png) · [P4](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-04.png) |
+產品展示：[牌間 / In the Cards](https://skills.1mether.me/in-the-cards/)
 
 ## 安裝
 
 對你的 AI 助理說：
 
-> 幫我從 GitHub 安裝 stargazer-interpreter 技能：github.com/locoda/stargazer-interpreter
+> 幫我從 GitHub 安裝「牌間」Lenormand skill：https://github.com/locoda/in-the-cards-lenormand-skill
 
 或手動複製到你的 agent 技能目錄：
 
 ```bash
-git clone https://github.com/locoda/stargazer-interpreter.git ~/your-agent/skills/stargazer-interpreter/
+git clone https://github.com/locoda/in-the-cards-lenormand-skill.git ~/your-agent/skills/in-the-cards-lenormand/
 ```
 
 需要 Node.js + Puppeteer（首次生成 PDF 或社群卡片時自動安裝 Chromium）。
+
+已有安裝可繼續保留舊目錄名 `stargazer-interpreter`；新安裝使用 `in-the-cards-lenormand`。
 
 ## 使用方式
 
 ### 首次解讀
 
-貼上 Stargazer 提示詞 — agent 自動執行 Phase 1（解析）+ Phase 2（解讀+儲存），預設生成 A4 PDF。
+貼上 Lenormand 牌陣或相容的 Stargazer 提示詞 — agent 自動執行 Phase 1（解析）+ Phase 2（解讀+儲存），預設生成 A4 PDF。
 
 ```
 使用者: 幫我解讀這個牌陣
@@ -76,13 +74,14 @@ git clone https://github.com/locoda/stargazer-interpreter.git ~/your-agent/skill
 
 ```
 使用者: 幫我解讀這個牌陣，生成 PDF 和社群卡片
-[Stargazer 提示詞...]
+[Lenormand 牌陣或 Stargazer 提示詞...]
 ```
 
 ### 三階段架構
 
 ```
-Stargazer 提示詞
+Lenormand 提示詞
+（相容 Stargazer 格式）
     │
     ▼
 [Phase 1] 解析 → 結構化牌面資料
@@ -125,7 +124,7 @@ Stargazer 提示詞
     └── manage-readings.js           # 解讀索引 CLI
 ```
 
-> **前端頁面與預覽檔案** 維護在 `site` 分支，透過 Cloudflare Pages 部署於 [stargazer-interpreter.1mether.me](https://stargazer-interpreter.1mether.me)。可檢視 [線上 Demo](https://stargazer-interpreter.1mether.me/demo/)。
+> **網站與預覽** 維護在獨立的 [`locoda/skill-showcase`](https://github.com/locoda/skill-showcase) 倉庫：[牌間 / In the Cards](https://skills.1mether.me/in-the-cards/)。
 
 ## 授權條款
 
@@ -142,6 +141,6 @@ MIT
 - 幾何沉默 (Geometric Silence) — 原創牌組設計
 
 **資料**
-- [Stargazer's Oracle（觀星者神諭）](https://stargazer.estework.site/)
+- [Stargazer’s Oracle（觀星者神諭）](https://lenor.star-oracle.app/)
 - [lenormand-oracle](https://github.com/jintianbaihe/lenormand-oracle) — 36 張牌雙語資料集，MIT
 - 組合修飾系統 — 基於公有領域雷諾曼傳統的原創 synthesis

@@ -1,10 +1,10 @@
-# Spread Parsing Rules — Stargazer Prompt Extraction (v3.3)
+# Spread Parsing Rules — Lenormand & Stargazer Input (v3.3)
 
-How to parse a Stargazer-generated prompt into structured data for interpretation and visualization.
+How to parse a freeform Lenormand spread or Stargazer-generated prompt into structured data for interpretation and visualization.
 
 ## Input Contract
 
-The skill receives a raw text string — the complete prompt copied from Stargazer. The prompt has this structure:
+The skill receives a raw text string. Stargazer-generated prompts use this structure:
 
 ```
 [Optional Universal Instruction Prefix]

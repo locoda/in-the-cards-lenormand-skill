@@ -10,7 +10,7 @@ This reference documents the chapter structure, page balance rules, and spread-s
 <head>
 <meta charset="UTF-8">
 <title>Lenormand Reading — {question_summary}</title>
-<meta name="generator" content="Stargazer Interpreter">
+<meta name="generator" content="In the Cards">
 <!-- CSS: font-face + @page + base styles -->
 </head>
 <body>
@@ -84,7 +84,7 @@ This reference documents the chapter structure, page balance rules, and spread-s
     <p class="cover-date">{date_display}</p>
   </div>
   <div class="cover-bottom">
-    <p class="cover-meta">Lenormand Reading · Stargazer Interpreter</p>
+    <p class="cover-meta">Lenormand Reading · In the Cards</p>
     <p class="cover-cards-preview">{card_names_list}</p>
   </div>
 </section>
