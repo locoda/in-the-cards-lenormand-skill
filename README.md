@@ -1,10 +1,10 @@
-# Stargazer Interpreter · 星解者
+# In the Cards · 牌间
+
+**Lenormand Interpreter**
 
 > [简体中文](README.zh-CN.md) · [繁體中文](README.zh-TW.md)
 
-An [Agent Skills](https://agentskills.io) compatible skill that interprets Lenormand card readings from [Stargazer's Oracle](https://stargazer.estework.site/). Works with any AI agent that supports the Agent Skills open standard — not tied to a specific platform.
-
-Paste a Stargazer prompt → get a full interpretation, saved as structured data, rendered into beautiful Kami-styled A4 PDFs, interactive web pages, or 1080×1440 social cards.
+An [Agent Skills](https://agentskills.io) compatible Lenormand interpreter. It reads the meaning between cards, saves each interpretation as structured data, and generates polished A4 PDFs, web pages, social cards, or long images. It accepts freeform spreads and prompts from [Stargazer’s Oracle](https://lenor.star-oracle.app/), without depending on a single platform.
 
 ## Design
 
@@ -28,32 +28,29 @@ Together they create a reading experience that feels scholarly, warm, and quietl
 
 ## Preview
 
-| Product | Spread | Cards | Link |
-|---------|--------|-------|------|
-| **Live Demo** | 3-Card Daily | Paste → Prompt → Preview → Download | [Demo](https://stargazer-interpreter.1mether.me/demo/) |
-| A4 PDF | 5-Card | 月亮 → 棺材 → 樹 → 雲 → 男人 | [PDF](https://stargazer-interpreter.1mether.me/previews/lenormand-five-創作瓶頸-2026-06-20.pdf) |
-| A4 PDF | A-or-B (EN) | Ship·Bear vs Mountain·Ring·Book | [PDF](https://stargazer-interpreter.1mether.me/previews/lenormand-choice-speak-or-hold-2026-06-20.pdf) |
-| Social Card | 3-Card Daily | All 4 carousel pages | [P1](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-01.png) · [P2](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-02.png) · [P3](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-03.png) · [P4](https://stargazer-interpreter.1mether.me/previews/lenormand-xhs-每日運勢-2026-06-20-04.png) |
+Product showcase: [牌间 / In the Cards](https://skills.1mether.me/in-the-cards/)
 
 ## Install
 
 Tell your agent:
 
-> Install the stargazer-interpreter skill from GitHub: github.com/locoda/stargazer-interpreter
+> Install the In the Cards Lenormand skill from GitHub: https://github.com/locoda/in-the-cards-lenormand-skill
 
 Or clone manually into your agent's skills directory:
 
 ```bash
-git clone https://github.com/locoda/stargazer-interpreter.git ~/your-agent/skills/stargazer-interpreter/
+git clone https://github.com/locoda/in-the-cards-lenormand-skill.git ~/your-agent/skills/in-the-cards-lenormand/
 ```
 
 Requires: Node.js + Puppeteer (auto-installs Chromium on first PDF/social card render).
+
+Existing installs may keep the legacy `stargazer-interpreter` folder name; new installs use `in-the-cards-lenormand`.
 
 ## Usage
 
 ### First-time reading
 
-Paste a Stargazer prompt — the agent runs Phase 1 (parse) + Phase 2 (interpret + save), generates A4 PDF by default.
+Paste a Lenormand spread or compatible Stargazer prompt — the agent runs Phase 1 (parse) + Phase 2 (interpret + save), then generates an A4 PDF by default.
 
 ```
 User: Interpret this spread
@@ -79,13 +76,14 @@ User: Generate web page from reading #2
 
 ```
 User: Interpret this spread, generate PDF and social cards
-[Stargazer prompt...]
+[Lenormand spread or Stargazer prompt...]
 ```
 
 ### Three-phase workflow
 
 ```
-Stargazer Prompt
+Lenormand Prompt
+(Stargazer-compatible)
     │
     ▼
 [Phase 1] Parse → structured card data
@@ -128,7 +126,7 @@ Stargazer Prompt
     └── manage-readings.js           # Reading index CLI
 ```
 
-> **Frontend & previews** are maintained in the `site` branch and deployed via Cloudflare Pages at [stargazer-interpreter.1mether.me](https://stargazer-interpreter.1mether.me). See the [live demo](https://stargazer-interpreter.1mether.me/demo/).
+> **Website & previews** are maintained in the separate [`locoda/skill-showcase`](https://github.com/locoda/skill-showcase) repository: [牌间 / In the Cards](https://skills.1mether.me/in-the-cards/).
 
 ## License
 
@@ -145,6 +143,6 @@ MIT
 - Geometric Silence — original card deck design
 
 **Data**
-- [Stargazer's Oracle](https://stargazer.estework.site/) — online Lenormand platform
+- [Stargazer’s Oracle](https://lenor.star-oracle.app/) — online Lenormand platform
 - [lenormand-oracle](https://github.com/jintianbaihe/lenormand-oracle) — 36-card bilingual dataset, MIT
 - Combination modifier system — original synthesis based on public-domain Lenormand tradition

@@ -1,5 +1,5 @@
 /**
- * Stargazer Interpreter — Social Card Renderer
+ * In the Cards — Social Card Renderer
  * Renders 1080×1440 social card HTML to individual PNGs using Puppeteer.
  */
 

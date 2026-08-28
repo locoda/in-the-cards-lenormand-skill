@@ -1,4 +1,4 @@
-# Design System — Stargazer Interpreter v3.3
+# Design System — In the Cards v3.3
 
 Shared design tokens, typography, fonts, and card reference used across all product templates.
 

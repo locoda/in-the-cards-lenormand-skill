@@ -1,4 +1,4 @@
-# Reading Schema — Stargazer Interpreter v3.3
+# Reading Schema — In the Cards v3.3
 
 Defines the canonical JSON structure for persisted Lenormand readings.
 Each reading is saved to `output/readings/{reading_id}.json` with a parallel `{reading_id}.md` human-readable copy.
@@ -25,7 +25,7 @@ Each reading is saved to `output/readings/{reading_id}.json` with a parallel `{r
   "question": "我的写作方向应该是什么？",
   "date": "2026-06-20",
   "generated_at": "2026-06-20T21:35:00+08:00",
-  "source": "stargazer.estework.site",
+  "source": "stargazer-oracle",
   "topic_slug": "写作方向"
 }
 ```
@@ -37,7 +37,7 @@ Fields:
 - `question`: the querent's question (null for daily)
 - `date`: YYYY-MM-DD from the prompt
 - `generated_at`: ISO 8601 timestamp of interpretation generation
-- `source`: always `"stargazer.estework.site"`
+- `source`: `"stargazer-oracle"` for compatible Stargazer’s Oracle prompts or `"freeform"` for manually supplied spreads. Existing readings may retain the legacy value `"stargazer.estework.site"`.
 - `topic_slug`: 2-6 character Chinese topic identifier extracted from question
 
 ## `cards` — Card Array

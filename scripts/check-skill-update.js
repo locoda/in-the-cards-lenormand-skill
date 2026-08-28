@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Stargazer Interpreter — Skill Update Checker
+ * In the Cards — Skill Update Checker
  *
  * Checks whether the installed skill's SKILL.md version is older than an
  * upstream SKILL.md version. Designed for the SKILL.md startup hook: by default
@@ -21,7 +21,7 @@ function parseArgs(argv) {
     cacheDays: DEFAULT_CACHE_DAYS,
     verbose: false,
     force: false,
-    source: process.env.STARGAZER_INTERPRETER_UPDATE_SOURCE || null,
+    source: process.env.IN_THE_CARDS_UPDATE_SOURCE || process.env.STARGAZER_INTERPRETER_UPDATE_SOURCE || null,
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -42,7 +42,7 @@ function parseArgs(argv) {
 }
 
 function printHelp() {
-  console.log(`Usage: node scripts/check-skill-update.js [options]\n\nOptions:\n  --skill-root <path>  Skill root containing SKILL.md (default: cwd)\n  --source <source>    Upstream SKILL.md URL, local file, or directory\n  --cache-days <days>  Minimum days between checks (default: 7)\n  --force             Ignore the cache and check now\n  --verbose           Print no-update and diagnostic messages\n\nSource resolution order:\n  1. --source\n  2. STARGAZER_INTERPRETER_UPDATE_SOURCE\n  3. .update-source file in the skill root\n  4. GitHub origin/upstream remote converted to raw SKILL.md URL\n`);
+  console.log(`Usage: node scripts/check-skill-update.js [options]\n\nOptions:\n  --skill-root <path>  Skill root containing SKILL.md (default: cwd)\n  --source <source>    Upstream SKILL.md URL, local file, or directory\n  --cache-days <days>  Minimum days between checks (default: 7)\n  --force             Ignore the cache and check now\n  --verbose           Print no-update and diagnostic messages\n\nSource resolution order:\n  1. --source\n  2. IN_THE_CARDS_UPDATE_SOURCE\n  3. STARGAZER_INTERPRETER_UPDATE_SOURCE (legacy)\n  4. .update-source file in the skill root\n  5. GitHub origin/upstream remote converted to raw SKILL.md URL\n`);
 }
 
 function readText(filePath) {
@@ -135,7 +135,7 @@ function resolveSource(options) {
 
 function fetchUrl(url) {
   return new Promise((resolve, reject) => {
-    https.get(url, { headers: { 'User-Agent': 'stargazer-interpreter-update-check' } }, (response) => {
+    https.get(url, { headers: { 'User-Agent': 'in-the-cards-lenormand-update-check' } }, (response) => {
       if ([301, 302, 303, 307, 308].includes(response.statusCode)) {
         response.resume();
         fetchUrl(response.headers.location).then(resolve, reject);
@@ -187,7 +187,7 @@ async function main() {
 
     if (compareVersions(localVersion, upstreamVersion) < 0) {
       console.log('--- SKILL UPDATE CHECK ---');
-      console.log(`Update available for stargazer-interpreter: ${localVersion} → ${upstreamVersion}`);
+      console.log(`Update available for in_the_cards_lenormand: ${localVersion} → ${upstreamVersion}`);
       console.log(`Source: ${source}`);
       console.log('To update, replace this skill with the latest version from the source above.');
       console.log('--- END UPDATE CHECK ---');

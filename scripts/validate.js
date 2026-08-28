@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * validate.js — Stargazer Interpreter deliverable validator
+ * validate.js — In the Cards deliverable validator
  *
  * Usage:
  *   node scripts/validate.js <html-file> --type <a4-pdf|social-card|web-page>
