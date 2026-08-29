@@ -6,6 +6,10 @@
 
 遵循 [Agent Skills](https://agentskills.io) 开放标准的 Lenormand 雷诺曼解读 skill。它读出牌与牌之间的意义，将每次解读保存为结构化数据，并生成 A4 PDF、独立网页、社交卡片或长图。既支持自由输入牌阵，也兼容 [Stargazer’s Oracle（观星者神谕）](https://lenor.star-oracle.app/) 提示词，不绑定单一平台。
 
+```
+请帮我安装这个 skill：https://github.com/locoda/in-the-cards-lenormand-skill
+```
+
 ## 设计
 
 所有产品共享统一视觉语言，灵感来自两个源头：

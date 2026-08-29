@@ -6,6 +6,10 @@
 
 An [Agent Skills](https://agentskills.io) compatible Lenormand interpreter. It reads the meaning between cards, saves each interpretation as structured data, and generates polished A4 PDFs, web pages, social cards, or long images. It accepts freeform spreads and prompts from [Stargazer’s Oracle](https://lenor.star-oracle.app/), without depending on a single platform.
 
+```
+Please help me install this skill: https://github.com/locoda/in-the-cards-lenormand-skill
+```
+
 ## Design
 
 Every product shares a unified visual language inspired by two sources:
