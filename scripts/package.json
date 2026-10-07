@@ -2,6 +2,6 @@
   "name": "in-the-cards-lenormand-scripts",
   "private": true,
   "dependencies": {
-    "puppeteer": "^25.1.0"
+    "puppeteer": "^25.12.0"
   }
 }
