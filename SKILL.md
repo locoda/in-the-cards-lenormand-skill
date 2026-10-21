@@ -3,7 +3,7 @@ name: in_the_cards_lenormand
 description: |-
   Interpret Lenormand card readings from freeform spreads or compatible Stargazer’s Oracle prompts, persist each interpretation as structured JSON plus human-readable Markdown, and generate polished A4 PDF, web, social-card, or long-image products. Uses a three-phase workflow: parse → interpret and save → generate. Supports six spread types, combination-first reading, bilingual Chinese/English output, natural-language retrieval, and regeneration of past readings.
   Triggers on: "牌间 / In the Cards / Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读 / 請為我解讀 / 幫我解讀 / 每日運勢 / 今日運勢 / 我想透過 Lenormand / 透過 Lenormand / 二選一 / Lenormand 卡牌占卜 / consult the Lenormand cards / compare them with Lenormand / daily fortune / read my Lenormand / deciding between two options".
-version: 3.5.0
+version: 3.5.1
 agent_created: true
 ---
 
@@ -12,29 +12,6 @@ agent_created: true
 **Lenormand Interpreter**
 
 Interpret Lenormand card spreads, persist them as reusable data, and generate visual products — A4 PDF, web pages, social cards, or long images — by copying seed HTML files and filling in placeholders. Accepts freeform spreads and prompts from [Stargazer’s Oracle](https://lenor.star-oracle.app/).
-
-## Startup Check
-
-On every load, run the following checks. Do not output results unless there is an update.
-
-```
-# ── AGENT — RUN ON LOAD ─────────────────────────────────────
-node {{SKILL_ROOT}}/scripts/check-skill-update.js --skill-root {{SKILL_ROOT}} --cache-days 7 || true
-# ── END AGENT RUN ON LOAD ───────────────────────────────────
-```
-
-`{{SKILL_ROOT}}` in the bash code block above resolves to the absolute path of this skill's root directory. The update checker compares this skill's frontmatter `version` with an upstream `SKILL.md` and stays silent unless a newer version exists. It resolves the upstream source in this order:
-
-1. `IN_THE_CARDS_UPDATE_SOURCE` environment variable
-2. Legacy `STARGAZER_INTERPRETER_UPDATE_SOURCE` environment variable
-3. `.update-source` file in the skill root
-4. GitHub `origin` or `upstream` remote, converted to a raw `SKILL.md` URL
-
-For manual checks or debugging, run:
-
-```bash
-node {{SKILL_ROOT}}/scripts/check-skill-update.js --skill-root {{SKILL_ROOT}} --force --verbose
-```
 
 ## Architecture
 
@@ -438,7 +415,6 @@ When the user references a past reading for a new product:
 | `assets/seed-social-card.html` | Copy-and-fill social card HTML skeleton | Phase 3c (copy to output/) |
 | `scripts/generate-pdf.js` | Puppeteer: HTML → A4 PDF | Phase 3a |
 | `scripts/manage-readings.js` | CLI: list, find, update reading index | Phase 2b, post-hoc regen |
-| `scripts/check-skill-update.js` | CLI: check the installed skill version against upstream `SKILL.md` | Startup check, manual update checks |
 | `scripts/render-social-cards.js` | Puppeteer: social card HTML → 1080×1440 PNGs | Phase 3c |
 | `scripts/render-long-image.js` | Puppeteer: web page HTML → full-page PNG | Phase 3d |
 | `cards/*.svg` | Geometric Silence 36-card deck | Phase 3a, 3c (SVG card faces) |
