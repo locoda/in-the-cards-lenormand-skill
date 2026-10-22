@@ -14,6 +14,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { chromiumArgs } = require('./chromium-args');
 
 // ─── Arguments ───────────────────────────────────────────────────────────────
 
@@ -136,7 +137,7 @@ if (productType === 'web-page') {
   }
 
   const browser = await puppeteer.launch({
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: chromiumArgs(),
     headless: true,
   });
 

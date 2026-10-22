@@ -6,6 +6,7 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
+const { chromiumArgs } = require('./chromium-args');
 
 (async () => {
   const args = process.argv.slice(2);
@@ -24,7 +25,7 @@ const fs = require('fs');
 
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+    args: chromiumArgs(['--disable-dev-shm-usage'])
   });
 
   try {

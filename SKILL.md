@@ -3,7 +3,7 @@ name: in_the_cards_lenormand
 description: |-
   Interpret Lenormand card readings from freeform spreads or compatible Stargazer’s Oracle prompts, persist each interpretation as structured JSON plus human-readable Markdown, and generate polished A4 PDF, web, social-card, or long-image products. Uses a three-phase workflow: parse → interpret and save → generate. Supports six spread types, combination-first reading, bilingual Chinese/English output, natural-language retrieval, and regeneration of past readings.
   Triggers on: "牌间 / In the Cards / Stargazer 解读 / 帮我解读这个牌阵 / 雷诺曼解读 / Lenormand reading / Stargazer prompt / 帮我解牌 / 帮我解读 / interpret this spread / 生成解读 PDF / 列出最近的解读 / 把上次的解读 / 生成网页版 / 生成社交卡片 / 上次的解读 / 之前的解读 / 請為我解讀 / 幫我解讀 / 每日運勢 / 今日運勢 / 我想透過 Lenormand / 透過 Lenormand / 二選一 / Lenormand 卡牌占卜 / consult the Lenormand cards / compare them with Lenormand / daily fortune / read my Lenormand / deciding between two options".
-version: 3.5.1
+version: 3.5.2
 agent_created: true
 ---
 
@@ -450,4 +450,5 @@ Validation is run automatically via `node scripts/validate.js` at the end of eac
 - **Social card chapter count**: If a reading has only 1 chapter (yesno-1, two), produce a cover-only card (single 1080×1440 image)
 - **Web page immutability**: Web pages are standalone and self-contained — they don't link back to the reading data
 - **Long image prerequisite**: `long-image` depends on the web page already being generated (Phase 3b). If the user requests long image without specifying web page, silently generate both (web page first, then the screenshot).
-- **Puppeteer v25+ `--no-sandbox`**: When using Puppeteer v25 (bundled in workspace), the browser launch MUST include `args: ['--no-sandbox', '--disable-setuid-sandbox']`. Without these flags, `page.setContent()` and `page.goto()` fail with "Requesting main frame too early!"
+- **Puppeteer Chromium sandbox**: The renderer scripts keep Chromium's sandbox **on** by default (shared logic: `scripts/chromium-args.js`). `--no-sandbox` / `--disable-setuid-sandbox` are added only when running as root or when `PUPPETEER_NO_SANDBOX=1` is set. If `page.setContent()` / `page.goto()` fail with "Requesting main frame too early!" in an environment where the sandbox cannot run, rerun with `PUPPETEER_NO_SANDBOX=1` — do not hardcode the flags.
+- **HTML escaping**: When filling `{{PLACEHOLDER}}` markers in any seed template, HTML-escape user-derived text (the question, names, free-text notes) and generated interpretation prose — `&`, `<`, `>`, `"` — before substitution. The only unescaped substitutions are the template's own structural fragments (card SVGs, chapter markup the template defines).
