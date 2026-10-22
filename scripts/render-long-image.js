@@ -16,6 +16,7 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
+const { chromiumArgs } = require('./chromium-args');
 
 const htmlPath = path.resolve(process.argv[2]);
 if (!htmlPath || !fs.existsSync(htmlPath)) {
@@ -39,7 +40,7 @@ const html = fs.readFileSync(htmlPath, 'utf8');
 (async () => {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    args: chromiumArgs(),
   });
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: 'networkidle0' });
